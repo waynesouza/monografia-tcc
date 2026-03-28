@@ -1,0 +1,49 @@
+% ----------------------------------------------------------
+\chapter{Revisão Sistemática da Literatura}
+% ----------------------------------------------------------
+
+A Revisão Sistemática da Literatura (RSL), também conhecida como revisão bibliográfica sistemática, é um método de pesquisa que busca encontrar, analisar e sintetizar evidências em estudos anteriores sobre um determinado assunto \cite{Metologia2015}. De acordo com \cite{RevisaoSistematicaLeitura2016}, este método é protocolar e severo, garantindo transparência e replicabilidade.
+
+A RSL difere da revisão narrativa por usar uma metodologia clara e pré-definida para minimizar as chances de erro e produzir resultados mais confiáveis. A definição de uma questão de pesquisa clara, a seleção de estudos pertinentes usando uma estratégia de busca sistemática, a avaliação da qualidade dos estudos incluídos e a síntese das evidências encontradas são todos componentes do processo, segundo \cite{Kitchenham2004}.
+
+Uma RSL envolve vários passos, como definir a pergunta de pesquisa, criar um protocolo de revisão, fazer uma busca sistemática na literatura, selecionar estudos, extrair dados, avaliar a qualidade dos estudos e concluir os resultados \cite{Peterson2011}.
+
+\section[Análise dos Resultados]{Análise dos Resultados}
+
+Esta seção tem como objetivo analisar comparativamente três dessas ferramentas – brModeloWeb, SqlDBM e Vertabelo – para identificar seus pontos fortes e fracos em relação à modelagem colaborativa.
+
+\subsection[brModeloWeb]{brModeloWeb}
+
+O brModeloWeb destaca-se como uma ferramenta de modelagem de dados \textit{online}, acessível e de código aberto, amplamente utilizada em ambientes acadêmicos e de ensino. Sua interface intuitiva e a capacidade de gerar \textit{scripts} SQL a partir dos diagramas ER o tornam uma opção atraente para iniciantes e para projetos de menor escala. No entanto, em termos de funcionalidades colaborativas, o brModeloWeb apresenta limitações significativas. Embora permita o compartilhamento de diagramas e a adição de comentários, não oferece suporte à edição simultânea por múltiplos usuários, controle de versão integrado ou recursos avançados de gerenciamento de conflitos. Essa falta de recursos colaborativos mais robustos pode restringir sua aplicabilidade em projetos de grande porte ou em equipes geograficamente distribuídas. Sendo assim, a colaboração se resume ao compartilhamento de arquivos, o que não permite a rastreabilidade das alterações e dificulta a colaboração em tempo real.
+
+\subsection[SqlDBM]{SqlDBM}
+
+O SqlDBM se apresenta como uma solução de modelagem de banco de dados \textit{online} mais abrangente, com foco na colaboração e na integração com diferentes SGBDs. Uma de suas principais vantagens é o suporte à edição simultânea de diagramas ER por múltiplos usuários, o que facilita a colaboração em tempo real e agiliza o processo de modelagem. Adicionalmente, o SqlDBM oferece controle de versão integrado, permitindo rastrear as alterações realizadas ao longo do tempo e reverter para versões anteriores do modelo, se necessário. A integração com o sistema de controle de versão \textit{git} permite que as equipes de desenvolvimento gerenciem seus modelos de dados da mesma forma que gerenciam o código-fonte da aplicação.
+
+\subsection[Vertabelo]{Vertabelo}
+
+O Vertabelo se posiciona como uma ferramenta de modelagem de dados online que engloba desde a modelagem conceitual (diagramas ER) até a modelagem lógica e física de bancos de dados. Similarmente ao SqlDBM, o Vertabelo oferece suporte à edição simultânea de diagramas, permitindo que múltiplos usuários colaborem em tempo real na criação e na modificação dos modelos de dados. A ferramenta também oferece funcionalidades de validação de modelos, garantindo a consistência e a integridade dos diagramas ER. Além disso, o Vertabelo se destaca pela capacidade de gerar documentação completa dos modelos de dados, facilitando a comunicação e o entendimento entre os membros da equipe de desenvolvimento.
+
+\section[Análise Comparativa]{Análise Comparativa}
+
+A análise das ferramentas brModeloWeb, SqlDBM e Vertabelo revela diferentes abordagens para a modelagem ER colaborativa. Enquanto o brModeloWeb oferece uma solução mais simples e focada em modelagem básica, o SqlDBM e o Vertabelo apresentam funcionalidades mais avançadas de colaboração, como edição em tempo real e controle de versão.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+        \begin{tabulary}{\textwidth}{|L|C|C|C|}
+        \hline
+        \textbf{Funcionalidade} & \textbf{brModeloWeb} & \textbf{SqlDBM} & \textbf{Vertabelo} \\
+        \hline
+        Colaboração em Tempo Real & Não & Sim & Sim \\
+        \hline
+        Controle de Versão & Não & Sim & Sim \\
+        \hline
+        Geração de DDL & Sim & Sim & Sim \\
+        \hline
+        Todas funcionalidades no pacote grátis & Sim & Não & Não \\
+        \hline
+        \end{tabulary}
+    \caption{Comparativo das Ferramentas}
+    \label{tabela:comparativo-ferramentas}
+\end{table}

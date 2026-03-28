@@ -1,0 +1,191 @@
+% ----------------------------------------------------------
+\chapter{Metodologia}
+% ----------------------------------------------------------
+
+\section[Materiais]{Materiais}
+
+Nesta seção, são detalhadas as ferramentas, linguagens, bibliotecas e plataformas de \textit{software} que foram empregadas para a concepção, desenvolvimento e validação da aplicação.
+
+\subsection[Análise, Modelagem e Projeto]{Análise, Modelagem e Projeto}
+
+\begin{itemize}
+    \item \textit{Unified Modeling Language} (UML): linguagem gráfica usada para visualização, especificação, construção e documentação de todos os casos pertencentes ao escopo do trabalho, através de uma formalização da estruturação dos planos de negócios \cite{UML2015}.
+    \item \textit{Excalidraw Libraries}: plataforma \textit{web} com suporte para adicionar bibliotecas adicionais criadas pelos próprios usuários, e foi usada a biblioteca \textit{Shapes for UML and ER Diagrams} para a criação dos diagramas dentro do Excalidraw.
+\end{itemize}
+
+\subsection[Persistência de dados]{Persistência de dados}
+
+\begin{itemize}
+    \item \textit{Structured Query Language} (SQL): Linguagem utilizada para o armazenamento de dados com estrutura predefinida e relacionamentos bem estabelecidos.
+    \item \textit{Not Only SQL} (NoSQL): Categoria de bancos de dados não relacionais que oferece modelos de dados flexíveis, ideal para informações semiestruturadas ou não estruturadas. O modelo de dados orientado a documentos permitiu representar cada diagrama de forma coesa, facilitando as operações de atualização e leitura exigidas pela sincronização colaborativa em tempo real.
+    \item \textit{PostgreSQL}: Sistema de banco de dados relacional, de código aberto. Foi selecionado para a persistência de dados estruturados, como informações de usuários, projetos e permissões de acesso. \cite{PostgreSQL2024}
+    \item \textit{MongoDB}: Banco de dados NoSQL orientado a documentos. Sua escolha foi estratégica para armazenar a estrutura dos diagramas ER. A natureza flexível e hierárquica de seu esquema, baseado em documentos JSON, é ideal para representar os componentes de um diagrama (entidades, atributos, relacionamentos), facilitando as operações de leitura e escrita exigidas pela funcionalidade de colaboração em tempo real. \cite{MongoDB2021}
+    \item \textit{DBeaver}: Ferramenta de banco de dados universal. Foi utilizada para a administração, consulta e manipulação dos dados tanto no PostgreSQL quanto no MongoDB. Sua capacidade de se conectar a múltiplos SGBDs a partir de uma única interface gráfica otimizou o processo de desenvolvimento e depuração da camada de persistência.
+\end{itemize}
+
+\subsection[Implementação]{Implementação}
+
+\begin{itemize}
+    \item \textit{git}: Sistema de controle de versão distribuído. Foi empregado para gerenciar todo o histórico de alterações do código-fonte do projeto, permitindo a rastreabilidade das modificações. \cite{Git2025}
+    \item \textit{GitHub}: Plataforma de hospedagem de código-fonte baseada em \textit{git}. Serviu como o repositório central do projeto, facilitando a colaboração, a revisão de código e o armazenamento seguro do trabalho. \cite{GitHub2024}
+    \item \textit{Docker}: Plataforma de contêineres utilizada para criar ambientes de desenvolvimento. Permitiu que a aplicação e seus bancos de dados fossem executados de forma consistente em qualquer máquina, simplificando a configuração e o processo de implantação. \cite{Docker2024}
+    \item \textit{IntelliJ IDEA}: Integrated Development Environment (IDE) utilizado para a codificação do \textit{back-end} em Java e \textit{Spring}. \cite{IntelliJ2024}
+    \item \textit{WebStorm}: IDE utilizado para o desenvolvimento do \textit{front-end} em Angular, HTML, CSS/SCSS e Javascript/TypeScript. Ambos os ambientes, da JetBrains, foram escolhidos por suas ferramentas avançadas de análise de código, depuração e integração com outras tecnologias do projeto. \cite{WebStorm2024}
+    \item \textit{Java}: Linguagem de programação orientada a objetos e independente de plataforma. Foi a base para toda a lógica de servidor da aplicação, escolhida por seu ecossistema adequado para uma aplicação que demanda processamento de requisições concorrentes e comunicação em tempo real. \cite{Java2024}
+    \item \textit{Spring Boot}: \textit{Framework} que simplifica o desenvolvimento de aplicações baseadas em \textit{Spring}. Foi utilizado para estruturar todo o \textit{back-end}, gerenciando a injeção de dependências, configurando as APIs REST e os \textit{endpoints WebSocket}, o que acelerou o ciclo de desenvolvimento. \cite{SpringBoot2024}
+    \item \textit{Spring WebSocket}: Módulo do \textit{Spring Framework} que fornece suporte para a criação de comunicação interativa e em tempo real entre cliente e servidor através do protocolo \textit{WebSocket}. Foi um componente central do projeto, utilizado para propagar as alterações realizadas em um diagrama para todos os usuários colaboradores conectados à mesma sessão. \cite{WebSockets2024}
+    \item \textit{Spring Security}: Módulo do ecossistema \textit{Spring}. Empregado em conjunto com \textit{JSON Web Token} (JWT) para implementar o sistema de autenticação e autorização da aplicação. O \textit{Spring Security} foi responsável por controlar o acesso aos recursos, enquanto o JWT foi utilizado para a geração de \textit{tokens} de acesso seguros e autocontidos. \cite{SpringSecurity2024}
+    \item \textit{Spring Data JPA}: Módulo que simplifica a implementação da camada de acesso a dados em bancos de dados relacionais. Foi utilizado para abstrair as operações de persistência com o PostgreSQL, reduzindo a necessidade de código repetitivo para as consultas ao banco. \cite{SpringDataJPA2024}
+    \item \textit{Spring Data MongoDB}: Módulo do projeto \textit{Spring Data} que fornece integração com o banco de dados MongoDB. Foi fundamental para implementar a camada de persistência dos diagramas ER. Este módulo abstrai a camada de acesso ao banco, automatizando o mapeamento entre os objetos Java, que representam os componentes do diagrama, e os documentos \textit{BSON} armazenados no MongoDB. \cite{SpringDataMongoDB2024}
+    \item Angular: Plataforma de desenvolvimento de aplicações \textit{web} baseadas em Javascript e TypeScript. Foi escolhido para a construção da interface do usuário no formato de uma \textit{Single-Page Application} (SPA). \cite{Angular2022}
+    \item \textit{GoJS}: Biblioteca JavaScript especializada na criação de diagramas interativos. Representa a tecnologia central da interface do usuário, sendo responsável por renderizar o diagrama ER na tela, permitir a manipulação de seus elementos (criação, exclusão, movimentação) e refletir visualmente as atualizações recebidas em tempo real. \cite{GoJS2024}
+    \item \textit{stompjs} e \textit{SockJS}: Bibliotecas JavaScript utilizadas no lado do cliente para estabelecer e gerenciar a comunicação via \textit{WebSocket} com o \textit{back-end}. O SockJS atua como uma camada de compatibilidade e o stompjs implementa o protocolo STOMP, simplificando o envio e recebimento de mensagens para a sincronização do diagrama. \cite{StompJS2023}
+    \item \textit{Node Package Manager} (npm): Gerenciador de pacotes do ecossistema Node.js. Foi essencial para a gestão de todas as dependências do projeto \textit{front-end}, como o \textit{framework} Angular e suas bibliotecas. \cite{NPM2024}
+\end{itemize}
+
+\subsection[Testes]{Testes}
+
+\begin{itemize}
+    \item \textit{JUnit} e \textit{Mockito}: \textit{Frameworks} para a realização de testes unitários em Java. Foram utilizados para validar a lógica de negócio no \textit{back-end}, garantindo a qualidade e a corretude das funcionalidades implementadas de forma isolada. \cite{JUnit2023} \cite{Mockito}
+    \item \textit{Postman}: Plataforma para teste de APIs. Foi utilizada durante o desenvolvimento para enviar requisições às APIs REST do \textit{back-end}, inspecionar as respostas e validar os \textit{endpoints}. \cite{Postman2024}
+    \item \textit{Google Chrome} e \textit{Mozilla Firefox}: Navegadores \textit{web} utilizados para a realização de testes manuais e de compatibilidade da interface do usuário, assegurando que a aplicação funcione corretamente e apresente uma experiência consistente em alguns dos principais navegadores do mercado. \cite{GoogleChrome} \cite{MozillaFirefox}
+\end{itemize}
+
+\section[Métodos]{Métodos}
+Nesta seção, são apresentados os métodos e as abordagens que nortearam o planejamento, a análise, o projeto e a implementação da aplicação. A condução do trabalho foi baseada em uma combinação de práticas conhecidas da Engenharia de \textit{Software} e da pesquisa científica, adaptadas para atender suas especificidades.
+
+\subsection[Abordagem Metodológica]{Abordagem Metodológica}
+Para a condução deste projeto, adotou-se uma abordagem metodológica híbrida, que integra conceitos do método científico, elementos do modelo em espiral de Boehm e práticas da metodologia Scrum.
+
+\subsubsection[Método Científico]{Método Científico}
+O método científico serviu como alicerce estrutural do trabalho, definindo as etapas macro de observação de um problema (a necessidade de uma ferramenta de modelagem ER colaborativa em tempo real), formulação de uma hipótese (a viabilidade de construir tal aplicação com tecnologias \textit{web}), experimentação (o desenvolvimento da solução) e análise dos resultados.
+
+\subsubsection[Modelo em Espiral de Boehm]{Modelo em Espiral de Boehm}
+O modelo foi empregado conceitualmente para guiar o ciclo de vida do projeto de forma iterativa e incremental. Cada ciclo envolveu planejamento, análise de riscos (como a complexidade da sincronização em tempo real), engenharia (codificação e testes) e avaliação pelo desenvolvedor, permitindo o refinamento contínuo da aplicação a cada iteração.
+
+\subsubsection[Metodologia Scrum]{Metodologia Scrum}
+A metodologia foi utilizada de forma adaptada para o gerenciamento das atividades de desenvolvimento. O trabalho foi decomposto em épicos, representando as grandes funcionalidades, que por sua vez foram detalhados em tarefas menores e mais específicas, facilitando o acompanhamento do progresso e a organização do trabalho em ciclos curtos de desenvolvimento.
+
+\subsection[Análise e Projeto do Sistema]{Análise e Projeto do Sistema}
+A fase de análise e projeto foi fundamental para traduzir os requisitos do sistema em um modelo funcional e técnico. Para a definição dos requisitos funcionais e do escopo do sistema, foram elaborados diagramas de Caso de Uso. Essa técnica da \textit{Unified Modeling Language} (UML) permitiu identificar os atores e suas interações com o sistema, delimitando claramente as funcionalidades a serem implementadas, como criar um projeto, convidar colaboradores, adicionar uma entidade ao diagrama, entre outras. A partir dessa análise, foram tomadas decisões arquiteturais cruciais.
+
+\subsubsection[Arquitetura Cliente-Servidor]{Arquitetura Cliente-Servidor}
+%
+% Explicar porque escolheu a arquitetura Cliente-Servidor
+%
+Optou-se pela arquitetura macro do tipo cliente-servidor, padrão para aplicações \textit{web} modernas. Nessa arquitetura, o \textit{front-end} (cliente), executado no navegador do usuário, é responsável pela interface e interação, enquanto o \textit{back-end} (servidor) centraliza a lógica de negócio, o controle de acesso e a persistência dos dados.
+
+\subsubsection[Protocolo de Comunicação em Tempo Real]{Protocolo de Comunicação em Tempo Real}
+
+Para atender ao requisito central de colaboração em tempo real, o protocolo WebSocket foi escolhido para a comunicação contínua entre cliente e servidor. A comunicação síncrona do protocolo HTTP, baseada em um ciclo de requisição e resposta estritamente iniciado pelo cliente, mostra-se ineficiente para este cenário. Soluções paliativas que utilizam HTTP, como o \textit{polling} (onde o cliente consulta o servidor em intervalos regulares), geram uma alta latência e um tráfego de rede excessivo, pois cada consulta reinicia uma conexão e carrega metadados que são, na maioria das vezes, desnecessários.
+
+O WebSocket, em contrapartida, estabelece uma conexão única, persistente e bidirecional  após um \textit{handshake} inicial. Essa arquitetura permite que o servidor envie atualizações aos clientes de forma proativa e instantânea (\textit{server push}), com baixa sobrecarga de dados. Essa característica é fundamental para a viabilidade de sistemas colaborativos, onde a propagação de alterações deve ter a menor latência possível para garantir uma experiência de uso fluida e consistente entre os múltiplos usuários. Conforme \citeonline{Souza2023}, em aplicações que demandam alta interatividade e troca constante de pequenos pacotes de dados, o WebSocket apresenta um desempenho superior e um custo computacional significativamente menor quando comparado às abordagens baseadas em HTTP.
+
+\subsection[Modelagem das Bases de Dados]{Modelagem das Bases de Dados}
+A estratégia de persistência de dados adotada neste projeto foi a abordagem híbrida, também conhecida como persistência poliglota (\textit{polyglot persistence}). Essa decisão consistiu em combinar um sistema de gerenciamento de banco de dados relacional e um não relacional, a fim de utilizar a tecnologia mais adequada para cada tipo de dado manipulado pela aplicação, melhorando tanto o desempenho quanto a integridade da informação.
+
+\subsubsection[Dados Relacionais]{Dados Relacionais}
+%
+% Explicar porque escolheu o PostgreSQL
+%
+Para o armazenamento de dados com estrutura bem definida e que exigem integridade referencial, como as informações de usuários, projetos e credenciais de acesso, optou-se pelo SGBD PostgreSQL. Sua conformidade com as propriedades ACID (Atomicidade, Consistência, Isolamento e Durabilidade) e seu sistema de controle de transações foram fatores determinantes para garantir a consistência e a segurança dos dados do sistema. A modelagem dessas informações foi formalizada por meio de um diagrama Entidade-Relacionamento (ER).
+
+\subsubsection[Dados Não Relacionais]{Dados Não Relacionais}
+%
+% Falar que o Spring tem um módulo do MongoDB, o que facilitaria no desenvolvimento
+%
+Em contrapartida, para a persistência dos dados que compõem os diagramas ER do protótipo — como entidades, atributos, relacionamentos e suas respectivas posições na área de desenho — a escolha recaiu sobre o MongoDB. A natureza colaborativa e em tempo real da aplicação impõe um requisito de destaque para operações de leitura e escrita concorrentes, onde múltiplos usuários podem consultar e alterar o mesmo diagrama. Esta decisão é respaldada por estudos que demonstram a superioridade do MongoDB em relação ao PostgreSQL \cite{Politowski2014}. O modelo de documentos permite que a estrutura de um diagrama seja armazenada de forma coesa e hierárquica, otimizando as consultas e simplificando a lógica de sincronização necessária para a colaboração em tempo real.
+
+\subsection[Padrão de Arquitetura de Software e de Código]{Padrão de Arquitetura de Software e de Código}
+Com a arquitetura macro definida, foram adotados padrões específicos para a organização interna do código, tanto no \textit{back-end} quanto no \textit{front-end}.
+
+\subsubsection[Model-View-Controller]{Model-View-Controller}
+%
+% Falar que escolheu o Spring pelo suporte ao WebSocket
+% Falar que o Spring usa o MVC como padrão e por este motivo adotou-se a linguagem Java e o Angular, associando a 
+% divisão de responsabilidades com o princípio do Clean Code
+% 
+% https://sabrinabm94.medium.com/usando-o-mvc-no-angular-13081366019a
+% https://www.amazon.com.br/Iniciando-com-JavaScript-fundamentos-Aprendendo/dp/B0D25257DD
+%
+A escolha do padrão de arquitetura \textit{Model-View-Controller} (MVC) foi uma decisão estratégica para a organização do código-fonte, sendo aplicada tanto no \textit{back-end} quanto no \textit{front-end} da aplicação. Este padrão promove a separação de responsabilidades, dividindo a aplicação em três componentes interconectados, o que foi útil para gerenciar a complexidade do sistema.
+
+\begin{itemize}
+    \item \textit{Model}: Camada de manipulação dos dados.
+    \item \textit{View}: Camada de interação do usuário.
+    \item \textit{Controller}: Camada de controle, responsável por ligar o \textit{model} e a \textit{view}, fazendo com que os \textit{models} possam ser repassados para as \textit{views} e vice-versa.
+\end{itemize}
+
+A adoção do padrão MVC em ambas as camadas do sistema não foi uma mera formalidade, mas uma escolha deliberada para obter vantagens concretas no processo de desenvolvimento. Essa abordagem está alinhada com as melhores práticas da Engenharia de \textit{Software}, que destacam o MVC como um padrão que promove a coesão e o baixo acoplamento entre as partes de um sistema. Conforme aponta a literatura, a separação de interesses facilita o desenvolvimento paralelo, a reutilização de componentes e, crucialmente, a testabilidade e a manutenção do \textit{software} \cite{EngenhariaSoftware2021}.
+
+\begin{itemize}
+    \item \textit{Back-end}: O \textit{framework} Spring implementa nativamente uma variação do MVC. As classes que usam uma determinada anotação atuam como Controladores, recebendo requisições HTTP. A lógica de negócio e os objetos de domínio representam o Modelo. A Visão é materializada pela resposta serializada, tipicamente em formato JSON, enviada ao cliente.
+    \item \textit{Front-end}: O \textit{framework} Angular organiza a aplicação de forma análoga. Os componentes são formados por um \textit{template} HTML, uma classe que contém a lógica e o estado, e os serviços que gerenciam os dados da aplicação.
+\end{itemize}
+
+\subsubsection[Clean Code]{Clean Code}
+A qualidade interna do código-fonte foi uma adotada durante todo o ciclo de desenvolvimento. Para tanto, foram escolhidos de forma sistemática os princípios de Código Limpo, conforme popularizados por \citeonline{CleanCode2009}, com o objetivo de produzir uma base de código legível e manutenível. A aplicação desses princípios se manifestou principalmente nas seguintes práticas:
+
+\begin{itemize}
+    \item Nomes de variáveis e métodos significativos
+    \item Métodos pequenos e com responsabilidade única
+    \item Código autoexplicativo
+\end{itemize}
+
+O primeiro princípio foi aplicado promovendo atenção especial à nomenclatura para que o propósito de cada elemento do código fosse explícito. Em vez de nomes genéricos, utilizaram-se identificadores descritivos. Da mesma forma, os métodos foram nomeados para expressar claramente sua ação e seu resultado. Essa prática elimina a ambiguidade e torna o código mais intuitivo.
+
+O segundo princípio foi aplicado na decomposição da lógica de negócio. Métodos e funções foram projetados para executar uma única tarefa e fazê-la bem. Por exemplo, um controlador de API REST que recebe uma requisição para adicionar uma nova entidade ao diagrama não executa a validação, a persistência no banco e a notificação via WebSocket dentro de um único método monolítico. Em vez disso, ele delega cada uma dessas responsabilidades a camadas de serviço distintas: um método para validar os dados, um para orquestrar a lógica de negócio e a persistência, e outro para notificar os clientes conectados. Essa separação torna o sistema mais modular, testável e fácil de depurar.
+
+O terceiro princípio foi majoritariamente empregado na escrita de um código que, por sua própria estrutura e clareza, documenta seu funcionamento, minimizando a necessidade de comentários explicativos. A combinação de nomes significativos e funções com responsabilidade única resultou em um código que se assemelha a uma narrativa legível. Comentários foram utilizados de forma criteriosa, reservados para justificar decisões de projeto não triviais ou para explicar algoritmos complexos, em vez de parafrasear o que uma linha de código já expressa claramente.
+
+\subsection[Estratégia de Controle de Versão]{Estratégia de Controle de Versão}
+A gestão do código-fonte é um pilar para a qualidade e a rastreabilidade de qualquer projeto de software. Para este trabalho, foi empregado o Sistema de Controle de Versão (VCS) \textit{git}, com o código hospedado na plataforma GitHub \cite{Git2014}. A estratégia adotada foi um modelo híbrido, que combina a agilidade do \textit{Trunk-Based Development} como fluxo principal, complementado por uma adaptação simplificada do \textit{GitFlow} para o desenvolvimento de funcionalidades específicas.
+
+A abordagem primária do \textit{Trunk-Based Development}, na qual as alterações são integradas diretamente na ramificação principal (master), foi uma escolha deliberada para promover um ritmo de desenvolvimento mais acelerado e simplificar o gerenciamento de versões. A viabilidade dessa abordagem foi sustentada pelo contexto do projeto, que conta com um único desenvolvedor. Essa decisão encontra respaldo no estudo de \citeonline{Lopes2025}, que aponta que a abordagem \textit{Trunk-Based} é particularmente eficaz em projetos de ritmo acelerado, com equipes menores e mais experientes, onde a complexidade de gerenciamento de múltiplas ramificações se torna um \textit{overhead} desnecessário.
+
+Para o desenvolvimento de funcionalidades mais complexas ou para a correção de \textit{bugs} que exigissem um trabalho mais extenso, foi adotada uma adaptação do modelo \textit{GitFlow}. Neste fluxo simplificado, uma ramificação de funcionalidade (\textit{feature branch}) era criada a partir da master. Esta prática permitiu implementar e testar novas capacidades de forma isolada, sem comprometer a estabilidade da ramificação principal. Após a conclusão e validação, a \textit{feature branch} era integrada de volta à master. Esse isolamento facilitou a organização das tarefas e garantiu uma camada adicional de validação, além de aprimorar a rastreabilidade do histórico de desenvolvimento, uma vez que cada conjunto de alterações significativas fica contido em sua própria ramificação \cite{Rivero2021}.
+
+A combinação dessas duas estratégias proporcionou o melhor de ambos os mundos para o escopo deste trabalho: a velocidade e a simplicidade do \textit{Trunk-Based Development} para o progresso diário e a segurança e organização das ramificações de funcionalidade para as implementações mais críticas.
+
+\subsection[Autenticação e Autorização]{Autenticação e Autorização}
+A segurança da aplicação foi implementada utilizando uma combinação de tecnologias e estratégias, visando proteger os dados e garantir o acesso adequado aos recursos.  O \textit{Spring Security}, um \textit{framework} utilizado no ecossistema Java, foi o pilar central da autenticação e autorização \cite{SpringSecurity2024}.
+
+Para a autenticação, foi adotado o padrão \textit{JSON Web Token} (JWT).  Após a autenticação bem-sucedida do usuário (verificação de credenciais), o servidor gera um token JWT, que é então enviado ao cliente. Este \textit{token} contém informações sobre o usuário autenticado e suas permissões.
+
+Os \textit{tokens} JWT foram armazenados em \textit{cookies} HTTP no cliente. Essa abordagem permite que o navegador gerencie automaticamente o envio do \textit{token} em cada requisição subsequente ao servidor, simplificando a implementação e melhorando a segurança em relação ao armazenamento em \textit{localStorage}, que é mais vulnerável a ataques XSS (\textit{Cross-Site Scripting}) \cite{Bulgakova2020}.
+
+No \textit{back-end}, o \textit{Spring Security} intercepta todas as requisições, validando a autenticidade do \textit{token} JWT presente no \textit{cookie}.  Caso o \textit{token} seja válido, o \textit{Spring Security} extrai as informações do usuário e suas permissões, permitindo o acesso aos recursos autorizados.
+
+No \textit{front-end}, \textit{Angular Guards} atuam para proteger rotas e componentes, impedindo o acesso não autorizado a determinadas áreas da aplicação, de acordo com \citeonline{Oliveira2024}.  Por exemplo, apenas usuários com ua determinada permissão podem acessar a página de gerenciamento de usuários.
+
+Essa abordagem em camadas, combinando \textit{Spring Security}, JWT, \textit{Cookies} e \textit{Angular Guards}, oferece uma solução de segurança, protegendo a aplicação contra acesso não autorizado e garantindo a integridade dos dados.
+
+\subsection[Estratégia de Concorrência]{Estratégia de Concorrência}
+A funcionalidade de colaboração em tempo real introduz a necessidade de uma estratégia para lidar com a concorrência.  Múltiplos usuários editando o mesmo elemento simultaneamente podem levar a conflitos e perda de dados se não forem devidamente gerenciados.  De acordo com \citeonline{Hipolito2024}, para mitigar esse problema, foi implementado um mecanismo de \textit{locks} (travas) com armazenamento em memória.
+
+A estratégia de \textit{locks} funciona da seguinte forma: antes de um usuário iniciar a edição de uma seção específica de um elemento, um \textit{lock} correspondente a essa seção é adquirido e impede que outros usuários editem a mesma seção simultaneamente.  O \textit{lock} é liberado assim que o usuário termina de editar a seção, permitindo que outros usuários a acessem.
+
+A utilização de armazenamento em memória garante um acesso rápido e eficiente às informações de travamento, minimizando a latência e, consequentemente, o impacto na experiência do usuário durante a colaboração em tempo real.  A implementação específica dos \textit{locks} foi realizada utilizando um recurso interno da linguagem Java, que oferece ferramentas eficientes para gerenciamento de concorrência em memória.
+
+Embora essa abordagem mitigue os conflitos de edição, ela introduz a possibilidade de \textit{deadlocks} (travamentos mútuos). Com a finalidade de evitar isso, foi implementada uma estratégia de \textit{timeout} para os \textit{locks}. Se uma trava não for liberada dentro de um período de tempo determinado, ela é automaticamente liberada pelo sistema, prevenindo que outros usuários fiquem indefinidamente bloqueados \cite{Filippo2005}.
+
+Essa estratégia de concorrência, baseada em travas em memória com \textit{timeouts}, oferece um equilíbrio entre a proteção dos dados e a manutenção de uma experiência de colaboração em tempo real fluida e responsiva.
+
+\subsection[Design da Interface do Usuário]{Design da Interface do Usuário}
+O \textit{design} da \textit{interface} da aplicação foi elaborado para garantir uma experiência de usuário intuitiva e eficaz, combinando a familiaridade de ferramentas de modelagem de dados estabelecidas com a usabilidade e estética de aplicações \textit{web} modernas.
+
+A inspiração inicial para a estrutura geral da interface foi o \textit{MySQL Workbench}. Esta escolha visou facilitar a transição para usuários já familiarizados com este ambiente de modelagem de dados. No entanto, a \textit{interface} foi adaptada e enriquecida com padrões de \textit{design} modernos comumente encontrados em aplicações \textit{web}, tais como:
+
+\begin{itemize}
+    \item \textit{Menu Lateral}: Um menu lateral fixo oferece acesso rápido e fácil a todas as funcionalidades principais da aplicação.
+    \item \textit{Modais}: Janelas modais são utilizadas para apresentar informações adicionais ou solicitar confirmação do usuário em tarefas específicas, mantendo o contexto da tela principal.
+    \item \textit{Elementos Visuais}: Utilização de elementos visuais consistentes e modernos para guiar o usuário e melhorar a clareza da informação.
+\end{itemize}
+
+Um componente central da \textit{interface} é a visualização e manipulação interativa dos diagramas. Para essa funcionalidade, foi integrada a biblioteca \textit{GoJS}. Ela permite a criação de diagramas complexos e dinâmicos, com recursos como arrastar e soltar, \textit{zoom}, e personalização visual, proporcionando uma experiência de modelagem de dados interativa. Essa abordagem torna a criação e visualização de diagramas uma parte central da experiência do usuário, facilitando a compreensão e manipulação das estruturas de dados.
+
+A combinação do design conhecido do \textit{MySQL Workbench} com elementos modernos de aplicações \textit{web} e a biblioteca \textit{GoJS} indicam que uma \textit{interface} intuitiva e eficaz para a modelagem de dados e a colaboração em tempo real possa ser construída.
+
+
+
+\subsection[Suporte]{Suporte}

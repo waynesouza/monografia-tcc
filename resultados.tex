@@ -1,0 +1,168 @@
+% ----------------------------------------------------------
+\chapter{Resultados}
+% ----------------------------------------------------------
+
+Esta seção apresenta os resultados obtidos ao longo do desenvolvimento do protótipo de modelador de diagramas ER colaborativo. Os resultados são organizados nas seguintes etapas: o diagrama de caso de uso, os modelos de dados, a arquitetura implementada e as funcionalidades do protótipo.
+
+\section{Diagrama de Caso de Uso}
+
+O diagrama de caso de uso detalha as interações entre os atores e o sistema. O único ator identificado é o Usuário, que representa qualquer pessoa autenticada na plataforma. A partir desse ator, foram mapeados os principais casos de uso que compõem o escopo do protótipo, conforme apresentado na Figura~\ref{fig:caso-de-uso}. A especificação completa de cada caso de uso encontra-se no Anexo A.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.15]{figuras/viewer.jpeg}
+    \caption{Diagrama de caso de uso do ator Viewer}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:caso-de-uso}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.15]{figuras/editor.jpeg}
+    \caption{Diagrama de caso de uso do ator Editor}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:caso-de-uso}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.15]{figuras/owner.jpeg}
+    \caption{Diagrama de caso de uso do ator Owner}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:caso-de-uso}
+\end{figure}
+
+\section{Modelos de Dados}
+
+As figuras \ref{fig:modelo-conceitual}, \ref{fig:modelo-logico} e \ref{fig:modelo-nosql} apresentam, respectivamente, os artefatos de modelagem de dados produzidos no projeto: o modelo conceitual e o modelo lógico do banco de dados relacional, e o esquema não-relacional com MongoDB.
+
+O modelo conceitual define as entidades e relacionamentos de alto nível, representando a estrutura geral dos dados.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/erd-conceptual-model.png}
+    \caption{Modelo conceitual do banco de dados}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:modelo-conceitual}
+\end{figure}
+
+O modelo lógico detalha a estrutura das tabelas e seus atributos, considerando as características do sistema de gerenciamento de banco de dados utilizado.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/erd-diagram.png}
+    \caption{Modelo lógico do banco de dados}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:modelo-logico}
+\end{figure}
+
+O esquema documental projetado para o MongoDB contempla as coleções, os campos e os tipos de dados.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=7cm]{figuras/erd-mongodb.png}
+    \caption{Esquema do banco de dados não-relacional}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:modelo-nosql}
+\end{figure}
+
+Os campos \textit{linkData} e \textit{nodeData} possuem, na devida ordem, os seguintes formatos:
+
+\begin{quadro}[H]
+    \begin{lstlisting}
+    {
+        "from": string,
+        "to": string,
+        "text": string,
+        "toText": string
+    }
+    \end{lstlisting}
+    \caption{Estrutura de dados do campo \textit{linkData}}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{lst:link-data}
+\end{quadro}
+
+\begin{quadro}[H]
+    \begin{lstlisting}
+    {
+        "id": string,
+        "key": string,
+        "items": [
+            {
+            "name": string,
+            "type": string,
+            "pk": boolean,
+            "fk": boolean,
+            "unique": boolean,
+            "notNull": boolean,
+            "autoIncrement": boolean,
+            "defaultValue": string
+            }
+        ],
+        "location": {
+            "x": string,
+            "y": string
+        }
+    }
+    \end{lstlisting}
+    \caption{Estrutura de dados do campo \textit{nodeData}}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{lst:node-data}
+\end{quadro}
+
+\section{Arquitetura do Protótipo}
+
+O protótipo foi construído segundo a arquitetura cliente-servidor, composta por dois módulos independentes: o \textit{back-end}, implementado com Spring Boot, e o \textit{front-end}, desenvolvido com Angular. A comunicação entre os módulos ocorre por dois canais distintos: requisições REST via HTTP para as operações de persistência e autenticação, e uma conexão persistente via WebSocket --- protocolo STOMP sobre SockJS --- para a sincronização colaborativa em tempo real.
+
+O \textit{back-end} foi organizado em camadas seguindo o padrão MVC, compreendendo controladores REST, serviços de negócio, repositórios JPA para o PostgreSQL e repositórios MongoDB para os documentos de diagrama. A segurança é gerenciada pelo Spring Security com tokens JWT armazenados em \textit{cookies} HttpOnly, protegendo todos os \textit{endpoints} da API. O servidor WebSocket opera com um \textit{broker} STOMP no endereço \texttt{/ws}, com prefixo de aplicação \texttt{/app} para as mensagens enviadas pelo cliente e prefixo de tópico \texttt{/topic} para as transmissões do servidor.
+
+O \textit{front-end} é estruturado como uma \textit{Single-Page Application} (SPA), com responsabilidades distribuídas entre componentes Angular, serviços e \textit{interceptors}. O componente central de diagrama integra a biblioteca GoJS para a renderização e manipulação interativa do canvas. O \texttt{CollaborationService} encapsula toda a comunicação WebSocket, enquanto o \texttt{DdlService} gerencia as operações de importação e exportação DDL.
+
+\section{Funcionalidades Implementadas}
+
+As subseções a seguir descrevem as funcionalidades que compõem o protótipo desenvolvido.
+
+\subsection{Autenticação e Autorização}
+
+O protótipo implementa um fluxo completo de autenticação, compreendendo o cadastro de novos usuários e o \textit{login} com credenciais. Após a autenticação bem-sucedida, o servidor emite dois tokens JWT: um \textit{access token} de curta duração e um \textit{refresh token}, ambos armazenados como \textit{cookies} HttpOnly no navegador do cliente. As rotas da aplicação são protegidas por \textit{guards} no \textit{front-end} e por um filtro JWT no \textit{back-end}, que intercepta e valida o token em cada requisição. Quando o \textit{access token} expira, o \textit{interceptor} do Angular aciona automaticamente o \textit{endpoint} de renovação, obtendo um novo par de tokens de forma transparente ao usuário.
+
+\subsection{Gerenciamento de Projetos e Times}
+
+O sistema permite ao usuário criar e gerenciar projetos de modelagem. Cada projeto possui um time de colaboradores, para o qual o criador pode convidar outros usuários cadastrados na plataforma. A gestão de projetos e times é realizada por meio de uma interface de \textit{dashboard}, com operações de criação, leitura, atualização e exclusão (CRUD) comunicadas ao servidor via API REST e persistidas no PostgreSQL.
+
+\subsection{Editor de Diagramas ER}
+
+O editor de diagramas constitui o componente central do protótipo. Construído com a biblioteca GoJS, o canvas oferece as seguintes capacidades de modelagem:
+
+\begin{itemize}
+    \item Adição e remoção de entidades (tabelas);
+    \item Adição, edição e remoção de atributos, com configuração de tipo de dado, chave primária, chave estrangeira, unicidade, restrição \textit{NOT NULL}, auto-incremento e valor padrão;
+    \item Criação e exclusão de relacionamentos entre entidades, com definição da cardinalidade;
+    \item Reposicionamento livre dos elementos na área de desenho.
+\end{itemize}
+
+O estado completo do diagrama --- entidades, atributos, relacionamentos e posicionamentos --- é serializado no formato JSON e persistido no MongoDB ao final de cada sequência de ações.
+
+\subsection{Colaboração em Tempo Real}
+
+A funcionalidade de colaboração permite que múltiplos usuários de um mesmo time trabalhem simultaneamente no mesmo diagrama. Ao abrir um projeto, o cliente estabelece uma conexão STOMP sobre SockJS com o servidor e se inscreve no tópico \texttt{/topic/diagram/\{projectId\}}. Quando um usuário seleciona uma entidade para edição, um evento de \textit{lock} é enviado ao servidor via \texttt{/app/diagram/lock} e imediatamente propagado a todos os demais clientes conectados. Enquanto o \textit{lock} está ativo, a entidade correspondente fica bloqueada para edição pelos outros colaboradores, prevenindo conflitos de concorrência. O \textit{lock} é liberado automaticamente por um mecanismo de \textit{timeout} no servidor caso o usuário não o libere explicitamente.
+
+\subsection{Importação e Exportação DDL}
+
+O protótipo suporta a interoperabilidade com outros ambientes por meio de operações DDL. A exportação converte o modelo do diagrama em instruções SQL (\textit{CREATE TABLE}) compatíveis com o padrão SQL. A importação analisa um \textit{script} SQL fornecido pelo usuário e reconstrói o diagrama correspondente no canvas. Ambas as operações são intermediadas pelo \textit{endpoint} \texttt{/api/ddl} no \textit{back-end}.
