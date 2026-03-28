@@ -188,4 +188,20 @@ A combinação do design conhecido do \textit{MySQL Workbench} com elementos mod
 
 
 
-\subsection[Suporte]{Suporte}
+\subsection[Idioma do Projeto]{Idioma do Projeto}
+
+A língua inglesa exerce uma posição dominante na área da Tecnologia da Informação. Conforme \citeonline{Alves2022}, a globalização e a competitividade do mercado tornaram o inglês praticamente nativo no setor tecnológico, sendo a língua predominante nas áreas de divulgação científica, comércio e relações internacionais. Essa realidade se manifesta de forma concreta na prática do desenvolvimento de \textit{software}: os comandos e as palavras reservadas de todas as principais linguagens de programação são estruturados em inglês, assim como os métodos ágeis amplamente adotados pela indústria, como o Scrum e o Kanban \cite{Alves2022}.
+
+Diante desse contexto, a adoção do inglês como idioma padrão para todos os artefatos técnicos produzidos neste projeto foi uma decisão deliberada, fundamentada nas boas práticas da Engenharia de \textit{Software}. Esta escolha está em consonância com os princípios do Código Limpo (\textit{Clean Code}), que preconiza o uso de nomes significativos e autoexplicativos \cite{CleanCode2009}. A utilização do inglês garante que a nomenclatura empregada no código-fonte, nos esquemas de banco de dados e nos diagramas seja consistente com a terminologia das tecnologias, bibliotecas e \textit{frameworks} adotados no projeto, evitando ambiguidades e facilitando a compreensão e a manutenção da base de código.
+
+Esta padronização foi aplicada de forma abrangente nos seguintes artefatos do projeto:
+
+\begin{itemize}
+    \item \textbf{Código-fonte}: nomes de classes, métodos, variáveis e atributos foram definidos em inglês tanto no \textit{back-end} (Java/Spring) quanto no \textit{front-end} (Angular/TypeScript), mantendo coerência com os próprios nomes das APIs e as convenções dos \textit{frameworks} utilizados.
+    \item \textbf{Banco de dados}: os nomes das tabelas, colunas e restrições no PostgreSQL, bem como os nomes das coleções e campos dos documentos no MongoDB, foram definidos em inglês. Essa decisão garante consistência com as anotações do \textit{Spring Data JPA} e do \textit{Spring Data MongoDB}, que realizam o mapeamento objeto-relacional e objeto-documento a partir dos identificadores declarados no código-fonte.
+    \item \textbf{Diagramas}: os nomes de entidades, atributos e relacionamentos nos diagramas Entidade-Relacionamento (ER), assim como os atores, casos de uso e operações nos diagramas UML, foram especificados em inglês, garantindo uniformidade com os demais artefatos técnicos do projeto.
+    \item \textbf{\textit{Endpoints} da API REST}: os caminhos dos recursos e as operações expostas pela API foram nomeados em inglês, seguindo as convenções estabelecidas pelo estilo arquitetural REST.
+    \item \textbf{Controle de versão}: as mensagens de \textit{commit} e os nomes de ramificações (\textit{branches}) no repositório \textit{git} foram redigidos em inglês, promovendo a rastreabilidade e a clareza do histórico de desenvolvimento.
+\end{itemize}
+
+A adoção uniforme do inglês como idioma técnico em todos os artefatos do projeto reduziu o atrito cognitivo entre as camadas da aplicação, facilitou a leitura e a manutenção do código e posicionou o trabalho em conformidade com os padrões internacionais da indústria de desenvolvimento de \textit{software}.
