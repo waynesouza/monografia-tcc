@@ -6,7 +6,9 @@ Esta seção apresenta os resultados obtidos ao longo do desenvolvimento do prot
 
 \section{Diagrama de Caso de Uso}
 
-O diagrama de caso de uso detalha as interações entre os atores e o sistema. O único ator identificado é o Usuário, que representa qualquer pessoa autenticada na plataforma. A partir desse ator, foram mapeados os principais casos de uso que compõem o escopo do protótipo, conforme apresentado na Figura~\ref{fig:caso-de-uso}. A especificação completa de cada caso de uso encontra-se no Anexo A.
+O diagrama de caso de uso detalha as interações entre os atores e o sistema. Foram identificados três atores distintos, cada um representando um perfil de acesso diferente dentro da plataforma: \textit{Viewer}, \textit{Editor} e \textit{Owner}. A especificação completa de cada caso de uso encontra-se no Anexo A.
+
+O ator \textit{Viewer}, apresentado na Figura~\ref{fig:caso-de-uso-viewer}, representa o colaborador com acesso somente leitura. Após realizar o \textit{login} (CSU-01), ele pode listar os projetos dos quais faz parte (CSU-03) e visualizar os diagramas associados a eles (CSU-06).
 
 \begin{figure}[H]
     \centering
@@ -15,8 +17,10 @@ O diagrama de caso de uso detalha as interações entre os atores e o sistema. O
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
     \end{center}
-    \label{fig:caso-de-uso}
+    \label{fig:caso-de-uso-viewer}
 \end{figure}
+
+O ator \textit{Editor}, apresentado na Figura~\ref{fig:caso-de-uso-editor}, herda as capacidades do \textit{Viewer} e adiciona a permissão de editar diagramas (CSU-07). Por meio dessa funcionalidade, o \textit{Editor} pode adicionar, editar e remover tabelas (CSU-13, CSU-14, CSU-15), gerenciar os atributos de cada tabela (CSU-19, CSU-20, CSU-21, CSU-22), criar e excluir relacionamentos entre entidades (CSU-16, CSU-17), reposicionar elementos na área de desenho (CSU-18), além de exportar (CSU-23) e importar (CSU-24) scripts DDL.
 
 \begin{figure}[H]
     \centering
@@ -25,8 +29,10 @@ O diagrama de caso de uso detalha as interações entre os atores e o sistema. O
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
     \end{center}
-    \label{fig:caso-de-uso}
+    \label{fig:caso-de-uso-editor}
 \end{figure}
+
+O ator \textit{Owner}, apresentado na Figura~\ref{fig:caso-de-uso-owner}, possui o conjunto mais amplo de permissões. Além de todas as capacidades do \textit{Editor}, o \textit{Owner} é o responsável pelo ciclo de vida dos projetos: pode criá-los (CSU-02), editá-los (CSU-04) e removê-los (CSU-08). Também gerencia o time de colaboradores, podendo adicionar membros (CSU-09), listar os membros existentes (CSU-10), alterar seus papéis de acesso (CSU-12) e removê-los do projeto (CSU-11).
 
 \begin{figure}[H]
     \centering
@@ -35,7 +41,7 @@ O diagrama de caso de uso detalha as interações entre os atores e o sistema. O
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
     \end{center}
-    \label{fig:caso-de-uso}
+    \label{fig:caso-de-uso-owner}
 \end{figure}
 
 \section{Modelos de Dados}
