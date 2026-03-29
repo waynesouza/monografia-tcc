@@ -171,4 +171,4 @@ A funcionalidade de colaboração permite que múltiplos usuários de um mesmo t
 
 \subsection{Importação e Exportação DDL}
 
-O protótipo suporta a interoperabilidade com outros ambientes por meio de operações DDL. A exportação converte o modelo do diagrama em instruções SQL (\textit{CREATE TABLE}) compatíveis com o padrão SQL. A importação analisa um \textit{script} SQL fornecido pelo usuário e reconstrói o diagrama correspondente no canvas. Ambas as operações são intermediadas pelo \textit{endpoint} \texttt{/api/ddl} no \textit{back-end}.
+O protótipo suporta a interoperabilidade com outros ambientes por meio de operações DDL no dialeto MySQL. A exportação converte o modelo do diagrama em instruções SQL (\textit{CREATE TABLE}) e a importação analisa um \textit{script} SQL fornecido pelo usuário para reconstruir o diagrama correspondente no \textit{canvas}. Ambas as operações são intermediadas pelo \textit{endpoint} \texttt{/api/ddl} no \textit{back-end}.
