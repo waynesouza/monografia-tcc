@@ -146,11 +146,11 @@ As subseções a seguir descrevem as funcionalidades que compõem o protótipo d
 
 \subsection{Autenticação e Autorização}
 
-O protótipo implementa um fluxo completo de autenticação, compreendendo o cadastro de novos usuários e o \textit{login} com credenciais. Após a autenticação bem-sucedida, o servidor emite dois tokens JWT: um \textit{access token} de curta duração e um \textit{refresh token}, ambos armazenados como \textit{cookies} HttpOnly no navegador do cliente. As rotas da aplicação são protegidas por \textit{guards} no \textit{front-end} e por um filtro JWT no \textit{back-end}, que intercepta e valida o token em cada requisição. Quando o \textit{access token} expira, o \textit{interceptor} do Angular aciona automaticamente o \textit{endpoint} de renovação, obtendo um novo par de tokens de forma transparente ao usuário.
+O protótipo implementa um fluxo de autenticação, com a realização de \textit{login} com credenciais. Após a autenticação bem-sucedida, o servidor emite dois tokens JWT: um \textit{access token} de curta duração e um \textit{refresh token}, ambos armazenados como \textit{cookies} no navegador do cliente. As rotas da aplicação são protegidas por \textit{guards} no \textit{front-end} e por um filtro JWT no \textit{back-end}, que intercepta e valida o token em cada requisição. Quando o \textit{access token} expira, o \textit{interceptor} do Angular aciona automaticamente o \textit{endpoint} de renovação, obtendo um novo par de tokens de forma transparente ao usuário.
 
 \subsection{Gerenciamento de Projetos e Times}
 
-O sistema permite ao usuário criar e gerenciar projetos de modelagem. Cada projeto possui um time de colaboradores, para o qual o criador pode convidar outros usuários cadastrados na plataforma. A gestão de projetos e times é realizada por meio de uma interface de \textit{dashboard}, com operações de criação, leitura, atualização e exclusão (CRUD) comunicadas ao servidor via API REST e persistidas no PostgreSQL.
+O sistema permite ao usuário criar e gerenciar projetos de modelagem. Cada projeto possui um time de colaboradores, para o qual o criador pode convidar outros usuários cadastrados na plataforma. A gestão de projetos e times é realizada por meio de uma interface de \textit{dashboard}, com operações de criação, leitura, atualização e exclusão comunicadas ao servidor e persistidas no banco de dados.
 
 \subsection{Editor de Diagramas ER}
 
@@ -163,7 +163,7 @@ O editor de diagramas constitui o componente central do protótipo. Construído 
     \item Reposicionamento livre dos elementos na área de desenho.
 \end{itemize}
 
-O estado completo do diagrama --- entidades, atributos, relacionamentos e posicionamentos --- é serializado no formato JSON e persistido no MongoDB ao final de cada sequência de ações.
+O estado completo do diagrama (entidades, atributos, relacionamentos e posicionamentos) é serializado no formato JSON e persistido no MongoDB ao final de cada sequência de ações.
 
 \subsection{Colaboração em Tempo Real}
 
