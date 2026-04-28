@@ -146,11 +146,11 @@ O protótipo foi construído segundo a arquitetura cliente-servidor, composta po
     \label{fig:arquitetura}
 \end{figure}
 
-A comunicação entre os módulos ocorre por dois canais distintos: requisições REST via HTTP para as operações de persistência e autenticação, e uma conexão persistente via WebSocket para a sincronização colaborativa em tempo real.
+A comunicação entre os módulos ocorre por dois canais distintos: requisições HTTP para as operações de persistência e autenticação, e uma conexão persistente via WebSocket para a sincronização colaborativa em tempo real.
 
-O \textit{back-end} foi organizado em camadas seguindo o padrão MVC, compreendendo controladores REST, serviços de negócio, repositórios JPA para o PostgreSQL e repositórios MongoDB para os documentos de diagrama. A segurança é gerenciada pelo Spring Security com tokens JWT armazenados em \textit{cookies} HttpOnly, protegendo todos os \textit{endpoints} da API. O servidor WebSocket opera com um \textit{broker} STOMP no endereço \texttt{/ws}, com prefixo de aplicação \texttt{/app} para as mensagens enviadas pelo cliente e prefixo de tópico \texttt{/topic} para as transmissões do servidor.
+O \textit{back-end} foi organizado em camadas seguindo o padrão MVC, separando as responsabilidades de controle, regras de negócio e acesso a dados. A segurança da API é gerenciada por meio de \textit{tokens} JWT armazenados em \textit{cookies} no navegador do cliente, protegendo os recursos contra acesso não autorizado. A comunicação em tempo real é viabilizada por um servidor WebSocket dedicado, responsável por receber as ações dos colaboradores e propagá-las a todos os usuários conectados ao mesmo projeto.
 
-O \textit{front-end} é estruturado como uma \textit{Single-Page Application} (SPA), com responsabilidades distribuídas entre componentes Angular, serviços e \textit{interceptors}. O componente central de diagrama integra a biblioteca GoJS para a renderização e manipulação interativa do canvas. O \texttt{CollaborationService} encapsula toda a comunicação WebSocket, enquanto o \texttt{DdlService} gerencia as operações de importação e exportação DDL.
+O \textit{front-end} é estruturado como uma \textit{Single-Page Application} (SPA), com responsabilidades distribuídas entre componentes de interface, serviços de dados e interceptadores de requisição. O componente central do editor integra a biblioteca GoJS para a renderização e manipulação interativa do diagrama no \textit{canvas}, enquanto serviços dedicados encapsulam a comunicação em tempo real e as operações de importação e exportação DDL.
 
 \section{Funcionalidades Implementadas}
 
@@ -158,7 +158,7 @@ As subseções a seguir descrevem as funcionalidades que compõem o protótipo d
 
 \subsection{Autenticação e Autorização}
 
-O protótipo implementa um fluxo de autenticação, com a realização de \textit{login} com credenciais. Após a autenticação bem-sucedida, o servidor emite dois tokens JWT: um \textit{access token} de curta duração e um \textit{refresh token}, ambos armazenados como \textit{cookies} no navegador do cliente. As rotas da aplicação são protegidas por \textit{guards} no \textit{front-end} e por um filtro JWT no \textit{back-end}, que intercepta e valida o token em cada requisição. Quando o \textit{access token} expira, o \textit{interceptor} do Angular aciona automaticamente o \textit{endpoint} de renovação, obtendo um novo par de tokens de forma transparente ao usuário.
+O protótipo implementa um fluxo de autenticação com credenciais de acesso. Após a autenticação bem-sucedida, o servidor emite dois \textit{tokens} de segurança: um de curta duração para as requisições e outro de renovação, ambos armazenados de forma segura no navegador do cliente. As rotas da aplicação são protegidas tanto no lado do cliente quanto no servidor, garantindo que apenas usuários autenticados acessem os recursos. Quando o \textit{token} de acesso expira, a renovação ocorre de forma automática e transparente ao usuário, sem necessidade de novo \textit{login}.
 
 \subsection{Gerenciamento de Projetos e Times}
 
@@ -175,12 +175,12 @@ O editor de diagramas constitui o componente central do protótipo. Construído 
     \item Reposicionamento livre dos elementos na área de desenho.
 \end{itemize}
 
-O estado completo do diagrama (entidades, atributos, relacionamentos e posicionamentos) é serializado no formato JSON e persistido no MongoDB ao final de cada sequência de ações.
+O estado completo do diagrama --- entidades, atributos, relacionamentos e posicionamentos --- é persistido na base de dados ao final de cada sequência de ações.
 
 \subsection{Colaboração em Tempo Real}
 
-A funcionalidade de colaboração permite que múltiplos usuários de um mesmo time trabalhem simultaneamente no mesmo diagrama. Ao abrir um projeto, o cliente estabelece uma conexão STOMP sobre SockJS com o servidor e se inscreve no tópico \texttt{/topic/diagram/\{projectId\}}. Quando um usuário seleciona uma entidade para edição, um evento de \textit{lock} é enviado ao servidor via \texttt{/app/diagram/lock} e imediatamente propagado a todos os demais clientes conectados. Enquanto o \textit{lock} está ativo, a entidade correspondente fica bloqueada para edição pelos outros colaboradores, prevenindo conflitos de concorrência. O \textit{lock} é liberado automaticamente por um mecanismo de \textit{timeout} no servidor caso o usuário não o libere explicitamente.
+A funcionalidade de colaboração permite que múltiplos usuários de um mesmo time trabalhem simultaneamente no mesmo diagrama. Ao abrir um projeto, o cliente estabelece automaticamente uma conexão persistente com o servidor para receber atualizações em tempo real. Quando um usuário seleciona uma entidade para edição, uma notificação de bloqueio é imediatamente propagada a todos os demais colaboradores conectados. Enquanto o bloqueio está ativo, a entidade correspondente fica indisponível para edição pelos outros usuários, prevenindo conflitos de concorrência. O bloqueio é liberado automaticamente pelo servidor após um intervalo de tempo predefinido, caso o usuário não o libere explicitamente.
 
 \subsection{Importação e Exportação DDL}
 
-O protótipo suporta a interoperabilidade com outros ambientes por meio de operações DDL no dialeto MySQL. A exportação converte o modelo do diagrama em instruções SQL (\textit{CREATE TABLE}) e a importação analisa um \textit{script} SQL fornecido pelo usuário para reconstruir o diagrama correspondente no \textit{canvas}. Ambas as operações são intermediadas pelo \textit{endpoint} \texttt{/api/ddl} no \textit{back-end}.
+O protótipo suporta a interoperabilidade com outros ambientes por meio de operações DDL no dialeto MySQL. A exportação converte o modelo do diagrama em instruções SQL de criação de tabelas, enquanto a importação analisa um \textit{script} SQL fornecido pelo usuário para reconstruir o diagrama correspondente no \textit{canvas}. Ambas as operações são processadas pelo \textit{back-end} e o resultado é retornado ao usuário pela interface da aplicação.
