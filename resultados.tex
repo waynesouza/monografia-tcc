@@ -181,6 +181,8 @@ O estado completo do diagrama --- entidades, atributos, relacionamentos e posici
 
 A funcionalidade de colaboração permite que múltiplos usuários de um mesmo time trabalhem simultaneamente no mesmo diagrama. Ao abrir um projeto, o cliente estabelece automaticamente uma conexão persistente com o servidor para receber atualizações em tempo real. Quando um usuário seleciona uma entidade para edição, uma notificação de bloqueio é imediatamente propagada a todos os demais colaboradores conectados. Enquanto o bloqueio está ativo, a entidade correspondente fica indisponível para edição pelos outros usuários, prevenindo conflitos de concorrência. O bloqueio é liberado automaticamente pelo servidor após um intervalo de tempo predefinido, caso o usuário não o libere explicitamente.
 
-\subsection{Importação e Exportação DDL}
+\subsection{Importação e Exportação de Diagramas}
 
 O protótipo suporta a interoperabilidade com outros ambientes por meio de operações DDL no dialeto MySQL. A exportação converte o modelo do diagrama em instruções SQL de criação de tabelas, enquanto a importação analisa um \textit{script} SQL fornecido pelo usuário para reconstruir o diagrama correspondente no \textit{canvas}. Ambas as operações são processadas pelo \textit{back-end} e o resultado é retornado ao usuário pela interface da aplicação.
+
+\section{\textit{Interface} do Usuário}
