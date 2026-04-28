@@ -134,7 +134,19 @@ Os campos \textit{linkData} e \textit{nodeData} possuem, na devida ordem, os seg
 
 \section{Arquitetura do Protótipo}
 
-O protótipo foi construído segundo a arquitetura cliente-servidor, composta por dois módulos independentes: o \textit{back-end}, implementado com Spring Boot, e o \textit{front-end}, desenvolvido com Angular. A comunicação entre os módulos ocorre por dois canais distintos: requisições REST via HTTP para as operações de persistência e autenticação, e uma conexão persistente via WebSocket --- protocolo STOMP sobre SockJS --- para a sincronização colaborativa em tempo real.
+O protótipo foi construído segundo a arquitetura cliente-servidor, composta por dois módulos independentes: o \textit{back-end}, implementado com Spring Boot, e o \textit{front-end}, desenvolvido com Angular. A Figura~\ref{fig:arquitetura} apresenta uma visão geral dos componentes do sistema e dos canais de comunicação entre eles.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/desenho-da-arquitetura.jpeg}
+    \caption{Arquitetura do protótipo}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:arquitetura}
+\end{figure}
+
+A comunicação entre os módulos ocorre por dois canais distintos: requisições REST via HTTP para as operações de persistência e autenticação, e uma conexão persistente via WebSocket para a sincronização colaborativa em tempo real.
 
 O \textit{back-end} foi organizado em camadas seguindo o padrão MVC, compreendendo controladores REST, serviços de negócio, repositórios JPA para o PostgreSQL e repositórios MongoDB para os documentos de diagrama. A segurança é gerenciada pelo Spring Security com tokens JWT armazenados em \textit{cookies} HttpOnly, protegendo todos os \textit{endpoints} da API. O servidor WebSocket opera com um \textit{broker} STOMP no endereço \texttt{/ws}, com prefixo de aplicação \texttt{/app} para as mensagens enviadas pelo cliente e prefixo de tópico \texttt{/topic} para as transmissões do servidor.
 
