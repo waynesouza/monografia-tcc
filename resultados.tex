@@ -186,3 +186,125 @@ A funcionalidade de colaboração permite que múltiplos usuários de um mesmo t
 O protótipo suporta a interoperabilidade com outros ambientes por meio de operações DDL no dialeto MySQL. A exportação converte o modelo do diagrama em instruções SQL de criação de tabelas, enquanto a importação analisa um \textit{script} SQL fornecido pelo usuário para reconstruir o diagrama correspondente no \textit{canvas}. Ambas as operações são processadas pelo \textit{back-end} e o resultado é retornado ao usuário pela interface da aplicação.
 
 \section{\textit{Interface} do Usuário}
+
+Esta seção apresenta as telas que compõem a interface do protótipo, organizadas pelo fluxo de uso da aplicação.
+
+% ----------------------------------------------------------
+\subsection{Autenticação}
+% ----------------------------------------------------------
+
+A Figura~\ref{fig:tela-login} apresenta a tela de entrada da aplicação. O usuário informa seu e-mail e senha para autenticar-se, com a opção de manter a sessão ativa. A tela também oferece um link para criação de nova conta.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/tela-de-login.png}
+    \caption{Tela de \textit{login}}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:tela-login}
+\end{figure}
+
+% ----------------------------------------------------------
+\subsection{Gerenciamento de Projetos e Times}
+% ----------------------------------------------------------
+
+Após o \textit{login}, o usuário é direcionado à tela principal da aplicação, apresentada na Figura~\ref{fig:tela-principal}. O menu lateral lista os projetos dos quais o usuário faz parte e disponibiliza o botão para criação de um novo projeto. Na parte inferior do menu, são exibidas as informações do usuário autenticado e a opção de encerrar a sessão.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/tela-principal.png}
+    \caption{Tela principal com listagem de projetos}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:tela-principal}
+\end{figure}
+
+Ao acionar o botão de criação, é exibido o modal apresentado na Figura~\ref{fig:criacao-projeto}. O usuário informa o nome e a descrição do projeto e confirma a operação. O projeto criado passa a aparecer imediatamente no menu lateral.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/tela-de-criacao-de-projeto.png}
+    \caption{Modal de criação de projeto}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:criacao-projeto}
+\end{figure}
+
+A Figura~\ref{fig:edicao-projeto} ilustra o modal de edição de projeto, que reúne em uma única tela a edição dos dados do projeto e o gerenciamento do time de colaboradores. A seção \textit{Team Members} lista os membros com seus respectivos papéis de acesso, e o \textit{Owner} pode adicionar ou remover colaboradores e alterar seus papéis. A tela também disponibiliza a opção de excluir o projeto.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/tela-de-edicao-de-projeto.png}
+    \caption{Modal de edição de projeto e gerenciamento de time}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:edicao-projeto}
+\end{figure}
+
+A adição de um novo membro é realizada por meio de um modal secundário, apresentado na Figura~\ref{fig:adicionar-membro}. O \textit{Owner} informa o e-mail do colaborador e seleciona o papel de acesso a ser atribuído (\textit{Viewer} ou \textit{Editor}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/modal-de-adicionar-membro-na-edicao-de-projeto.png}
+    \caption{Modal de adição de membro ao projeto}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:adicionar-membro}
+\end{figure}
+
+% ----------------------------------------------------------
+\subsection{Editor de Diagramas}
+% ----------------------------------------------------------
+
+Ao selecionar um projeto no menu lateral, o usuário acessa o editor de diagramas. A Figura~\ref{fig:diagrama-vazio} apresenta o editor com o \textit{canvas} em branco. A barra de ferramentas lateral disponibiliza as ações de modelagem: adição de entidade, controles de \textit{zoom} e operações de importação e exportação DDL. No topo da tela, o papel do usuário no projeto é exibido em destaque.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/tela-do-diagrama-vazio.png}
+    \caption{Editor de diagramas com \textit{canvas} vazio}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:diagrama-vazio}
+\end{figure}
+
+Ao adicionar uma entidade ao \textit{canvas}, o modal de edição apresentado na Figura~\ref{fig:edicao-entidade} é exibido. O usuário define o nome da entidade e pode adicionar atributos por meio do botão \textit{New Attribute}. Quando ainda não há atributos cadastrados, a interface exibe uma mensagem orientando o usuário a iniciar o preenchimento.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/modal-de-edicao-de-tabela.png}
+    \caption{Modal de edição de entidade sem atributos}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:edicao-entidade}
+\end{figure}
+
+A Figura~\ref{fig:edicao-entidade-atributo} apresenta o mesmo modal após a adição de um atributo. Para cada atributo, o usuário configura o nome, o tipo de dado e as restrições aplicáveis: chave primária (PK), unicidade (UN), obrigatoriedade (NN), auto-incremento (AI) e valor padrão.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/modal-de-edicao-de-tabela-com-atributo.png}
+    \caption{Modal de edição de entidade com atributo configurado}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:edicao-entidade-atributo}
+\end{figure}
+
+A Figura~\ref{fig:diagrama-com-entidades} exibe o \textit{canvas} com duas entidades criadas. Cada entidade é representada como um cartão com o nome e a lista de atributos, indicando o tipo de dado e as restrições de cada um. O diagrama reflete em tempo real as alterações realizadas por qualquer colaborador conectado ao projeto.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/tela-do-diagrama.png}
+    \caption{Editor de diagramas com entidades criadas}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:diagrama-com-entidades}
+\end{figure}
