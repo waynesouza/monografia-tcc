@@ -150,7 +150,7 @@ A comunicação entre os módulos ocorre por dois canais distintos: requisiçõe
 
 O \textit{back-end} foi organizado em camadas seguindo o padrão MVC, separando as responsabilidades de controle, regras de negócio e acesso a dados. A segurança da API é gerenciada por meio de \textit{tokens} JWT armazenados em \textit{cookies} no navegador do cliente, protegendo os recursos contra acesso não autorizado. A comunicação em tempo real é viabilizada por um servidor WebSocket dedicado, responsável por receber as ações dos colaboradores e propagá-las a todos os usuários conectados ao mesmo projeto.
 
-O \textit{front-end} é estruturado como uma \textit{Single-Page Application} (SPA), com responsabilidades distribuídas entre componentes de interface, serviços de dados e interceptadores de requisição. O componente central do editor integra a biblioteca GoJS para a renderização e manipulação interativa do diagrama no \textit{canvas}, enquanto serviços dedicados encapsulam a comunicação em tempo real e as operações de importação e exportação DDL.
+O \textit{front-end} é estruturado como uma SPA, com responsabilidades distribuídas entre componentes de interface, serviços de dados e interceptadores de requisição. O componente central do editor integra a biblioteca GoJS para a renderização e manipulação interativa do diagrama no \textit{canvas}, enquanto serviços dedicados encapsulam a comunicação em tempo real e as operações de importação e exportação DDL.
 
 \section{Funcionalidades Implementadas}
 

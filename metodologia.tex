@@ -96,7 +96,7 @@ Para o armazenamento de dados com estrutura bem definida e que exigem integridad
 %
 Em contrapartida, para a persistência dos dados que compõem os diagramas ER do protótipo — como entidades, atributos, relacionamentos e suas respectivas posições na área de desenho — a escolha recaiu sobre o MongoDB. A natureza colaborativa e em tempo real da aplicação impõe um requisito de destaque para operações de leitura e escrita concorrentes, onde múltiplos usuários podem consultar e alterar o mesmo diagrama. Esta decisão é respaldada por estudos que demonstram a superioridade do MongoDB em relação ao PostgreSQL \cite{Politowski2014}. O modelo de documentos permite que a estrutura de um diagrama seja armazenada de forma coesa e hierárquica, otimizando as consultas e simplificando a lógica de sincronização necessária para a colaboração em tempo real.
 
-\subsection[Dialeto SQL para Operações DDL]{Dialeto SQL para Operações DDL}
+\subsection[Dialeto SQL]{Dialeto SQL}
 
 Uma das funcionalidades centrais do protótipo é a capacidade de exportar o diagrama ER como um \textit{script} DDL e de importar um \textit{script} SQL para reconstruir o diagrama. Para viabilizar essas operações, foi necessário definir um dialeto SQL de referência, já que diferentes SGBDs possuem particularidades sintáticas próprias em suas instruções DDL.
 
