@@ -8,35 +8,36 @@ Os resultados apresentados no capítulo anterior demonstram que o protótipo de 
 \section{Comparação com Ferramentas Existentes}
 % ----------------------------------------------------------
 
-A fim de contextualizar o protótipo desenvolvido, a Tabela~\ref{tab:comparacao} apresenta uma comparação entre o protótipo e três ferramentas de modelagem ER disponíveis no mercado: Lucidchart, DBdiagram.io e MySQL Workbench.
+A fim de contextualizar o protótipo desenvolvido, a Tabela~\ref{tab:comparacao} apresenta uma comparação entre o protótipo e as três ferramentas de modelagem ER analisadas na Revisão Sistemática da Literatura: brModeloWeb, SqlDBM e Vertabelo.
 
 \begin{table}[H]
 \centering
+\renewcommand{\arraystretch}{1.5}
 \caption{Comparação entre o protótipo e ferramentas de modelagem ER}
 \label{tab:comparacao}
-\begin{tabular}{|l|c|c|c|c|}
-\hline
-\textbf{Funcionalidade} & \textbf{Protótipo} & \textbf{Lucidchart} & \textbf{DBdiagram.io} & \textbf{MySQL Workbench} \\
-\hline
-Modelagem ER              & Sim    & Sim      & Sim      & Sim \\
-\hline
-Colaboração em tempo real & Sim    & Pago     & Não      & Não \\
-\hline
-Exportação DDL (SQL)      & Sim    & Pago     & Sim      & Sim \\
-\hline
-Importação DDL (SQL)      & Sim    & Não      & Sim      & Sim \\
-\hline
-Baseado em \textit{web}   & Sim    & Sim      & Sim      & Não \\
-\hline
-Gratuito                  & Sim    & Parcial  & Parcial  & Sim \\
-\hline
-\end{tabular}
+    \begin{tabulary}{\textwidth}{|L|C|C|C|C|}
+    \hline
+    \textbf{Funcionalidade} & \textbf{Protótipo} & \textbf{brModeloWeb} & \textbf{SqlDBM} & \textbf{Vertabelo} \\
+    \hline
+    Modelagem ER              & Sim & Sim & Sim & Sim \\
+    \hline
+    Colaboração em tempo real & Sim & Não & Sim & Sim \\
+    \hline
+    Exportação DDL (SQL)      & Sim & Sim & Sim & Sim \\
+    \hline
+    Importação DDL (SQL)      & Sim & Não & Sim & Sim \\
+    \hline
+    Baseado em \textit{web}   & Sim & Sim & Sim & Sim \\
+    \hline
+    Gratuito                  & Sim & Sim & Parcial & Parcial \\
+    \hline
+    \end{tabulary}
 \begin{center}
     {\small Fonte: Elaborado pelo autor}
 \end{center}
 \end{table}
 
-A análise comparativa evidencia que o protótipo desenvolvido distingue-se por reunir, em uma plataforma \textit{web} e de forma gratuita, as funcionalidades de colaboração em tempo real e de importação e exportação DDL. O Lucidchart, embora ofereça colaboração em tempo real, restringe esse recurso a planos pagos. O MySQL Workbench, apesar de robusto na modelagem e no suporte DDL, opera como uma aplicação \textit{desktop} e não oferece colaboração entre usuários. O DBdiagram.io, por sua vez, oferece suporte a DDL, mas carece da funcionalidade colaborativa. O protótipo preenche a intersecção dessas capacidades, alinhando-se ao diagnóstico de lacuna identificado na justificativa do trabalho: a ausência de uma ferramenta \textit{web}, acessível e colaborativa para a modelagem de diagramas ER.
+A análise comparativa evidencia que o protótipo desenvolvido distingue-se por reunir, em uma plataforma \textit{web} e de forma inteiramente gratuita, a colaboração em tempo real com suporte completo a importação e exportação DDL. O brModeloWeb, embora gratuito e baseado em \textit{web}, limita a colaboração ao compartilhamento de arquivos, sem suporte à edição simultânea entre múltiplos usuários. O SqlDBM e o Vertabelo oferecem colaboração em tempo real e operações DDL mais abrangentes, porém restringem funcionalidades avançadas a planos pagos. O protótipo preenche essa intersecção ao combinar colaboração em tempo real, operações DDL e acesso irrestrito sem custo, alinhando-se ao diagnóstico de lacuna identificado na justificativa do trabalho: a ausência de uma ferramenta \textit{web}, acessível e colaborativa para a modelagem de diagramas ER.
 
 % ----------------------------------------------------------
 \section{Dificuldades e Lições Aprendidas}
