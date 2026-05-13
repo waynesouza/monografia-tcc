@@ -162,17 +162,17 @@ Para o desenvolvimento de funcionalidades mais complexas ou para a correção de
 A combinação dessas duas estratégias proporcionou o melhor de ambos os mundos para o escopo deste trabalho: a velocidade e a simplicidade do \textit{Trunk-Based Development} para o progresso diário e a segurança e organização das ramificações de funcionalidade para as implementações mais críticas.
 
 \subsection[Autenticação e Autorização]{Autenticação e Autorização}
-A segurança da aplicação foi implementada utilizando uma combinação de tecnologias e estratégias, visando proteger os dados e garantir o acesso adequado aos recursos.  O \textit{Spring Security}, um \textit{framework} utilizado no ecossistema Java, foi o pilar central da autenticação e autorização \cite{SpringSecurity2024}.
+A segurança da aplicação foi implementada utilizando uma combinação de tecnologias e estratégias, visando proteger os dados e garantir o acesso adequado aos recursos.  O Spring Security, um \textit{framework} utilizado no ecossistema Java, foi o pilar central da autenticação e autorização \cite{SpringSecurity2024}.
 
-Para a autenticação, foi adotado o padrão \textit{JSON Web Token} (JWT).  Após a autenticação bem-sucedida do usuário (verificação de credenciais), o servidor gera um token JWT, que é então enviado ao cliente. Este \textit{token} contém informações sobre o usuário autenticado e suas permissões.
+Para a autenticação, foi adotado o padrão JWT.  Após a autenticação bem-sucedida do usuário (verificação de credenciais), o servidor gera um token JWT, que é então enviado ao cliente. Este \textit{token} contém informações sobre o usuário autenticado e suas permissões.
 
 Os \textit{tokens} JWT foram armazenados em \textit{cookies} HTTP no cliente. Essa abordagem permite que o navegador gerencie automaticamente o envio do \textit{token} em cada requisição subsequente ao servidor, simplificando a implementação e melhorando a segurança em relação ao armazenamento em \textit{localStorage}, que é mais vulnerável a ataques XSS (\textit{Cross-Site Scripting}) \cite{Bulgakova2020}.
 
-No \textit{back-end}, o \textit{Spring Security} intercepta todas as requisições, validando a autenticidade do \textit{token} JWT presente no \textit{cookie}.  Caso o \textit{token} seja válido, o \textit{Spring Security} extrai as informações do usuário e suas permissões, permitindo o acesso aos recursos autorizados.
+No \textit{back-end}, o Spring Security intercepta todas as requisições, validando a autenticidade do \textit{token} JWT presente no \textit{cookie}.  Caso o \textit{token} seja válido, o Spring Security extrai as informações do usuário e suas permissões, permitindo o acesso aos recursos autorizados.
 
-No \textit{front-end}, \textit{Angular Guards} atuam para proteger rotas e componentes, impedindo o acesso não autorizado a determinadas áreas da aplicação, de acordo com \citeonline{Oliveira2024}.  Por exemplo, apenas usuários com ua determinada permissão podem acessar a página de gerenciamento de usuários.
+No \textit{front-end}, Angular Guards atuam para proteger rotas e componentes, impedindo o acesso não autorizado a determinadas áreas da aplicação, de acordo com \citeonline{Oliveira2024}.  Por exemplo, apenas usuários com ua determinada permissão podem acessar a página de gerenciamento de usuários.
 
-Essa abordagem em camadas, combinando \textit{Spring Security}, JWT, \textit{Cookies} e \textit{Angular Guards}, oferece uma solução de segurança, protegendo a aplicação contra acesso não autorizado e garantindo a integridade dos dados.
+Essa abordagem em camadas, combinando Spring Security, JWT, \textit{Cookies} e Angular Guards, oferece uma solução de segurança, protegendo a aplicação contra acesso não autorizado e garantindo a integridade dos dados.
 
 \subsection[Estratégia de Concorrência]{Estratégia de Concorrência}
 A funcionalidade de colaboração em tempo real introduz a necessidade de uma estratégia para lidar com a concorrência.  Múltiplos usuários editando o mesmo elemento simultaneamente podem levar a conflitos e perda de dados se não forem devidamente gerenciados.  De acordo com \citeonline{Hipolito2024}, para mitigar esse problema, foi implementado um mecanismo de \textit{locks} (travas) com armazenamento em memória.
@@ -188,7 +188,7 @@ Essa estratégia de concorrência, baseada em travas em memória com \textit{tim
 \subsection[Design da Interface do Usuário]{Design da Interface do Usuário}
 O \textit{design} da \textit{interface} da aplicação foi elaborado para garantir uma experiência de usuário intuitiva e eficaz, combinando a familiaridade de ferramentas de modelagem de dados estabelecidas com a usabilidade e a estética de aplicações \textit{web} modernas.
 
-A inspiração inicial para a estrutura geral da interface foi o \textit{MySQL Workbench}. Esta escolha visou facilitar a transição para usuários já familiarizados com este ambiente de modelagem de dados. No entanto, a \textit{interface} foi adaptada e enriquecida com padrões de \textit{design} modernos comumente encontrados em aplicações \textit{web}, tais como:
+A inspiração inicial para a estrutura geral da interface foi o MySQL Workbench. Esta escolha visou facilitar a transição para usuários já familiarizados com este ambiente de modelagem de dados. No entanto, a \textit{interface} foi adaptada e enriquecida com padrões de \textit{design} modernos comumente encontrados em aplicações \textit{web}, tais como:
 
 \begin{itemize}
     \item Menu Lateral: Um menu lateral fixo oferece acesso rápido e fácil a todas as funcionalidades principais da aplicação.
@@ -196,9 +196,9 @@ A inspiração inicial para a estrutura geral da interface foi o \textit{MySQL W
     \item Elementos Visuais: Utilização de elementos visuais consistentes e modernos para guiar o usuário e melhorar a clareza da informação.
 \end{itemize}
 
-Um componente central da \textit{interface} é a visualização e manipulação interativa dos diagramas. Para essa funcionalidade, foi integrada a biblioteca \textit{GoJS}. Ela permite a criação de diagramas complexos e dinâmicos, com recursos como arrastar e soltar, \textit{zoom}, e personalização visual, proporcionando uma experiência de modelagem de dados interativa. Essa abordagem torna a criação e visualização de diagramas uma parte central da experiência do usuário, facilitando a compreensão e manipulação das estruturas de dados.
+Um componente central da \textit{interface} é a visualização e manipulação interativa dos diagramas. Para essa funcionalidade, foi integrada a biblioteca GoJS. Ela permite a criação de diagramas complexos e dinâmicos, com recursos como arrastar e soltar, \textit{zoom}, e personalização visual, proporcionando uma experiência de modelagem de dados interativa. Essa abordagem torna a criação e visualização de diagramas uma parte central da experiência do usuário, facilitando a compreensão e manipulação das estruturas de dados.
 
-A combinação do design conhecido do \textit{MySQL Workbench} com elementos modernos de aplicações \textit{web} e a biblioteca \textit{GoJS} indicam que uma \textit{interface} intuitiva e eficaz para a modelagem de dados e a colaboração em tempo real possa ser construída.
+A combinação do design conhecido do MySQL Workbench com elementos modernos de aplicações \textit{web} e a biblioteca GoJS indicam que uma \textit{interface} intuitiva e eficaz para a modelagem de dados e a colaboração em tempo real possa ser construída.
 
 
 
@@ -212,7 +212,7 @@ Esta padronização foi aplicada de forma abrangente nos seguintes artefatos do 
 
 \begin{itemize}
     \item Código-fonte: nomes de classes, métodos, variáveis e atributos foram definidos em inglês tanto no \textit{back-end} (Java/Spring) quanto no \textit{front-end} (Angular/TypeScript), mantendo coerência com os próprios nomes das APIs e as convenções dos \textit{frameworks} utilizados.
-    \item Banco de dados: os nomes das tabelas, colunas e restrições no PostgreSQL, bem como os nomes das coleções e campos dos documentos no MongoDB, foram definidos em inglês. Essa decisão garante consistência com as anotações do \textit{Spring Data JPA} e do \textit{Spring Data MongoDB}, que realizam o mapeamento objeto-relacional e objeto-documento a partir dos identificadores declarados no código-fonte.
+    \item Banco de dados: os nomes das tabelas, colunas e restrições no PostgreSQL, bem como os nomes das coleções e campos dos documentos no MongoDB, foram definidos em inglês. Essa decisão garante consistência com as anotações do Spring Data JPA e do Spring Data MongoDB, que realizam o mapeamento objeto-relacional e objeto-documento a partir dos identificadores declarados no código-fonte.
     \item Diagramas: os nomes de entidades, atributos e relacionamentos nos diagramas ER, assim como os atores, casos de uso e operações nos diagramas UML, foram especificados em inglês, garantindo uniformidade com os demais artefatos técnicos do projeto.
     \item \textit{Endpoints} da API REST: os caminhos dos recursos e as operações expostas pela API foram nomeados em inglês, seguindo as convenções estabelecidas pelo estilo arquitetural REST.
     \item Controle de versão: as mensagens de \textit{commit} e os nomes de ramificações (\textit{branches}) no repositório \textit{git} foram redigidos em inglês, promovendo a rastreabilidade e a clareza do histórico de desenvolvimento.
