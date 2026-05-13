@@ -160,22 +160,25 @@ As subseções a seguir descrevem as funcionalidades que compõem o protótipo d
 
 O protótipo implementa um fluxo de autenticação com credenciais de acesso. Após a autenticação bem-sucedida, o servidor emite dois \textit{tokens} de segurança: um de curta duração para as requisições e outro de renovação, ambos armazenados de forma segura no navegador do cliente. As rotas da aplicação são protegidas tanto no lado do cliente quanto no servidor, garantindo que apenas usuários autenticados acessem os recursos. Quando o \textit{token} de acesso expira, a renovação ocorre de forma automática e transparente ao usuário, sem necessidade de novo \textit{login}.
 
+A Figura~\ref{fig:arquitetura-autenticacao} ilustra a arquitetura de autenticação e autorização implementada no \textit{back-end}. Toda requisição originada pelo cliente passa pelo filtro JWT, que valida o \textit{token} presente no \textit{cookie}; caso inválido, a requisição é rejeitada com o código 401 (\textit{Unauthorized}). Requisições válidas avançam para duas camadas de autorização em série: a primeira verifica permissões por URL e a segunda aplica restrições mais granulares por meio da anotação \texttt{@PreAuthorize}. O descumprimento de qualquer uma dessas camadas resulta em resposta 403 (\textit{Forbidden}); somente após a aprovação em ambas a requisição alcança os controladores da aplicação.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/desenho-da-arquitetura-de-autenticacao-e-autorizacao.jpeg}
+    \caption{Arquitetura de autenticação e autorização do \textit{back-end}}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:arquitetura-autenticacao}
+\end{figure}
+
 \subsection{Gerenciamento de Projetos e Times}
 
 O sistema permite ao usuário criar e gerenciar projetos de modelagem. Cada projeto possui um time de colaboradores, para o qual o criador pode convidar outros usuários cadastrados na plataforma. A gestão de projetos e times é realizada por meio de uma interface de \textit{dashboard}, com operações de criação, leitura, atualização e exclusão comunicadas ao servidor e persistidas no banco de dados.
 
 \subsection{Editor de Diagramas ER}
 
-O editor de diagramas constitui o componente central do protótipo. Construído com a biblioteca GoJS, o canvas oferece as seguintes capacidades de modelagem:
-
-\begin{itemize}
-    \item Adição e remoção de entidades (tabelas);
-    \item Adição, edição e remoção de atributos, com configuração de tipo de dado, chave primária, chave estrangeira, unicidade, restrição \textit{NOT NULL}, auto-incremento e valor padrão;
-    \item Criação e exclusão de relacionamentos entre entidades, com definição da cardinalidade;
-    \item Reposicionamento livre dos elementos na área de desenho.
-\end{itemize}
-
-O estado completo do diagrama (entidades, atributos, relacionamentos e posicionamentos) é persistido na base de dados ao final de cada sequência de ações.
+O editor de diagramas constitui o componente central do protótipo. Construído com a biblioteca GoJS, o \textit{canvas} permite adicionar e remover entidades (tabelas), gerenciar seus atributos com configuração de tipo de dado, chave primária, chave estrangeira, unicidade, restrição \textit{NOT NULL}, auto-incremento e valor padrão, criar e excluir relacionamentos entre entidades com definição de cardinalidade, além de reposicionar livremente os elementos na área de desenho. O estado completo do diagrama — entidades, atributos, relacionamentos e posicionamentos — é persistido na base de dados ao final de cada sequência de ações.
 
 \subsection{Colaboração em Tempo Real}
 
