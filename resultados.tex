@@ -160,7 +160,7 @@ As subseções a seguir descrevem as funcionalidades que compõem o protótipo d
 
 O protótipo implementa um fluxo de autenticação com credenciais de acesso. Após a autenticação bem-sucedida, o servidor emite dois \textit{tokens} de segurança: um de curta duração para as requisições e outro de renovação, ambos armazenados de forma segura no navegador do cliente. As rotas da aplicação são protegidas tanto no lado do cliente quanto no servidor, garantindo que apenas usuários autenticados acessem os recursos. Quando o \textit{token} de acesso expira, a renovação ocorre de forma automática e transparente ao usuário, sem necessidade de novo \textit{login}.
 
-A Figura~\ref{fig:arquitetura-autenticacao} ilustra a arquitetura de autenticação e autorização implementada no \textit{back-end}. Toda requisição originada pelo cliente passa pelo filtro JWT, que valida o \textit{token} presente no \textit{cookie}; caso inválido, a requisição é rejeitada com o código 401 (\textit{Unauthorized}). Requisições válidas avançam para duas camadas de autorização em série: a primeira verifica permissões por URL e a segunda aplica restrições mais granulares por meio da anotação \texttt{@PreAuthorize}. O descumprimento de qualquer uma dessas camadas resulta em resposta 403 (\textit{Forbidden}); somente após a aprovação em ambas a requisição alcança os controladores da aplicação.
+A Figura~\ref{fig:arquitetura-autenticacao} ilustra a arquitetura de autenticação e autorização implementada no \textit{back-end}. Toda requisição originada pelo cliente passa pelo filtro JWT, que valida o \textit{token} presente no \textit{cookie}; caso inválido, a requisição é rejeitada com o código 401 (\textit{Unauthorized}). Requisições válidas avançam para duas camadas de autorização em série: a primeira verifica permissões com base na URL acessada e a segunda aplica restrições mais granulares ao nível do método, controlando o acesso de acordo com o perfil do usuário autenticado. O descumprimento de qualquer uma dessas camadas resulta em resposta 403 (\textit{Forbidden}); somente após a aprovação em ambas a requisição alcança os controladores da aplicação.
 
 \begin{figure}[H]
     \centering
@@ -196,7 +196,7 @@ Esta seção apresenta as telas que compõem a \textit{interface} do protótipo,
 \subsection{Autenticação}
 % ----------------------------------------------------------
 
-A Figura~\ref{fig:tela-login} apresenta a tela de entrada da aplicação. O usuário informa seu \textit{e-mail} e senha para autenticar-se, com a opção de manter a sessão ativa. A tela também oferece um link para criação de nova conta.
+A Figura~\ref{fig:tela-login} apresenta a tela de entrada da aplicação. O usuário informa seu \textit{e-mail} e senha para autenticar-se, com a opção de manter a sessão ativa. O cadastro de novos usuários não está disponível pela interface gráfica, sendo realizado exclusivamente por meio da API do \textit{back-end}. O Quadro~\ref{lst:curl-cadastro} apresenta o comando utilizado para esse cadastro.
 
 \begin{figure}[H]
     \centering
@@ -207,6 +207,25 @@ A Figura~\ref{fig:tela-login} apresenta a tela de entrada da aplicação. O usu�
     \end{center}
     \label{fig:tela-login}
 \end{figure}
+
+\begin{quadro}[H]
+    \begin{lstlisting}
+curl -X POST http://{{domain}}/api/user \
+    -H "Content-Type: application/json" \
+    -d '{
+      "firstName": "Test",
+      "lastName": "Name",
+      "email": "test.name@email.com",
+      "password": "yourPassword123!",
+      "role": "USER"
+    }'
+    \end{lstlisting}
+    \caption{Comando para cadastro de usuário via API}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{lst:curl-cadastro}
+\end{quadro}
 
 % ----------------------------------------------------------
 \subsection{Gerenciamento de Projetos e Times}
