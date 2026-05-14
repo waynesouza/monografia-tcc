@@ -109,7 +109,7 @@
 \textbf{Pós-Condições:}
 \begin{itemize}
     \item O usuário poderá visualizar o diagrama ER com todas as entidades, atributos e relacionamentos cadastrados para o projeto.
-    \item Caso o usuário possua o perfil de Editor, poderá também editar o diagrama (CSU-07) e exportar o script DDL correspondente (CSU-23).
+    \item Caso o usuário possua o perfil de Editor, poderá também editar o diagrama (CSU-07) e exportar o script SQL correspondente (CSU-23).
 \end{itemize}
 
 \vspace{1em}
@@ -552,16 +552,16 @@
 \vspace{1em}
 
 \begin{itemize}
-    \item \textbf{CSU-23: Exportar DDL}
+    \item \textbf{CSU-23: Exportar SQL}
 \end{itemize}
 
-\textbf{Caso de uso:} Exportar DDL
+\textbf{Caso de uso:} Exportar SQL
 
 \textbf{Identificador:} CSU-23
 
 \textbf{Atores envolvidos:} Editor
 
-\textbf{Sumário:} Esta funcionalidade permite que o Editor exporte o diagrama ER do projeto na forma de um script DDL (\textit{Data Definition Language}) em SQL.
+\textbf{Sumário:} Esta funcionalidade permite que o Editor exporte o diagrama ER do projeto na forma de um script SQL.
 
 \textbf{Pré-condição:}
 \begin{itemize}
@@ -571,8 +571,8 @@
 
 \textbf{Fluxo principal:}
 \begin{itemize}
-    \item Ao visualizar o diagrama (CSU-06), o Editor seleciona a opção de exportar o script DDL;
-    \item O sistema gera o script DDL correspondente ao estado atual do diagrama ER;
+    \item Ao visualizar o diagrama (CSU-06), o Editor seleciona a opção de exportar o script SQL;
+    \item O sistema gera o script SQL correspondente ao estado atual do diagrama ER;
     \item O arquivo gerado é disponibilizado para \textit{download};
     \item O Editor realiza o \textit{download} do arquivo.
 \end{itemize}
@@ -585,7 +585,7 @@
 
 \textbf{Pós-Condições:}
 \begin{itemize}
-    \item O Editor possui um arquivo de script DDL SQL correspondente ao diagrama ER do projeto.
+    \item O Editor possui um arquivo de script SQL correspondente ao diagrama ER do projeto.
 \end{itemize}
 
 \vspace{1em}
@@ -600,7 +600,7 @@
 
 \textbf{Atores envolvidos:} Editor
 
-\textbf{Sumário:} Esta funcionalidade permite que o Editor importe um script SQL/DDL para popular o diagrama ER do projeto de forma automática.
+\textbf{Sumário:} Esta funcionalidade permite que o Editor importe um script SQL para popular o diagrama ER do projeto de forma automática.
 
 \textbf{Pré-condição:}
 \begin{itemize}
@@ -610,7 +610,7 @@
 \textbf{Fluxo principal:}
 \begin{itemize}
     \item O Editor seleciona a opção de importar um script SQL na interface de edição;
-    \item O Editor fornece o script SQL/DDL, seja por meio de \textit{upload} de arquivo ou colagem direta do conteúdo;
+    \item O Editor fornece o script SQL, seja por meio de \textit{upload} de arquivo ou colagem direta do conteúdo;
     \item O sistema faz o \textit{parse} do script e gera as tabelas e relacionamentos correspondentes no diagrama;
     \item O diagrama é atualizado com a estrutura importada;
     \item As alterações são persistidas.
