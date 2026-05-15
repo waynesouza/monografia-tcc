@@ -106,7 +106,7 @@ Em contrapartida, para a persistência dos dados que compõem os diagramas ER do
 
 \subsection[Dialeto SQL]{Dialeto SQL}
 
-Uma das funcionalidades centrais do protótipo é a capacidade de exportar o diagrama ER como um \textit{script} DDL e de importar um \textit{script} SQL para reconstruir o diagrama. Para viabilizar essas operações, foi necessário definir um dialeto SQL de referência, já que diferentes SGBDs possuem particularidades sintáticas próprias em suas instruções DDL.
+Uma das funcionalidades centrais do protótipo é a capacidade de exportar e importar o diagrama ER como um \textit{script} SQL. Para viabilizar essas operações, foi necessário definir um dialeto SQL de referência, já que diferentes SGBDs possuem particularidades sintáticas próprias em suas instruções DDL.
 
 O dialeto adotado foi o {MySQL. O MySQL é um sistema de gerenciamento de banco de dados relacional de código aberto, mantido pela Oracle Corporation, e é amplamente reconhecido como um dos SGBDs mais utilizados no mundo para aplicações \textit{web} \cite{OracleMySQL}. Sua sintaxe DDL é amplamente difundida no mercado de desenvolvimento \textit{web}, o que torna o dialeto MySQL uma escolha adequada para maximizar a interoperabilidade dos \textit{scripts} gerados e importados pelo protótipo com outros ambientes e ferramentas do ecossistema de desenvolvimento de \textit{software}.
 
