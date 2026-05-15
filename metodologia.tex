@@ -47,7 +47,7 @@ Nesta seção, são detalhados os equipamentos de \textit{hardware} e as ferrame
     \item Spring Data MongoDB: Módulo do projeto \textit{Spring Data} que fornece integração com o banco de dados MongoDB. Foi fundamental para implementar a camada de persistência dos diagramas ER. Este módulo abstrai a camada de acesso ao banco, automatizando o mapeamento entre os objetos Java, que representam os componentes do diagrama, e os documentos \textit{BSON} armazenados no MongoDB. \cite{SpringDataMongoDB2024}
     \item Angular: Plataforma de desenvolvimento de aplicações \textit{web} baseadas em Javascript e TypeScript. Foi escolhido para a construção da interface do usuário no formato de uma \textit{Single-Page Application} (SPA). \cite{Angular2022}
     \item GoJS: Biblioteca JavaScript especializada na criação de diagramas interativos. Representa a tecnologia central da interface do usuário, sendo responsável por renderizar o diagrama ER na tela, permitir a manipulação de seus elementos (criação, exclusão, movimentação) e refletir visualmente as atualizações recebidas em tempo real. \cite{GoJS2024}
-    \item stompjs e SockJS: Bibliotecas JavaScript utilizadas no lado do cliente para estabelecer e gerenciar a comunicação via \textit{WebSocket} com o \textit{back-end}. O SockJS atua como uma camada de compatibilidade e o stompjs implementa o protocolo STOMP, simplificando o envio e recebimento de mensagens para a sincronização do diagrama. \cite{StompJS2023}
+    \item stompjs e SockJS: Bibliotecas JavaScript utilizadas no lado do cliente para estabelecer e gerenciar a comunicação via WebSocket com o \textit{back-end}. O SockJS atua como uma camada de compatibilidade e o stompjs implementa o protocolo STOMP, simplificando o envio e recebimento de mensagens para a sincronização do diagrama. \cite{StompJS2023}
     \item Node Package Manager (npm): Gerenciador de pacotes do ecossistema Node.js. Foi essencial para a gestão de todas as dependências do projeto \textit{front-end}, como o \textit{framework} Angular e suas bibliotecas. \cite{NPM2024}
 \end{itemize}
 
@@ -75,7 +75,7 @@ O modelo foi empregado conceitualmente para guiar o ciclo de vida do projeto de 
 A metodologia foi utilizada de forma adaptada para o gerenciamento das atividades de desenvolvimento. O trabalho foi decomposto em épicos, representando as grandes funcionalidades, que por sua vez foram detalhados em tarefas menores e mais específicas, facilitando o acompanhamento do progresso e a organização do trabalho em ciclos curtos de desenvolvimento.
 
 \subsection[Análise e Projeto do Sistema]{Análise e Projeto do Sistema}
-A fase de análise e projeto foi fundamental para traduzir os requisitos do sistema em um modelo funcional e técnico. Para a definição dos requisitos funcionais e do escopo do sistema, foram elaborados diagramas de Caso de Uso. Essa técnica da \textit{Unified Modeling Language} (UML) permitiu identificar os atores e suas interações com o sistema, delimitando claramente as funcionalidades a serem implementadas, como criar um projeto, convidar colaboradores, adicionar uma entidade ao diagrama, entre outras. A partir dessa análise, foram tomadas decisões arquiteturais cruciais.
+A fase de análise e projeto foi fundamental para traduzir os requisitos do sistema em um modelo funcional e técnico. Para a definição dos requisitos funcionais e do escopo do sistema, foram elaborados diagramas de Caso de Uso. Essa técnica da UML permitiu identificar os atores e suas interações com o sistema, delimitando claramente as funcionalidades a serem implementadas, como criar um projeto, convidar colaboradores, adicionar uma entidade ao diagrama, entre outras. A partir dessa análise, foram tomadas decisões arquiteturais cruciais.
 
 \subsubsection[Arquitetura Cliente-Servidor]{Arquitetura Cliente-Servidor}
 %
@@ -122,7 +122,7 @@ Com a arquitetura macro definida, foram adotados padrões específicos para a or
 % https://sabrinabm94.medium.com/usando-o-mvc-no-angular-13081366019a
 % https://www.amazon.com.br/Iniciando-com-JavaScript-fundamentos-Aprendendo/dp/B0D25257DD
 %
-A escolha do padrão de arquitetura \textit{Model-View-Controller} (MVC) foi uma decisão estratégica para a organização do código-fonte, sendo aplicada tanto no \textit{back-end} quanto no \textit{front-end} da aplicação. Este padrão promove a separação de responsabilidades, dividindo a aplicação em três componentes interconectados, o que foi útil para gerenciar a complexidade do sistema.
+A escolha do padrão de arquitetura MVC foi uma decisão estratégica para a organização do código-fonte, sendo aplicada tanto no \textit{back-end} quanto no \textit{front-end} da aplicação. Este padrão promove a separação de responsabilidades, dividindo a aplicação em três componentes interconectados, o que foi útil para gerenciar a complexidade do sistema.
 
 \begin{itemize}
     \item \textit{Model}: Camada de manipulação dos dados.
@@ -153,7 +153,7 @@ O segundo princípio foi aplicado na decomposição da lógica de negócio. Mét
 O terceiro princípio foi majoritariamente empregado na escrita de um código que, por sua própria estrutura e clareza, documenta seu funcionamento, minimizando a necessidade de comentários explicativos. A combinação de nomes significativos e funções com responsabilidade única resultou em um código que se assemelha a uma narrativa legível. Comentários foram utilizados de forma criteriosa, reservados para justificar decisões de projeto não triviais ou para explicar algoritmos complexos, em vez de parafrasear o que uma linha de código já expressa claramente.
 
 \subsection[Estratégia de Controle de Versão]{Estratégia de Controle de Versão}
-A gestão do código-fonte é um pilar para a qualidade e a rastreabilidade de qualquer projeto de software. Para este trabalho, foi empregado o Sistema de Controle de Versão (VCS) \textit{git}, com o código hospedado na plataforma GitHub \cite{Git2014}. A estratégia adotada foi um modelo híbrido, que combina a agilidade do \textit{Trunk-Based Development} como fluxo principal, complementado por uma adaptação simplificada do \textit{GitFlow} para o desenvolvimento de funcionalidades específicas.
+A gestão do código-fonte é um pilar para a qualidade e a rastreabilidade de qualquer projeto de software. Para este trabalho, foi empregado o VCS \textit{git}, com o código hospedado na plataforma GitHub \cite{Git2014}. A estratégia adotada foi um modelo híbrido, que combina a agilidade do \textit{Trunk-Based Development} como fluxo principal, complementado por uma adaptação simplificada do \textit{GitFlow} para o desenvolvimento de funcionalidades específicas.
 
 A abordagem primária do \textit{Trunk-Based Development}, na qual as alterações são integradas diretamente na ramificação principal (master), foi uma escolha deliberada para promover um ritmo de desenvolvimento mais acelerado e simplificar o gerenciamento de versões. A viabilidade dessa abordagem foi sustentada pelo contexto do projeto, que conta com um único desenvolvedor. Essa decisão encontra respaldo no estudo de \citeonline{Lopes2025}, que aponta que a abordagem \textit{Trunk-Based} é particularmente eficaz em projetos de ritmo acelerado, com equipes menores e mais experientes, onde a complexidade de gerenciamento de múltiplas ramificações se torna um \textit{overhead} desnecessário.
 
@@ -218,4 +218,4 @@ Esta padronização foi aplicada de forma abrangente nos seguintes artefatos do 
     \item Controle de versão: as mensagens de \textit{commit} e os nomes de ramificações (\textit{branches}) no repositório \textit{git} foram redigidos em inglês, promovendo a rastreabilidade e a clareza do histórico de desenvolvimento.
 \end{itemize}
 
-A adoção uniforme do inglês como idioma técnico em todos os artefatos do projeto reduziu o atrito cognitivo entre as camadas da aplicação, facilitou a leitura e a manutenção do código e posicionou o trabalho em conformidade com os padrões internacionais da indústria de desenvolvimento de \textit{software}.
+A adoção do inglês como idioma técnico em praticamente todos os artefatos do projeto reduziu o atrito cognitivo entre as camadas da aplicação, facilitou a leitura e a manutenção do código e posicionou o trabalho em conformidade com os padrões internacionais da indústria de desenvolvimento de \textit{software}.
