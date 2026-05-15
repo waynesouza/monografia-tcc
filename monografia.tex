@@ -4,22 +4,22 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
-%% Este template utiliza o modelo mantido pela abnt e foi baseado 
+%% Este template utiliza o modelo mantido pela abnt e foi baseado
 %% no abtex2-modelo-trabalho-academico.tex, v-1.9.6 laurocesar
-%% Copyright 2012-2016 by abnTeX2 group at http://www.abntex.net.br/ 
+%% Copyright 2012-2016 by abnTeX2 group at http://www.abntex.net.br/
 %%
 % -------------------------------------------------------------------
-%% This work may be distributed and/or modified under the conditions 
-%% of the LaTeX Project Public License, either version 1.3 of this 
-%% license or (at your option) any later version. The latest version 
+%% This work may be distributed and/or modified under the conditions
+%% of the LaTeX Project Public License, either version 1.3 of this
+%% license or (at your option) any later version. The latest version
 %% of this license is in http://www.latex-project.org/lppl.txt
 %% and version 1.3 or later is part of all distributions of LaTeX
 %% version 2005/12/01 or later.
 %%
 %% This work has the LPPL maintenance status `maintained'.
-%% 
+%%
 %% The Current Maintainer of this work is the abnTeX2 team, led
-%% by Lauro César Araujo. Further information are available on 
+%% by Lauro César Araujo. Further information are available on
 %% http://www.abntex.net.br/
 %%
 %% This work consists of the files abntex2-modelo-trabalho-academico.tex,
@@ -32,10 +32,10 @@
 %%
 %% ATENÇAO para as opções:
 %%
-%% para modo rascunho, sem páginas brancas, use: 
+%% para modo rascunho, sem páginas brancas, use:
 %% openany, oneside, nopartblankpage
 %%
-%% para modo normal, com tudo que ABNT exige, use:  
+%% para modo normal, com tudo que ABNT exige, use:
 %% openright, twoside, partpageblank
 %%
 
@@ -46,7 +46,7 @@
 	%openright,		% capítulos começam em pág ímpar (insere página vazia caso preciso)
 	oneside,		% considera impressão de um só lado (gera menos pág brancas)
 	%twoside,		% para impressão em recto e verso. Oposto a oneside
-	a4paper,		% tamanho do papel. 
+	a4paper,		% tamanho do papel.
 	% -- opções da classe abntex2 --
 	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
 	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
@@ -75,7 +75,7 @@
     columns=flexible,
 }
 \usepackage{customize}
-\input{monografia-preludio.tex}	
+\input{monografia-preludio.tex}
 
 \graphicspath{{./figuras/}}   	% pasta contendo todas as figuras
 
@@ -98,7 +98,7 @@
   Ciência da Computação
   }
 \tipotrabalho{Monografia}
-% O preambulo deve conter o tipo do trabalho, o objetivo, o nome da instituição e a área de concentração 
+% O preambulo deve conter o tipo do trabalho, o objetivo, o nome da instituição e a área de concentração
 \preambulo{Proposta de Trabalho de Conclusão de Curso.}
 
 % ----------------------------------------------------
@@ -124,7 +124,7 @@
 %------------- Ficha catalográfica
 % São os ``Dados internacionais de catalogação-na-publicação''.
 % Escolha uma das opções: usar página pdf pronta (gerada pela biblioteca?!)
-% ou gerar a página com o comando \imprimirfichacatalografica. 
+% ou gerar a página com o comando \imprimirfichacatalografica.
 % (Mais detalhes no preludio e documentacao do pacote abntex2.)
 %
 % \begin{fichacatalografica}
@@ -137,18 +137,18 @@
 %\imprimirerrata
 
 %------------ Folha de aprovação
-% É um elemento obrigatório da NBR 14724/2011 (seção 4.2.1.3). 
-% Você pode utilizar a página modelo até a aprovação do trabalho. 
+% É um elemento obrigatório da NBR 14724/2011 (seção 4.2.1.3).
+% Você pode utilizar a página modelo até a aprovação do trabalho.
 % Após isso, gere uma página com a imagem da folha assinada pela banca,
-% comente o comando \imprimirfolhadeaprovacao e use o \includepdf 
+% comente o comando \imprimirfolhadeaprovacao e use o \includepdf
 % \imprimirfolhadeaprovacao{06 de junho de 2018} FIXME
 % \includepdf{folhadeaprovacao_final.pdf}
 
 %------------ Dedicatória
 % \begin{dedicatoria}
-%    \vspace*{\fill} \centering \noindent 
+%    \vspace*{\fill} \centering \noindent
 %    \textit{ Este trabalho é dedicado ao meu pai, minha mãe,\\
-%    meu cachorro, meu gato, meu periquito e todo mundo.} 
+%    meu cachorro, meu gato, meu periquito e todo mundo.}
 %    \vspace*{\fill}
 % \end{dedicatoria}
 
@@ -173,26 +173,22 @@
 \setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
 
 % resumo em português
-% \begin{resumo}
-%  A escrita da monografia é um problema clássico no Trabalho de Conclusão de Curso (TCC).
-%  Aqui é o lugar onde o autor explica brevemente o conteúdo do seu trabalho. Para usar este
-%  template é necessário instalar alguns pacotes do LaTeX, particularmente o abntex2. O pacote
-%  blindtex não é realmente necessário, serve apenas para gerar lero-lero neste exemplo.
- 
-%  \textbf{Palavras-chave}: Monografia, LaTeX, TCC.
-% \end{resumo}
+\begin{resumo}
+ A modelagem de diagramas entidade-relacionamento (ER) é etapa essencial no projeto de bancos de dados, porém as ferramentas disponíveis raramente combinam colaboração em tempo real, modelagem interativa e acesso gratuito em uma única solução. Este trabalho apresenta o desenvolvimento de um protótipo de modelador de diagramas ER colaborativo, acessível via navegador \textit{web}, que permite a múltiplos usuários trabalharem simultaneamente no mesmo diagrama. O sistema foi construído sobre uma arquitetura cliente-servidor, adotando Java com Spring Boot no \textit{back-end} e Angular no \textit{front-end}. A comunicação em tempo real entre os colaboradores foi viabilizada pelo protocolo WebSocket em conjunto com o protocolo de mensageria STOMP, enquanto um mecanismo de \textit{locks} em memória com \textit{timeout} automático foi implementado para o controle de concorrência. Para a persistência de dados, adotou-se uma estratégia poliglota: o PostgreSQL armazena informações estruturadas de usuários, projetos e permissões, ao passo que o MongoDB armazena os diagramas como documentos, adequando-se à natureza hierárquica e dinâmica dessa informação. A interface gráfica utiliza a biblioteca GoJS para a renderização e manipulação interativa dos diagramas. O protótipo contempla controle de acesso baseado em três perfis --- \textit{Viewer}, \textit{Editor} e \textit{Owner} ---, autenticação por \textit{tokens} JWT, gerenciamento de projetos e times, e operações de importação e exportação de \textit{scripts} SQL no dialeto MySQL. A comparação com ferramentas consolidadas no mercado --- brModeloWeb, SqlDBM e Vertabelo --- evidenciou que o protótipo preenche uma lacuna ao reunir, de forma gratuita, colaboração em tempo real e interoperabilidade via SQL. Os cinco objetivos específicos definidos foram atendidos, comprovando a viabilidade técnica de uma ferramenta \textit{web} colaborativa para a modelagem de diagramas ER.
+
+ \textbf{Palavras-chave}: diagrama entidade-relacionamento; modelagem de banco de dados; colaboração em tempo real; WebSocket; Spring Boot; Angular.
+\end{resumo}
 
 % resumo em inglês
-% \begin{resumo}[Abstract]
-%  \begin{otherlanguage*}{english}
-%   The writing of the monograph is a classic problem in the Course Conclusion Work.
-%   Here is where the author briefly explains the content of his work.
- 
-%  \textbf{Keywords}: Monograph, LaTeX.
-%  \end{otherlanguage*}
-% \end{resumo}
+\begin{resumo}[Abstract]
+ \begin{otherlanguage*}{english}
+  Entity-relationship (ER) diagram modelling is an essential step in database design, yet available tools rarely combine real-time collaboration, interactive modelling, and free access in a single solution. This work presents the development of a prototype collaborative ER diagram modeller, accessible through a web browser, that allows multiple users to work simultaneously on the same diagram. The system was built on a client-server architecture using Java with Spring Boot on the back end and Angular on the front end. Real-time communication between collaborators was enabled by the WebSocket protocol with the STOMP messaging protocol, while an in-memory locking mechanism with automatic timeout was implemented for concurrency control. A polyglot persistence strategy was adopted: PostgreSQL stores structured data for users, projects and permissions, while MongoDB stores diagrams as documents, suited to the hierarchical and dynamic nature of that information. The graphical interface uses the GoJS library for interactive diagram rendering and manipulation. The prototype includes role-based access control with three profiles --- Viewer, Editor and Owner ---, JWT-based authentication, project and team management, and SQL script import and export operations in the MySQL dialect. A comparison with established market tools --- brModeloWeb, SqlDBM and Vertabelo --- demonstrated that the prototype fills a gap by combining, at no cost, real-time collaboration and SQL interoperability. All five specific objectives defined at the outset were met, proving the technical feasibility of a web-based collaborative tool for ER diagram modelling.
 
-% Consulte o manual da classe abntex2 para maiores 
+  \textbf{Keywords}: entity-relationship diagram; database modelling; real-time collaboration; WebSocket; Spring Boot; Angular.
+ \end{otherlanguage*}
+\end{resumo}
+
+% Consulte o manual da classe abntex2 para maiores
 % orientações sobre os seguintes tópicos:
 
 %------------ Lista de ilustrações
@@ -256,7 +252,7 @@
 
 % \nocite{fds2017, LARAVEL2008, HTMLeCSS2008, AplicacaodePHP2007,  PHPPOO2015, PHPConhece2017, PHPMYSQL2011, JAVASCRIPTGuia2002}
 
-% Consulte o manual da classe abntex2 para orientações 
+% Consulte o manual da classe abntex2 para orientações
 % sobre os seguintes tópicos opcionais:
 
 %------------ Glossário
