@@ -164,7 +164,7 @@ A combinação dessas duas estratégias proporcionou o melhor de ambos os mundos
 \subsection[Autenticação e Autorização]{Autenticação e Autorização}
 A segurança da aplicação foi implementada utilizando uma combinação de tecnologias e estratégias, visando proteger os dados e garantir o acesso adequado aos recursos.  O Spring Security, um \textit{framework} utilizado no ecossistema Java, foi o pilar central da autenticação e autorização \cite{SpringSecurity2024}.
 
-Para a autenticação, foi adotado o padrão JWT.  Após a autenticação bem-sucedida do usuário (verificação de credenciais), o servidor gera um token JWT, que é então enviado ao cliente. Este \textit{token} contém informações sobre o usuário autenticado e suas permissões.
+Para a autenticação, foi adotado o padrão JWT.  Após a autenticação bem-sucedida do usuário (verificação de credenciais), o servidor gera um \textit{token} JWT, que é então enviado ao cliente. Este \textit{token} contém informações sobre o usuário autenticado e suas permissões.
 
 Os \textit{tokens} JWT foram armazenados em \textit{cookies} HTTP no cliente. Essa abordagem permite que o navegador gerencie automaticamente o envio do \textit{token} em cada requisição subsequente ao servidor, simplificando a implementação e melhorando a segurança em relação ao armazenamento em \textit{localStorage}, que é mais vulnerável a ataques XSS (\textit{Cross-Site Scripting}) \cite{Bulgakova2020}.
 
@@ -192,7 +192,7 @@ A inspiração inicial para a estrutura geral da interface foi o MySQL Workbench
 
 \begin{itemize}
     \item Menu Lateral: Um menu lateral fixo oferece acesso rápido e fácil a todas as funcionalidades principais da aplicação.
-    \item Modais: Janelas modais são utilizadas para apresentar informações adicionais ou solicitar confirmação do usuário em tarefas específicas, mantendo o contexto da tela principal.
+    \item \textit{Modais}: Janelas \textit{modais} são utilizadas para apresentar informações adicionais ou solicitar confirmação do usuário em tarefas específicas, mantendo o contexto da tela principal.
     \item Elementos Visuais: Utilização de elementos visuais consistentes e modernos para guiar o usuário e melhorar a clareza da informação.
 \end{itemize}
 
