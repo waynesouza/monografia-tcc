@@ -92,7 +92,8 @@ Os campos \textit{linkData} e \textit{nodeData} possuem, na devida ordem, os seg
         "from": string,
         "to": string,
         "text": string,
-        "toText": string
+        "toText": interger,
+        "fromColumn": string      
     }
     \end{lstlisting}
     \caption{Estrutura de dados do campo \textit{linkData}}
@@ -210,7 +211,7 @@ A Figura~\ref{fig:tela-login} apresenta a tela de entrada da aplicação. O usu�
 
 \begin{quadro}[H]
     \begin{lstlisting}
-curl -X POST http://{{domain}}/api/user \
+curl -X POST http://localhost:8080/api/user \
     -H "Content-Type: application/json" \
     -d '{
       "firstName": "Test",
