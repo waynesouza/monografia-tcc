@@ -4,7 +4,7 @@
 
 \section[Materiais]{Materiais}
 
-Nesta seção, são detalhados os equipamentos de \textit{hardware} e as ferramentas, linguagens, bibliotecas e plataformas de \textit{software} que foram empregados para a concepção, desenvolvimento e validação da aplicação.
+Nesta seção, são listados os equipamentos de \textit{hardware} e as ferramentas, linguagens, bibliotecas e plataformas de \textit{software} empregados na concepção, no desenvolvimento e na validação da aplicação, de modo a permitir a reprodução do ambiente de trabalho. As decisões de arquitetura que motivaram a escolha dos itens mais relevantes são discutidas e justificadas na seção de Métodos, a seguir.
 
 \subsection[Equipamentos]{Equipamentos}
 
@@ -16,47 +16,45 @@ Nesta seção, são detalhados os equipamentos de \textit{hardware} e as ferrame
 \subsection[Análise, Modelagem e Projeto]{Análise, Modelagem e Projeto}
 
 \begin{itemize}
-    \item Unified Modeling Language (UML): linguagem gráfica usada para visualização, especificação, construção e documentação de todos os casos pertencentes ao escopo do trabalho, através de uma formalização da estruturação dos planos de negócios \cite{UML2015}.
-    \item Excalidraw Libraries: plataforma \textit{web} com suporte para adicionar bibliotecas adicionais criadas pelos próprios usuários, e foi usada a biblioteca \textit{Shapes for UML and ER Diagrams} para a criação dos diagramas dentro do Excalidraw.
+    \item Unified Modeling Language (UML) \cite{UML2015} --- elaboração dos diagramas de caso de uso do sistema.
+    \item Excalidraw, com a biblioteca \textit{Shapes for UML and ER Diagrams} --- criação dos diagramas de arquitetura e dos modelos de dados.
 \end{itemize}
 
 \subsection[Persistência de dados]{Persistência de dados}
 
 \begin{itemize}
-    \item Structured Query Language (SQL): Linguagem utilizada para o armazenamento de dados com estrutura predefinida e relacionamentos bem estabelecidos.
-    \item Not Only SQL (NoSQL): Categoria de bancos de dados não relacionais que oferece modelos de dados flexíveis, ideal para informações semiestruturadas ou não estruturadas. O modelo de dados orientado a documentos permitiu representar cada diagrama de forma coesa, facilitando as operações de atualização e leitura exigidas pela sincronização colaborativa em tempo real.
-    \item PostgreSQL: Sistema de banco de dados relacional, de código aberto. Foi selecionado para a persistência de dados estruturados, como informações de usuários, projetos e permissões de acesso. \cite{PostgreSQL2024}
-    \item MongoDB: Banco de dados NoSQL orientado a documentos. Sua escolha foi estratégica para armazenar a estrutura dos diagramas ER. A natureza flexível e hierárquica de seu esquema, baseado em documentos JSON, é ideal para representar os componentes de um diagrama (entidades, atributos, relacionamentos), facilitando as operações de leitura e escrita exigidas pela funcionalidade de colaboração em tempo real. \cite{MongoDB2021}
-    \item DBeaver: Ferramenta de banco de dados universal. Foi utilizada para a administração, consulta e manipulação dos dados tanto no PostgreSQL quanto no MongoDB. Sua capacidade de se conectar a múltiplos SGBDs a partir de uma única interface gráfica otimizou o processo de desenvolvimento e depuração da camada de persistência.
+    \item PostgreSQL \cite{PostgreSQL2024} --- persistência dos dados relacionais (usuários, projetos e permissões de acesso).
+    \item MongoDB \cite{MongoDB2021} --- persistência da estrutura dos diagramas ER.
+    \item DBeaver --- administração, consulta e manipulação dos dados no PostgreSQL e no MongoDB.
 \end{itemize}
 
 \subsection[Implementação]{Implementação}
 
 \begin{itemize}
-    \item git: Sistema de controle de versão distribuído. Foi empregado para gerenciar todo o histórico de alterações do código-fonte do projeto, permitindo a rastreabilidade das modificações. \cite{Git2025}
-    \item GitHub: Plataforma de hospedagem de código-fonte baseada em \textit{git}. Serviu como o repositório central do projeto, facilitando a colaboração, a revisão de código e o armazenamento seguro do trabalho. \cite{GitHub2024}
-    \item GitHub Copilot: Assistente de programação baseado em inteligência artificial, integrado ao ambiente de desenvolvimento. Foi utilizado em alguns \textit{pull requests} exclusivamente como apoio à revisão de código, auxiliando na identificação de possíveis melhorias e inconsistências no código-fonte.
-    \item Docker: Plataforma de contêineres utilizada para criar ambientes de desenvolvimento. Permitiu que a aplicação e seus bancos de dados fossem executados de forma consistente em qualquer máquina, simplificando a configuração e o processo de implantação. \cite{Docker2024}
-    \item IntelliJ IDEA: Integrated Development Environment (IDE) utilizado para a codificação do \textit{back-end} em Java e \textit{Spring}. \cite{IntelliJ2024}
-    \item WebStorm: IDE utilizado para o desenvolvimento do \textit{front-end} em Angular, HTML, CSS/SCSS e Javascript/TypeScript. Ambos os ambientes, da JetBrains, foram escolhidos por suas ferramentas avançadas de análise de código, depuração e integração com outras tecnologias do projeto. \cite{WebStorm2024}
-    \item Java: Linguagem de programação orientada a objetos e independente de plataforma. Foi a base para toda a lógica de servidor da aplicação, escolhida por seu ecossistema adequado para uma aplicação que demanda processamento de requisições concorrentes e comunicação em tempo real. \cite{Java2024}
-    \item Spring Boot: \textit{Framework} que simplifica o desenvolvimento de aplicações baseadas em \textit{Spring}. Foi utilizado para estruturar todo o \textit{back-end}, gerenciando a injeção de dependências, configurando as APIs REST e os \textit{endpoints WebSocket}, o que acelerou o ciclo de desenvolvimento. \cite{SpringBoot2024}
-    \item Spring WebSocket: Módulo do \textit{Spring Framework} que fornece suporte para a criação de comunicação interativa e em tempo real entre cliente e servidor através do protocolo \textit{WebSocket}. Foi um componente central do projeto, utilizado para propagar as alterações realizadas em um diagrama para todos os usuários colaboradores conectados à mesma sessão. \cite{WebSockets2024}
-    \item Spring Security: Módulo do ecossistema \textit{Spring}. Empregado em conjunto com \textit{JSON Web Token} (JWT) para implementar o sistema de autenticação e autorização da aplicação. O \textit{Spring Security} foi responsável por controlar o acesso aos recursos, enquanto o JWT foi utilizado para a geração de \textit{tokens} de acesso seguros e autocontidos. \cite{SpringSecurity2024}
-    \item Spring Data JPA: Módulo que simplifica a implementação da camada de acesso a dados em bancos de dados relacionais. Foi utilizado para abstrair as operações de persistência com o PostgreSQL, reduzindo a necessidade de código repetitivo para as consultas ao banco. \cite{SpringDataJPA2024}
-    \item Spring Data MongoDB: Módulo do projeto \textit{Spring Data} que fornece integração com o banco de dados MongoDB. Foi fundamental para implementar a camada de persistência dos diagramas ER. Este módulo abstrai a camada de acesso ao banco, automatizando o mapeamento entre os objetos Java, que representam os componentes do diagrama, e os documentos \textit{BSON} armazenados no MongoDB. \cite{SpringDataMongoDB2024}
-    \item Angular: Plataforma de desenvolvimento de aplicações \textit{web} baseadas em Javascript e TypeScript. Foi escolhido para a construção da interface do usuário no formato de uma \textit{Single-Page Application} (SPA). \cite{Angular2022}
-    \item GoJS: Biblioteca JavaScript especializada na criação de diagramas interativos. Representa a tecnologia central da interface do usuário, sendo responsável por renderizar o diagrama ER na tela, permitir a manipulação de seus elementos (criação, exclusão, movimentação) e refletir visualmente as atualizações recebidas em tempo real. \cite{GoJS2024}
-    \item stompjs e SockJS: Bibliotecas JavaScript utilizadas no lado do cliente para estabelecer e gerenciar a comunicação via \textit{WebSocket} com o \textit{back-end}. O SockJS atua como uma camada de compatibilidade e o stompjs implementa o protocolo STOMP, simplificando o envio e recebimento de mensagens para a sincronização do diagrama. \cite{StompJS2023}
-    \item Node Package Manager (npm): Gerenciador de pacotes do ecossistema Node.js. Foi essencial para a gestão de todas as dependências do projeto \textit{front-end}, como o \textit{framework} Angular e suas bibliotecas. \cite{NPM2024}
+    \item Git \cite{Git2025} --- controle de versão do código-fonte.
+    \item GitHub \cite{GitHub2024} --- hospedagem e repositório central do código-fonte.
+    \item GitHub Copilot --- apoio à revisão de código em parte dos \textit{pull requests}.
+    \item Docker \cite{Docker2024} --- containerização do ambiente de desenvolvimento e dos bancos de dados.
+    \item IntelliJ IDEA \cite{IntelliJ2024} --- IDE para o desenvolvimento do \textit{back-end} em Java e Spring.
+    \item WebStorm \cite{WebStorm2024} --- IDE para o desenvolvimento do \textit{front-end} em Angular.
+    \item Java \cite{Java2024} --- linguagem de programação do \textit{back-end}.
+    \item Spring Boot \cite{SpringBoot2024} --- \textit{framework} de estruturação do \textit{back-end} e das APIs REST.
+    \item Spring WebSocket \cite{WebSockets2024} --- comunicação em tempo real entre \textit{back-end} e clientes.
+    \item Spring Security \cite{SpringSecurity2024} --- autenticação e autorização da aplicação, em conjunto com JWT.
+    \item Spring Data JPA \cite{SpringDataJPA2024} --- camada de acesso a dados do PostgreSQL.
+    \item Spring Data MongoDB \cite{SpringDataMongoDB2024} --- camada de acesso a dados do MongoDB.
+    \item Angular \cite{Angular2022} --- construção da interface do usuário como \textit{Single-Page Application}.
+    \item GoJS \cite{GoJS2024} --- renderização e manipulação interativa dos diagramas ER.
+    \item stompjs e SockJS \cite{StompJS2023} --- comunicação via \textit{WebSocket} no lado do cliente.
+    \item Node Package Manager (npm) \cite{NPM2024} --- gestão das dependências do \textit{front-end}.
 \end{itemize}
 
 \subsection[Testes]{Testes}
 
 \begin{itemize}
-    \item JUnit e Mockito: \textit{Frameworks} para a realização de testes unitários em Java. Foram utilizados para validar a lógica de negócio no \textit{back-end}, garantindo a qualidade e a corretude das funcionalidades implementadas de forma isolada. \cite{JUnit2023} \cite{Mockito}
-    \item Postman: Plataforma para teste de APIs. Foi utilizada durante o desenvolvimento para enviar requisições às APIs REST do \textit{back-end}, inspecionar as respostas e validar os \textit{endpoints}. \cite{Postman2024}
-    \item Google Chrome e Mozilla Firefox: Navegadores \textit{web} utilizados para a realização de testes manuais e de compatibilidade da interface do usuário, assegurando que a aplicação funcione corretamente e apresente uma experiência consistente em alguns dos principais navegadores do mercado. \cite{GoogleChrome} \cite{MozillaFirefox}
+    \item JUnit e Mockito \cite{JUnit2023} \cite{Mockito} --- testes unitários da lógica de negócio no \textit{back-end}.
+    \item Postman \cite{Postman2024} --- testes manuais das APIs REST do \textit{back-end}.
+    \item Google Chrome e Mozilla Firefox \cite{GoogleChrome} \cite{MozillaFirefox} --- testes manuais de compatibilidade da interface do usuário.
 \end{itemize}
 
 \section[Métodos]{Métodos}
