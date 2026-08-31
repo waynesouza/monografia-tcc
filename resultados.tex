@@ -48,7 +48,7 @@ O ator \textit{Owner}, apresentado na Figura~\ref{fig:caso-de-uso-owner}, possui
 
 As figuras \ref{fig:modelo-conceitual}, \ref{fig:modelo-logico} e \ref{fig:modelo-nosql} apresentam, respectivamente, os artefatos de modelagem de dados produzidos no projeto: o modelo conceitual e o modelo lógico do banco de dados relacional, e o esquema não-relacional com MongoDB.
 
-O modelo conceitual define as entidades e relacionamentos de alto nível, representando a estrutura geral dos dados.
+O modelo conceitual define as entidades e relacionamentos de alto nível, representando a estrutura geral dos dados. Ao todo, sete entidades compõem o modelo --- \textit{users}, \textit{teams}, \textit{projects}, \textit{diagrams}, \textit{entities}, \textit{attributes} e \textit{relationships} ---, conectadas por relações que refletem a hierarquia usuário-time-projeto-diagrama e a composição interna de cada diagrama em entidades, atributos e relacionamentos.
 
 \begin{figure}[H]
     \centering
@@ -60,7 +60,7 @@ O modelo conceitual define as entidades e relacionamentos de alto nível, repres
     \label{fig:modelo-conceitual}
 \end{figure}
 
-O modelo lógico detalha a estrutura das tabelas e seus atributos, considerando as características do sistema de gerenciamento de banco de dados utilizado.
+O modelo lógico detalha a estrutura das tabelas e seus atributos, considerando as características do sistema de gerenciamento de banco de dados utilizado. O esquema relacional é composto por quatro tabelas --- \textit{teams}, \textit{projects}, \textit{users} e \textit{refresh\_tokens} --- relacionadas por chaves estrangeiras que garantem a integridade referencial entre usuários, times e projetos, além do controle de sessão por meio dos \textit{tokens} de renovação.
 
 \begin{figure}[H]
     \centering
@@ -72,7 +72,7 @@ O modelo lógico detalha a estrutura das tabelas e seus atributos, considerando 
     \label{fig:modelo-logico}
 \end{figure}
 
-O esquema documental projetado para o MongoDB contempla as coleções, os campos e os tipos de dados.
+O esquema documental projetado para o MongoDB contempla as coleções, os campos e os tipos de dados. O esquema é composto por uma única coleção, \textit{diagram}, com cinco campos: o identificador (\textit{\_id}), o discriminador de classe (\textit{\_class}), a referência ao projeto (\textit{projectId}) e os campos \textit{linkData} e \textit{nodeData}, detalhados a seguir, que armazenam, respectivamente, os relacionamentos e as entidades do diagrama em formato serializado.
 
 \begin{figure}[H]
     \centering
@@ -149,13 +149,13 @@ O protótipo foi construído segundo a arquitetura cliente-servidor, composta po
 
 A comunicação entre os módulos ocorre por dois canais distintos: requisições HTTP para as operações de persistência e autenticação, e uma conexão persistente via WebSocket para a sincronização colaborativa em tempo real.
 
-O \textit{back-end} foi organizado em camadas seguindo o padrão MVC, separando as responsabilidades de controle, regras de negócio e acesso a dados. A segurança da API é gerenciada por meio de \textit{tokens} JWT armazenados em \textit{cookies} no navegador do cliente, protegendo os recursos contra acesso não autorizado. A comunicação em tempo real é viabilizada por um servidor WebSocket dedicado, responsável por receber as ações dos colaboradores e propagá-las a todos os usuários conectados ao mesmo projeto.
+O \textit{back-end} foi organizado em camadas seguindo o padrão MVC, separando as responsabilidades de controle, regras de negócio e acesso a dados. A segurança da API é gerenciada por meio de \textit{tokens} JWT armazenados em \textit{cookies} no navegador do cliente, protegendo os recursos contra acesso não autorizado. A comunicação em tempo real é viabilizada por um servidor WebSocket dedicado, responsável por receber as ações dos colaboradores e propagá-las a todos os usuários conectados ao mesmo projeto. Essa escolha evita a sobrecarga de requisições HTTP repetidas (\textit{polling}) para manter os colaboradores sincronizados, reduzindo a latência percebida durante a edição simultânea do diagrama.
 
 O \textit{front-end} é estruturado como uma SPA, com responsabilidades distribuídas entre componentes de interface, serviços de dados e interceptadores de requisição. O componente central do editor integra a biblioteca GoJS para a renderização e manipulação interativa do diagrama no \textit{canvas}, enquanto serviços dedicados encapsulam a comunicação em tempo real e as operações de importação e exportação SQL.
 
 \section{Funcionalidades Implementadas}
 
-As subseções a seguir descrevem as funcionalidades que compõem o protótipo desenvolvido.
+As subseções a seguir descrevem as funcionalidades que compõem o protótipo desenvolvido, cada uma concebida para atender diretamente às necessidades dos perfis \textit{Viewer}, \textit{Editor} e \textit{Owner} apresentados anteriormente.
 
 \subsection{Autenticação e Autorização}
 
@@ -188,6 +188,22 @@ A funcionalidade de colaboração permite que múltiplos usuários de um mesmo t
 \subsection{Importação e Exportação de Diagramas}
 
 O protótipo suporta a interoperabilidade com outros ambientes por meio de operações SQL no dialeto MySQL. A exportação converte o modelo do diagrama em instruções SQL de criação de tabelas, enquanto a importação analisa um \textit{script} SQL fornecido pelo usuário para reconstruir o diagrama correspondente no \textit{canvas}. Ambas as operações são processadas pelo \textit{back-end} e o resultado é retornado ao usuário pela interface da aplicação.
+
+\section{Testes e Validação do Protótipo}
+
+Conforme descrito na Subseção~\ref{subsec:testes} da Metodologia, a validação do protótipo combina suítes de testes unitários automatizados no \textit{back-end} e no \textit{front-end}, testes manuais das APIs REST com Postman e testes manuais de compatibilidade da interface nos navegadores Google Chrome e Mozilla Firefox.
+
+No \textit{back-end}, a suíte de testes unitários com JUnit e Mockito cobre a lógica de negócio, o acesso aos dados e as regras de segurança da aplicação, incluindo a validação do \textit{token} JWT e as camadas de autorização apresentadas na Figura~\ref{fig:arquitetura-autenticacao}. A cobertura de código dessa suíte é medida automaticamente pelo JaCoCo, e a qualidade do código é avaliada pelo SonarQube; ambas as verificações são executadas a cada atualização enviada ao repositório, impedindo que alterações que reduzam a cobertura mínima estabelecida sejam incorporadas ao projeto.
+
+No \textit{front-end}, a suíte de testes unitários com Jasmine e Karma cobre os componentes de interface e os serviços responsáveis pela comunicação com o \textit{back-end} e pela navegação entre telas. Para viabilizar essa cobertura, as partes do editor de diagramas que dependem diretamente de bibliotecas externas --- a renderização via GoJS e a comunicação em tempo real --- foram isoladas em componentes próprios, o que permite testá-las de forma independente do restante da aplicação. Assim como no \textit{back-end}, essa suíte também é executada automaticamente a cada atualização de código, com a mesma exigência de cobertura mínima.
+
+Os testes manuais com Postman validaram os principais fluxos das APIs REST expostas pelo \textit{back-end}: autenticação e renovação de \textit{token}, criação, edição e exclusão de projetos, gestão de times (adição, listagem, alteração de papel e remoção de membros) e persistência do estado do diagrama (entidades, atributos, relacionamentos e posicionamentos).
+
+Os testes manuais de compatibilidade validaram, no Chrome e no Firefox, o comportamento visual e funcional do editor de diagramas e da colaboração em tempo real, incluindo o mecanismo de bloqueio de entidades ilustrado na Figura~\ref{fig:elemento-bloqueado}.
+
+Essa combinação reflete uma escolha de escopo: a cobertura de código automatizada garante uma rede de segurança contra regressões à medida que o protótipo evolui, enquanto os testes manuais cobrem aspectos que a automação unitária não alcança diretamente, como o comportamento real de renderização entre navegadores e a validação exploratória dos fluxos de API a partir da perspectiva de um cliente externo.
+
+Os percentuais de cobertura efetivamente alcançados pelas suítes de \textit{back-end} e \textit{front-end}, bem como os principais indicadores reportados pelo SonarQube, serão apresentados nesta seção assim que essa medição for concluída em ambos os projetos. [PLACEHOLDER: inserir quadro/figura com os percentuais de cobertura (JaCoCo e Karma) e o resumo do relatório SonarQube] % TODO: substituir pelo quadro/figura com as evidências reais de cobertura de testes
 
 \section{\textit{Interface} do Usuário}
 
