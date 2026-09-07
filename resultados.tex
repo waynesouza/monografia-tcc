@@ -6,13 +6,13 @@ Esta seção apresenta os resultados obtidos ao longo do desenvolvimento do prot
 
 \section{Diagrama de Caso de Uso}
 
-O diagrama de caso de uso detalha as interações entre os atores e o sistema. Foram identificados três atores distintos, cada um representando um perfil de acesso diferente dentro da plataforma: \textit{Viewer}, \textit{Editor} e \textit{Owner}. A especificação completa de cada caso de uso encontra-se no \hyperref[anx:caso-de-uso]{Anexo A}.
+O diagrama de caso de uso detalha as interações entre os atores e o sistema. Foram identificados três atores distintos, cada um representando um perfil de acesso diferente dentro da plataforma: \textit{Viewer}, \textit{Editor} e \textit{Owner}. Para preservar a legibilidade, os diagramas foram divididos em partes complementares, cada uma retomando o caso de uso que a conecta às demais. Como o \textit{Owner} compartilha integralmente os casos de uso do \textit{Editor}, as suas figuras apresentam somente os casos de uso que lhe são exclusivos, sem repetir as operações de modelagem já ilustradas. A especificação completa de cada caso de uso encontra-se no \hyperref[anx:caso-de-uso]{Anexo A}.
 
-O ator \textit{Viewer}, apresentado na Figura~\ref{fig:caso-de-uso-viewer}, representa o colaborador com acesso somente leitura. Após realizar o \textit{login}, ele pode listar os projetos dos quais faz parte e visualizar os diagramas associados a eles.
+O ator \textit{Viewer}, apresentado na Figura~\ref{fig:caso-de-uso-viewer}, representa o colaborador com acesso somente leitura. Após realizar o \textit{login} (CSU-01), ele pode listar os projetos dos quais faz parte (CSU-03) e visualizar os diagramas associados a eles (CSU-06).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.15]{figuras/viewer.jpeg}
+    \includegraphics[width=15cm]{figuras/viewer.png}
     \caption{Diagrama de caso de uso do ator Viewer}
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
@@ -20,28 +20,100 @@ O ator \textit{Viewer}, apresentado na Figura~\ref{fig:caso-de-uso-viewer}, repr
     \label{fig:caso-de-uso-viewer}
 \end{figure}
 
-O ator \textit{Editor}, apresentado na Figura~\ref{fig:caso-de-uso-editor}, herda as capacidades do \textit{Viewer} e adiciona a permissão de editar diagramas. Por meio dessa funcionalidade, o \textit{Editor} pode adicionar, editar e remover tabelas, gerenciar os atributos de cada tabela, criar e excluir relacionamentos entre entidades, reposicionar elementos na área de desenho, além de exportar e importar scripts SQL.
+O ator \textit{Editor} herda as capacidades do \textit{Viewer} e adiciona a permissão de editar diagramas. Como o conjunto de casos de uso desse ator é extenso, o diagrama foi dividido em cinco partes, apresentadas nas Figuras~\ref{fig:caso-de-uso-editor-p1} a~\ref{fig:caso-de-uso-editor-p5}. A Figura~\ref{fig:caso-de-uso-editor-p1} apresenta o fluxo principal: após o \textit{login}, o \textit{Editor} lista os projetos, visualiza o diagrama --- de onde é possível exportar o \textit{script} SQL correspondente (CSU-23) --- e acessa a edição do diagrama (CSU-07), caso de uso que concentra as operações de modelagem detalhadas nas partes seguintes.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.15]{figuras/editor.jpeg}
-    \caption{Diagrama de caso de uso do ator Editor}
+    \includegraphics[width=15cm]{figuras/editor-part1.png}
+    \caption{Diagrama de caso de uso do ator Editor --- parte 1 de 5: fluxo principal}
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
     \end{center}
-    \label{fig:caso-de-uso-editor}
+    \label{fig:caso-de-uso-editor-p1}
 \end{figure}
 
-O ator \textit{Owner}, apresentado na Figura~\ref{fig:caso-de-uso-owner}, possui o conjunto mais amplo de permissões. Além de todas as capacidades do \textit{Editor}, o \textit{Owner} é o responsável pelo ciclo de vida dos projetos: pode criá-los, editá-los e removê-los. Também gerencia o time de colaboradores, podendo adicionar membros, listar os membros existentes, alterar seus papéis de acesso e removê-los do projeto.
+A Figura~\ref{fig:caso-de-uso-editor-p2} detalha, a partir do CSU-07, as operações sobre tabelas: adicionar (CSU-13), editar (CSU-14) e remover (CSU-15). A edição de uma tabela abrange ainda a adição (CSU-19) e a listagem dos seus atributos (CSU-20).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.15]{figuras/owner.jpeg}
-    \caption{Diagrama de caso de uso do ator Owner}
+    \includegraphics[width=15cm]{figuras/editor-part2.png}
+    \caption{Diagrama de caso de uso do ator Editor --- parte 2 de 5: gerenciamento de tabelas, a partir do CSU-07}
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
     \end{center}
-    \label{fig:caso-de-uso-owner}
+    \label{fig:caso-de-uso-editor-p2}
+\end{figure}
+
+A Figura~\ref{fig:caso-de-uso-editor-p3} dá continuidade ao CSU-20 da parte anterior, apresentando a edição (CSU-21) e a remoção (CSU-22) de atributos como extensões da listagem.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/editor-part3.png}
+    \caption{Diagrama de caso de uso do ator Editor --- parte 3 de 5: gerenciamento de atributos, a partir do CSU-20}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:caso-de-uso-editor-p3}
+\end{figure}
+
+A Figura~\ref{fig:caso-de-uso-editor-p4} retoma o CSU-07 e apresenta as operações sobre os relacionamentos entre entidades: adicionar (CSU-16) e remover (CSU-17).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/editor-part4.png}
+    \caption{Diagrama de caso de uso do ator Editor --- parte 4 de 5: gerenciamento de relacionamentos, a partir do CSU-07}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:caso-de-uso-editor-p4}
+\end{figure}
+
+Por fim, a Figura~\ref{fig:caso-de-uso-editor-p5}, também derivada do CSU-07, reúne o reposicionamento de elementos na área de desenho (CSU-18) e a importação de \textit{script} SQL (CSU-24).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/editor-part5.png}
+    \caption{Diagrama de caso de uso do ator Editor --- parte 5 de 5: movimentação de elementos e importação SQL, a partir do CSU-07}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:caso-de-uso-editor-p5}
+\end{figure}
+
+O ator \textit{Owner} possui o conjunto mais amplo de permissões: além de todos os casos de uso do \textit{Editor}, é o responsável pelo ciclo de vida dos projetos e pela gestão do time de colaboradores. As operações de modelagem do diagrama são exatamente as mesmas do \textit{Editor} e, por isso, não são reproduzidas novamente --- permanecem válidas as Figuras~\ref{fig:caso-de-uso-editor-p1} a~\ref{fig:caso-de-uso-editor-p5}, bastando substituir o ator. As Figuras~\ref{fig:caso-de-uso-owner-p1} a~\ref{fig:caso-de-uso-owner-p3} apresentam apenas o que é exclusivo desse ator. A Figura~\ref{fig:caso-de-uso-owner-p1} mostra o fluxo principal: após o \textit{login} (CSU-01), o \textit{Owner} pode criar projetos (CSU-02) e listar os projetos existentes (CSU-03), listagem a partir da qual remove projetos (CSU-05) e acessa a visualização do diagrama (CSU-06), retomando daí o mesmo percurso de edição já descrito para o \textit{Editor}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/owner-part1.png}
+    \caption{Diagrama de caso de uso do ator Owner --- parte 1 de 3: fluxo principal e ciclo de vida dos projetos}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:caso-de-uso-owner-p1}
+\end{figure}
+
+A Figura~\ref{fig:caso-de-uso-owner-p2} dá continuidade à listagem de projetos (CSU-03) e apresenta a edição do projeto (CSU-04), que dá acesso à adição de membros ao time (CSU-08) e à listagem dos membros existentes (CSU-09).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/owner-part2.png}
+    \caption{Diagrama de caso de uso do ator Owner --- parte 2 de 3: gestão do projeto e do time, a partir do CSU-03}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:caso-de-uso-owner-p2}
+\end{figure}
+
+Por fim, a Figura~\ref{fig:caso-de-uso-owner-p3} dá continuidade ao CSU-09, com a remoção (CSU-11) e a edição de membros (CSU-10), esta última estendida pela alteração do papel de acesso do colaborador no projeto (CSU-12).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/owner-part3.png}
+    \caption{Diagrama de caso de uso do ator Owner --- parte 3 de 3: gerenciamento de membros, a partir do CSU-09}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:caso-de-uso-owner-p3}
 \end{figure}
 
 \section{Modelos de Dados}
