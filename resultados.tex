@@ -275,7 +275,29 @@ Os testes manuais de compatibilidade validaram, no Chrome e no Firefox, o compor
 
 Essa combinação reflete uma escolha de escopo: a cobertura de código automatizada garante uma rede de segurança contra regressões à medida que o protótipo evolui, enquanto os testes manuais cobrem aspectos que a automação unitária não alcança diretamente, como o comportamento real de renderização entre navegadores e a validação exploratória dos fluxos de API a partir da perspectiva de um cliente externo.
 
-Os percentuais de cobertura efetivamente alcançados pelas suítes de \textit{back-end} e \textit{front-end}, bem como os principais indicadores reportados pelo SonarQube, serão apresentados nesta seção assim que essa medição for concluída em ambos os projetos. [PLACEHOLDER: inserir quadro/figura com os percentuais de cobertura (JaCoCo e Karma) e o resumo do relatório SonarQube] % TODO: substituir pelo quadro/figura com as evidências reais de cobertura de testes
+A medição de cobertura foi concluída nos dois projetos e atingiu 100\% em todos os indicadores verificados, atendendo integralmente à exigência de cobertura mínima estabelecida. A Figura~\ref{fig:cobertura-back-end} apresenta o relatório do \textit{back-end}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/core-coverage.png}
+    \caption{Relatório de cobertura de código dos testes do \textit{back-end}}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:cobertura-back-end}
+\end{figure}
+
+A Figura~\ref{fig:cobertura-front-end} apresenta o relatório equivalente do \textit{front-end}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/client-coverage.png}
+    \caption{Relatório de cobertura de código dos testes do \textit{front-end}}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:cobertura-front-end}
+\end{figure}
 
 \section{\textit{Interface} do Usuário}
 
