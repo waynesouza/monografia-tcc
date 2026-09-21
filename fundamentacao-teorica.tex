@@ -1,16 +1,18 @@
 % ----------------------------------------------------------
-\chapter{Revisão Sistemática da Literatura}
+\chapter{Fundamentação Teórica}
 % ----------------------------------------------------------
 
-A Revisão Sistemática da Literatura (RSL), também conhecida como revisão bibliográfica sistemática, é um método de pesquisa que busca encontrar, analisar e sintetizar evidências em estudos anteriores sobre um determinado assunto \cite{Metologia2015}. De acordo com \cite{RevisaoSistematicaLeitura2016}, este método é protocolar e severo, garantindo transparência e replicabilidade.
+A modelagem de dados é a atividade que antecede a construção de um banco de dados e consiste em representar, de forma abstrata, os objetos de um domínio e as associações existentes entre eles. Conforme \citeonline{Fundamentos2017}, essa atividade é organizada em três níveis: o conceitual, que descreve o domínio sem vinculação a uma tecnologia específica e tem no diagrama ER sua principal forma de representação; o lógico, que traduz esse modelo para as estruturas de um determinado tipo de banco de dados; e o físico, que define como os dados serão efetivamente armazenados. O diagrama ER ocupa, portanto, uma posição central no projeto de um sistema, pois é a partir dele que as demais decisões sobre o armazenamento dos dados são derivadas.
 
-A RSL difere da revisão narrativa por usar uma metodologia clara e pré-definida para minimizar as chances de erro e produzir resultados mais confiáveis. A definição de uma questão de pesquisa clara, a seleção de estudos pertinentes usando uma estratégia de busca sistemática, a avaliação da qualidade dos estudos incluídos e a síntese das evidências encontradas são todos componentes do processo, segundo \cite{Kitchenham2004}.
+Além de orientar a construção do banco de dados, o diagrama ER cumpre um papel de comunicação: é sobre ele que analistas, desenvolvedores e demais envolvidos discutem o domínio e constroem um entendimento comum a respeito dele. Essa natureza compartilhada faz da modelagem uma atividade essencialmente coletiva e explica por que a possibilidade de várias pessoas trabalharem sobre um mesmo modelo é uma demanda recorrente nas ferramentas de apoio ao projeto de bancos de dados.
 
-Uma RSL envolve vários passos, como definir a pergunta de pesquisa, criar um protocolo de revisão, fazer uma busca sistemática na literatura, selecionar estudos, extrair dados, avaliar a qualidade dos estudos e concluir os resultados \cite{Peterson2011}.
+Os sistemas que dão suporte a esse tipo de trabalho coletivo são objeto de estudo da área de \textit{groupware}. Segundo \citeonline{Fuks2002}, tais sistemas se apoiam em três dimensões — comunicação, coordenação e cooperação — que precisam ser contempladas de maneira articulada: não basta permitir que os participantes atuem sobre um artefato comum, é necessário também coordenar essa atuação para que as contribuições não se anulem. No caso da edição simultânea, a coordenação se materializa em mecanismos de controle de concorrência, responsáveis por impedir que alterações realizadas ao mesmo tempo sobre um mesmo elemento conduzam o artefato a um estado inconsistente \cite{Filippo2005}.
+
+Quando essas dimensões são atendidas, o ganho para a equipe é expressivo: a colaboração em tempo real encurta o ciclo de troca de ideias, oferece visibilidade imediata sobre a contribuição de cada participante e reduz o retrabalho decorrente de versões divergentes de um mesmo artefato \cite{Inoue2014,Hsu2021}. São esses conceitos que orientam a análise das ferramentas de modelagem de diagramas ER apresentada nas seções seguintes.
 
 \section[Análise dos Resultados]{Análise dos Resultados}
 
-Esta seção tem como objetivo analisar comparativamente três dessas ferramentas (brModeloWeb, SqlDBM e Vertabelo) para identificar seus pontos fortes e fracos em relação à modelagem colaborativa.
+Esta seção analisa comparativamente três ferramentas de modelagem de diagramas ER disponíveis no mercado — brModeloWeb, SqlDBM e Vertabelo — com o objetivo de identificar seus pontos fortes e fracos em relação à modelagem colaborativa.
 
 \subsection[brModeloWeb]{brModeloWeb}
 
