@@ -272,7 +272,11 @@ Database modelling is a fundamental step in software system development, and ER 
 \partanexos
 \chapter{Expansão do Caso de Uso}
 \label{anx:caso-de-uso}
-\includepdf[pages=-]{anexos/Expansão de Caso de Uso.pdf}
+% A primeira página do PDF (CSU-01) ocupa só a metade superior da folha;
+% ela é recortada e posicionada abaixo do título para não deixar a folha
+% do título em branco. As demais páginas entram inteiras.
+\noindent\includegraphics[page=1, trim=55 362 55 52, clip, width=\textwidth]{anexos/Expansão de Caso de Uso.pdf}
+\includepdf[pages=2-]{anexos/Expansão de Caso de Uso.pdf}
 \end{anexosenv}
 
 % INDICE REMISSIVO
