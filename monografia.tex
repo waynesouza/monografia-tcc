@@ -274,8 +274,13 @@ Database modelling is a fundamental step in software system development, and ER 
 \label{anx:caso-de-uso}
 % A primeira página do PDF (CSU-01) ocupa só a metade superior da folha;
 % ela é recortada e posicionada abaixo do título para não deixar a folha
-% do título em branco. As demais páginas entram inteiras.
-\noindent\includegraphics[page=1, trim=55 362 55 52, clip, width=\textwidth]{anexos/Expansão de Caso de Uso.pdf}
+% do título em branco. As demais páginas entram inteiras. O recorte mantém a
+% largura total da folha e parte da borda do papel, como o \includepdf faz,
+% para que o texto fique alinhado e com o mesmo tamanho das demais páginas.
+\noindent\makebox[\textwidth][l]{%
+    \hspace*{\dimexpr -1in-\hoffset-\oddsidemargin\relax}%
+    \includegraphics[page=1, trim=0 362 0 52, clip, width=\paperwidth]{anexos/Expansão de Caso de Uso.pdf}%
+}
 \includepdf[pages=2-]{anexos/Expansão de Caso de Uso.pdf}
 \end{anexosenv}
 
