@@ -275,29 +275,109 @@ Os testes manuais de compatibilidade validaram, no Chrome e no Firefox, o compor
 
 Essa combinação reflete uma escolha de escopo: a cobertura de código automatizada garante uma rede de segurança contra regressões à medida que o protótipo evolui, enquanto os testes manuais cobrem aspectos que a automação unitária não alcança diretamente, como o comportamento real de renderização entre navegadores e a validação exploratória dos fluxos de API a partir da perspectiva de um cliente externo.
 
-A medição de cobertura foi concluída nos dois projetos e atingiu 100\% em todos os indicadores verificados, atendendo integralmente à exigência de cobertura mínima estabelecida. A Figura~\ref{fig:cobertura-back-end} apresenta o relatório do \textit{back-end}.
+A medição de cobertura foi concluída nos dois projetos e atingiu 100\% em todos os indicadores verificados, atendendo integralmente à exigência de cobertura mínima estabelecida. A Tabela~\ref{tab:cobertura-back-end} apresenta o relatório do \textit{back-end}.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=15cm]{figuras/core-coverage.png}
-    \caption{Relatório de cobertura de código dos testes do \textit{back-end}}
-    \begin{center}
-        {\small Fonte: Elaborado pelo autor}
-    \end{center}
-    \label{fig:cobertura-back-end}
-\end{figure}
+\begin{table}[H]
+\centering
+\caption{Relatório de cobertura de código dos testes do \textit{back-end}}
+\label{tab:cobertura-back-end}
+\resizebox{\textwidth}{!}{%
+    \begin{tabular}{|l|r|r|r|r|r|r|r|r|r|r|r|r|}
+    \hline
+    \multirow{2}{*}{\textbf{Pacote}} & \multicolumn{2}{c|}{\textbf{Instruções}} & \multicolumn{2}{c|}{\textbf{Ramos}} & \multicolumn{2}{c|}{\textbf{Complexidade}} & \multicolumn{2}{c|}{\textbf{Linhas}} & \multicolumn{2}{c|}{\textbf{Métodos}} & \multicolumn{2}{c|}{\textbf{Classes}} \\
+    \cline{2-13}
+    & \textbf{Não cob.} & \textbf{Cob.} & \textbf{Não cob.} & \textbf{Cob.} & \textbf{Não cob.} & \textbf{Total} & \textbf{Não cob.} & \textbf{Total} & \textbf{Não cob.} & \textbf{Total} & \textbf{Não cob.} & \textbf{Total} \\
+    \hline
+    com.erd.core.service           & 0 & 100\% & 0  & 100\% & 0 & 239 & 0 & 647 & 0 & 122 & 0 & 11 \\
+    \hline
+    com.erd.core.controller        & 0 & 100\% & 0  & 100\% & 0 & 37  & 0 & 148 & 0 & 34  & 0 & 7  \\
+    \hline
+    com.erd.core.config            & 0 & 100\% & 0  & 100\% & 0 & 40  & 0 & 120 & 0 & 30  & 0 & 8  \\
+    \hline
+    com.erd.core.dto.response      & 0 & 100\% & -- & n/a   & 0 & 71  & 0 & 130 & 0 & 71  & 0 & 7  \\
+    \hline
+    com.erd.core.model             & 0 & 100\% & 0  & 100\% & 0 & 54  & 0 & 90  & 0 & 53  & 0 & 4  \\
+    \hline
+    com.erd.core.dto.request       & 0 & 100\% & -- & n/a   & 0 & 57  & 0 & 81  & 0 & 57  & 0 & 10 \\
+    \hline
+    com.erd.core.dto               & 0 & 100\% & -- & n/a   & 0 & 54  & 0 & 83  & 0 & 54  & 0 & 6  \\
+    \hline
+    com.erd.core.filter            & 0 & 100\% & 0  & 100\% & 0 & 10  & 0 & 36  & 0 & 7   & 0 & 2  \\
+    \hline
+    com.erd.core.mapper            & 0 & 100\% & -- & n/a   & 0 & 11  & 0 & 24  & 0 & 11  & 0 & 4  \\
+    \hline
+    com.erd.core.dto.collaboration & 0 & 100\% & -- & n/a   & 0 & 14  & 0 & 27  & 0 & 14  & 0 & 1  \\
+    \hline
+    com.erd.core.model.mongo       & 0 & 100\% & -- & n/a   & 0 & 9   & 0 & 19  & 0 & 9   & 0 & 1  \\
+    \hline
+    com.erd.core.enumeration       & 0 & 100\% & -- & n/a   & 0 & 2   & 0 & 4   & 0 & 2   & 0 & 2  \\
+    \hline
+    com.erd.core.dto.error         & 0 & 100\% & -- & n/a   & 0 & 6   & 0 & 11  & 0 & 6   & 0 & 1  \\
+    \hline
+    com.erd.core.advice            & 0 & 100\% & -- & n/a   & 0 & 2   & 0 & 2   & 0 & 2   & 0 & 1  \\
+    \hline
+    com.erd.core.exception         & 0 & 100\% & -- & n/a   & 0 & 1   & 0 & 2   & 0 & 1   & 0 & 1  \\
+    \hline
+    com.erd.core                   & 0 & 100\% & -- & n/a   & 0 & 2   & 0 & 3   & 0 & 2   & 0 & 1  \\
+    \hline
+    \textbf{Total} & \textbf{0 de 5.414} & \textbf{100\%} & \textbf{0 de 242} & \textbf{100\%} & \textbf{0} & \textbf{609} & \textbf{0} & \textbf{1.427} & \textbf{0} & \textbf{475} & \textbf{0} & \textbf{67} \\
+    \hline
+    \end{tabular}%
+}
+\begin{center}
+    {\small Fonte: Elaborado pelo autor}
+\end{center}
+\end{table}
 
-A Figura~\ref{fig:cobertura-front-end} apresenta o relatório equivalente do \textit{front-end}.
+A Tabela~\ref{tab:cobertura-front-end} apresenta o relatório equivalente do \textit{front-end}.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=15cm]{figuras/client-coverage.png}
-    \caption{Relatório de cobertura de código dos testes do \textit{front-end}}
-    \begin{center}
-        {\small Fonte: Elaborado pelo autor}
-    \end{center}
-    \label{fig:cobertura-front-end}
-\end{figure}
+\begin{table}[H]
+\centering
+\caption{Relatório de cobertura de código dos testes do \textit{front-end}}
+\label{tab:cobertura-front-end}
+\resizebox{\textwidth}{!}{%
+    \begin{tabular}{|l|r|r|r|r|r|r|r|r|}
+    \hline
+    \multirow{2}{*}{\textbf{Diretório}} & \multicolumn{2}{c|}{\textbf{Instruções}} & \multicolumn{2}{c|}{\textbf{Ramos}} & \multicolumn{2}{c|}{\textbf{Funções}} & \multicolumn{2}{c|}{\textbf{Linhas}} \\
+    \cline{2-9}
+    & \textbf{Cob.} & \textbf{Qtd.} & \textbf{Cob.} & \textbf{Qtd.} & \textbf{Cob.} & \textbf{Qtd.} & \textbf{Cob.} & \textbf{Qtd.} \\
+    \hline
+    app                              & 100\% & 23/23   & 100\% & 2/2     & 100\% & 10/10   & 100\% & 21/21   \\
+    \hline
+    app/component/entity-edit-form   & 100\% & 55/55   & 100\% & 33/33   & 100\% & 15/15   & 100\% & 54/54   \\
+    \hline
+    app/component/login              & 100\% & 18/18   & 100\% & 1/1     & 100\% & 5/5     & 100\% & 16/16   \\
+    \hline
+    app/component/modal/project      & 100\% & 194/194 & 100\% & 76/76   & 100\% & 48/48   & 100\% & 191/191 \\
+    \hline
+    app/component/register           & 100\% & 22/22   & 100\% & 3/3     & 100\% & 5/5     & 100\% & 21/21   \\
+    \hline
+    app/component/side-bar           & 100\% & 95/95   & 100\% & 25/25   & 100\% & 33/33   & 100\% & 94/94   \\
+    \hline
+    app/component/table-editor       & 100\% & 30/30   & 100\% & 6/6     & 100\% & 9/9     & 100\% & 28/28   \\
+    \hline
+    app/diagram                      & 100\% & 587/587 & 100\% & 197/197 & 100\% & 151/151 & 100\% & 549/549 \\
+    \hline
+    app/guards                       & 100\% & 27/27   & 100\% & 9/9     & 100\% & 7/7     & 100\% & 25/25   \\
+    \hline
+    app/interceptor                  & 100\% & 47/47   & 100\% & 15/15   & 100\% & 11/11   & 100\% & 41/41   \\
+    \hline
+    app/model/enum                   & 100\% & 13/13   & 100\% & 2/2     & 100\% & 1/1     & 100\% & 13/13   \\
+    \hline
+    app/service                      & 100\% & 314/314 & 100\% & 112/112 & 100\% & 102/102 & 100\% & 295/295 \\
+    \hline
+    app/shared                       & 100\% & 8/8     & 100\% & 0/0     & 100\% & 6/6     & 100\% & 7/7     \\
+    \hline
+    environments                     & 100\% & 1/1     & 100\% & 0/0     & 100\% & 0/0     & 100\% & 1/1     \\
+    \hline
+    \textbf{Total} & \textbf{100\%} & \textbf{1434/1434} & \textbf{100\%} & \textbf{481/481} & \textbf{100\%} & \textbf{403/403} & \textbf{100\%} & \textbf{1356/1356} \\
+    \hline
+    \end{tabular}%
+}
+\begin{center}
+    {\small Fonte: Elaborado pelo autor}
+\end{center}
+\end{table}
 
 \section{\textit{Interface} do Usuário}
 
