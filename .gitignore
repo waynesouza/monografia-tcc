@@ -1,0 +1,19 @@
+# Arquivos auxiliares do LaTeX
+*.aux
+*.log
+*.bbl
+*.blg
+*.brf
+*.toc
+*.lof
+*.lot
+*.lol
+*.loa
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.run.xml
+*.idx
+*.ilg
+*.ind
