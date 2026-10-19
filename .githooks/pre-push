@@ -1,10 +1,32 @@
 #!/bin/sh
 # Impede o push se a monografia não compilar.
+
+# Editores abertos antes da instalação do MiKTeX/Perl não têm esses
+# diretórios no PATH; acrescenta os locais padrão de instalação.
+for dir in "$LOCALAPPDATA/Programs/MiKTeX/miktex/bin/x64" \
+           "$PROGRAMFILES/MiKTeX/miktex/bin/x64" \
+           "/c/Strawberry/perl/bin"; do
+    [ -d "$dir" ] && PATH="$PATH:$dir"
+done
+export PATH
+
+for cmd in latexmk perl; do
+    if ! command -v "$cmd" >/dev/null 2>&1; then
+        echo "'$cmd' não encontrado no PATH — push cancelado." >&2
+        echo "Reinicie o editor/terminal após instalar MiKTeX e Strawberry Perl." >&2
+        exit 1
+    fi
+done
+
 echo "Compilando monografia.tex antes do push..."
-if ! latexmk -silent monografia.tex >/dev/null 2>&1; then
-    echo "LaTeX não compilou — push cancelado. Veja monografia.log." >&2
-    grep -n -A3 '^!' monografia.log 2>/dev/null | head -n 20 >&2
-    grep -n -E ':[0-9]+: ' monografia.log 2>/dev/null | head -n 20 >&2
+if ! output=$(latexmk -silent monografia.tex 2>&1); then
+    echo "LaTeX não compilou — push cancelado." >&2
+    errors=$(grep -E '^!|:[0-9]+: ' monografia.log 2>/dev/null | head -n 20)
+    if [ -n "$errors" ]; then
+        echo "$errors" >&2
+    else
+        echo "$output" | tail -n 20 >&2
+    fi
     exit 1
 fi
 if grep -q -E 'Citation .* undefined|Reference .* undefined' monografia.log; then
