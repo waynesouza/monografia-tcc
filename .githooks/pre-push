@@ -1,0 +1,14 @@
+#!/bin/sh
+# Impede o push se a monografia não compilar.
+echo "Compilando monografia.tex antes do push..."
+if ! latexmk -silent monografia.tex >/dev/null 2>&1; then
+    echo "LaTeX não compilou — push cancelado. Veja monografia.log." >&2
+    grep -n -A3 '^!' monografia.log 2>/dev/null | head -n 20 >&2
+    grep -n -E ':[0-9]+: ' monografia.log 2>/dev/null | head -n 20 >&2
+    exit 1
+fi
+if grep -q -E 'Citation .* undefined|Reference .* undefined' monografia.log; then
+    echo "Aviso: há citações/referências indefinidas:" >&2
+    grep -E 'Citation .* undefined|Reference .* undefined' monografia.log | sort -u >&2
+fi
+echo "Compilação OK."
