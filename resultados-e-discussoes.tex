@@ -23,6 +23,8 @@ A fim de contextualizar o protótipo desenvolvido, a Tabela~\ref{tab:comparacao}
     \hline
     Colaboração em tempo real & Sim & Não & Sim & Sim \\
     \hline
+    Controle de versão        & Não & Não & Sim & Sim \\
+    \hline
     Exportação SQL      & Sim & Sim & Sim & Sim \\
     \hline
     Importação SQL      & Sim & Não & Sim & Sim \\
@@ -37,7 +39,7 @@ A fim de contextualizar o protótipo desenvolvido, a Tabela~\ref{tab:comparacao}
 \end{center}
 \end{table}
 
-A análise comparativa evidencia que o protótipo desenvolvido distingue-se por reunir, em uma plataforma \textit{web} e de forma inteiramente gratuita, a colaboração em tempo real com suporte completo a importação e exportação SQL. O brModeloWeb, embora gratuito e baseado em \textit{web}, limita a colaboração ao compartilhamento dos modelos, sem suporte à edição simultânea entre múltiplos usuários. O SqlDBM e o Vertabelo oferecem colaboração em tempo real e operações DDL mais abrangentes, porém não dispõem de plano gratuito, sendo acessíveis apenas mediante assinatura paga. O protótipo preenche essa intersecção ao combinar colaboração em tempo real, operações SQL e acesso irrestrito sem custo, alinhando-se ao diagnóstico de lacuna identificado na justificativa do trabalho: a ausência de uma ferramenta \textit{web}, acessível e colaborativa para a modelagem de diagramas ER.
+A análise comparativa evidencia que o protótipo desenvolvido distingue-se por reunir, em uma plataforma \textit{web} e de forma inteiramente gratuita, a colaboração em tempo real com suporte completo a importação e exportação SQL. O brModeloWeb, embora gratuito e baseado em \textit{web}, limita a colaboração ao compartilhamento dos modelos, sem suporte à edição simultânea entre múltiplos usuários. O SqlDBM e o Vertabelo oferecem colaboração em tempo real e operações DDL mais abrangentes, porém não dispõem de plano gratuito, sendo acessíveis apenas mediante assinatura paga. Ambas oferecem ainda controle de versão dos modelos, recurso que o protótipo não contempla e que é tratado como uma de suas limitações na Seção~\ref{sec:limitacoes}. O protótipo preenche essa intersecção ao combinar colaboração em tempo real, operações SQL e acesso irrestrito sem custo, alinhando-se ao diagnóstico de lacuna identificado na justificativa do trabalho: a ausência de uma ferramenta \textit{web}, acessível e colaborativa para a modelagem de diagramas ER.
 
 % ----------------------------------------------------------
 \section{Dificuldades e Lições Aprendidas}
@@ -51,6 +53,7 @@ Por fim, a adoção da persistência poliglota (PostgreSQL e MongoDB) conferiu f
 
 % ----------------------------------------------------------
 \section{Limitações do Protótipo}
+\label{sec:limitacoes}
 % ----------------------------------------------------------
 
 Apesar dos resultados alcançados, o protótipo apresenta limitações que definem seu escopo em relação a uma solução de produção.
