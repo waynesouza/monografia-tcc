@@ -2,7 +2,7 @@
 \chapter{Resultados}
 % ----------------------------------------------------------
 
-Esta seção apresenta os resultados obtidos ao longo do desenvolvimento do protótipo de modelador de diagramas ER colaborativo. Os resultados são organizados nas seguintes etapas: o diagrama de caso de uso, os modelos de dados, a arquitetura implementada e as funcionalidades do protótipo.
+Esta seção apresenta os resultados obtidos ao longo do desenvolvimento do protótipo de modelador de diagramas ER colaborativo. Os resultados são organizados nas seguintes etapas: o diagrama de caso de uso, os modelos de dados, a investigação da biblioteca de diagramação, a arquitetura implementada e as funcionalidades do protótipo.
 
 \section{Diagrama de Caso de Uso}
 
@@ -204,6 +204,50 @@ Os campos \textit{linkData} e \textit{nodeData} possuem, na devida ordem, os seg
     \end{center}
     \label{lst:node-data}
 \end{quadro}
+
+\section{Investigação da Biblioteca de Diagramação}
+\label{sec:investigacao-biblioteca}
+
+A área de desenho concentra a representação visual das entidades, dos atributos e dos relacionamentos, bem como a interação do usuário com o diagrama. Para a sua construção, foram investigadas, na fase inicial do projeto, três alternativas: a biblioteca GoJS, a biblioteca JointJS e o desenvolvimento de elementos gráficos próprios diretamente sobre os recursos de desenho do navegador. As alternativas foram avaliadas segundo cinco critérios: a disponibilidade de recursos para a representação de diagramas ER, a disponibilidade de recursos de interação com o diagrama, a forma de representação dos dados do diagrama, a integração com o Angular e as condições de licenciamento.
+
+O desenvolvimento de elementos próprios ofereceria controle total sobre a aparência e o comportamento do diagrama, além de dispensar qualquer custo de licença. Em contrapartida, exigiria implementar recursos que as bibliotecas de diagramação já oferecem, como a seleção de elementos, o arrastar e soltar, o \textit{zoom}, o traçado das linhas de relacionamento entre as entidades e o desfazer e refazer de ações. Conforme a revisão de estudos industriais conduzida por \citeonline{Mohagheghi2007}, o reuso sistemático de componentes de \textit{software} está associado a uma menor densidade de defeitos e a ganhos de produtividade. Considerando que o protótipo foi desenvolvido por um único desenvolvedor e dentro do prazo de um trabalho de conclusão de curso, essa alternativa foi descartada, de modo que o esforço do projeto pudesse ser direcionado à colaboração em tempo real, foco do objetivo geral deste trabalho.
+
+A JointJS é uma biblioteca de diagramação baseada em SVG, cujo núcleo é distribuído sob licença de código aberto, enquanto recursos avançados de \textit{interface} são oferecidos em uma versão comercial denominada JointJS+ \cite{JointJS2026}. O exemplo de diagrama ER disponibilizado pelo fabricante pertence a essa versão comercial \cite{JointJSDemos}. A biblioteca já foi empregada em ferramentas acadêmicas de modelagem colaborativa: \citeonline{Zweihoff2019} a utilizaram como camada de visualização do Pyro, um ambiente de modelagem colaborativa executado no navegador, no qual os elementos gráficos são manipulados de forma interativa. Por ser baseado em SVG, cada elemento do diagrama torna-se parte da estrutura da página, o que permite a sua inspeção pelas ferramentas do navegador e a sua leitura por tecnologias assistivas \cite{KorenIvancevic2026}.
+
+A GoJS, por sua vez, é uma biblioteca comercial que realiza a renderização sobre o elemento Canvas do HTML. A investigação identificou um conjunto de capacidades diretamente aplicáveis ao modelador proposto. A biblioteca permite definir modelos visuais reutilizáveis para as entidades e para os relacionamentos, cuja aparência é vinculada automaticamente aos dados, de modo que uma alteração em um atributo é refletida no diagrama sem necessidade de redesenho manual. Ela dispõe ainda de um painel em formato de tabela, adequado à representação de uma entidade com a sua lista de atributos, e o fabricante disponibiliza um exemplo oficial de diagrama ER \cite{GoJSERSample}. Arrastar e soltar, \textit{zoom}, seleção, desfazer e refazer e o traçado das linhas de relacionamento são oferecidos pela própria biblioteca, e o fabricante mantém documentação específica para a integração com o Angular \cite{GoJS2024}.
+
+Dentre essas capacidades, a forma de representação dos dados teve papel central na escolha. A GoJS separa o modelo do diagrama da sua apresentação visual e serializa esse modelo em JSON, na forma de uma lista de nós e de uma lista de ligações. Essa estrutura foi aproveitada diretamente no esquema documental do MongoDB, nos campos \textit{linkData} e \textit{nodeData} apresentados nos Quadros~\ref{lst:link-data} e~\ref{lst:node-data}, sem a necessidade de conversões entre formatos. Além disso, as alterações no modelo são agrupadas em transações e notificadas pela biblioteca, o que permitiu capturar cada modificação realizada por um colaborador e propagá-la aos demais por meio da conexão WebSocket.
+
+A investigação também evidenciou limitações da GoJS. A primeira é o licenciamento: a biblioteca não é de código aberto e, sem uma chave de licença, exibe uma marca d'água sobre o diagrama, havendo uma modalidade gratuita para fins acadêmicos e não comerciais \cite{GoJSDeployment}. Essa condição atende ao escopo deste trabalho, mas representa um custo para uma eventual adoção comercial, conforme discutido nas limitações do protótipo. A segunda decorre da renderização em Canvas: o conteúdo desenhado não fica disponível como elementos da página, de modo que não pode ser lido por tecnologias assistivas sem tratamento adicional \cite{KorenIvancevic2026} nem consultado pelos testes automatizados da mesma forma que os demais elementos da \textit{interface}. Essa característica motivou o isolamento da renderização em componentes próprios, descrito na seção de testes, para que o restante da aplicação pudesse ser testado de forma independente. A terceira refere-se à integração com o mecanismo de detecção de mudanças do Angular, que exigiu cuidado adicional, conforme discutido no capítulo seguinte.
+
+A Tabela~\ref{tab:comparacao-bibliotecas} sintetiza a comparação entre as três alternativas investigadas.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\caption{Comparação entre as alternativas investigadas para a área de desenho}
+\label{tab:comparacao-bibliotecas}
+    \begin{tabulary}{\textwidth}{|L|C|C|C|}
+    \hline
+    \textbf{Critério} & \textbf{GoJS} & \textbf{JointJS} & \textbf{Elementos próprios} \\
+    \hline
+    Exemplo oficial de diagrama ER   & Sim & Somente na versão comercial & Não se aplica \\
+    \hline
+    Seleção, arrastar e soltar e \textit{zoom} & Oferecidos pela biblioteca & Oferecidos pela biblioteca & A implementar \\
+    \hline
+    Modelo de dados em JSON          & Sim & Sim & A implementar \\
+    \hline
+    Integração com o Angular         & Documentada pelo fabricante & Documentada pelo fabricante & A implementar \\
+    \hline
+    Licença                          & Comercial, com uso acadêmico gratuito & Núcleo aberto e versão comercial & Sem custo \\
+    \hline
+    \end{tabulary}
+\begin{center}
+    {\small Fonte: Elaborado pelo autor}
+\end{center}
+\end{table}
+
+Diante desses resultados, a GoJS foi adotada como biblioteca de diagramação do protótipo. A decisão se justifica por ela reunir, sem custo no contexto acadêmico, os recursos utilizados na modelagem ER do protótipo e por oferecer um modelo de dados que se integrou diretamente tanto ao esquema de persistência quanto ao mecanismo de colaboração em tempo real. As limitações identificadas, especialmente o licenciamento comercial, foram consideradas aceitáveis para um protótipo e são retomadas na discussão dos resultados como pontos de atenção para trabalhos futuros.
 
 \section{Arquitetura do Protótipo}
 
