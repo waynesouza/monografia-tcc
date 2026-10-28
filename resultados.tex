@@ -576,6 +576,95 @@ O mecanismo de bloqueio de entidades garante a consistência do diagrama durante
     \label{fig:elemento-bloqueado}
 \end{figure}
 
+% ----------------------------------------------------------
+\subsection{Importação e Exportação SQL}
+% ----------------------------------------------------------
+
+A importação é acionada pelo botão correspondente na barra de ferramentas lateral do editor. Conforme ilustra a Figura~\ref{fig:importacao-ddl}, o navegador abre a janela de seleção de arquivos do sistema operacional, na qual o usuário escolhe o \textit{script} SQL contendo as instruções DDL a serem importadas.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/interface/tela-de-importacao-ddl.jpeg}
+    \caption{Seleção do \textit{script} SQL para importação}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:importacao-ddl}
+\end{figure}
+
+Após o processamento do arquivo, a aplicação informa que a importação foi concluída com sucesso e recarrega o diagrama, como mostra a Figura~\ref{fig:importacao-sucesso}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/interface/alert-da-importacao-bem-sucedida.jpeg}
+    \caption{Confirmação de importação bem-sucedida}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:importacao-sucesso}
+\end{figure}
+
+A Figura~\ref{fig:diagrama-importado} apresenta o diagrama resultante da importação de um \textit{script} com três tabelas relacionadas: \textit{customers}, \textit{orders} e \textit{order\_items}. As entidades, os atributos com seus tipos de dados e os relacionamentos definidos pelas chaves estrangeiras são reconstruídos automaticamente no \textit{canvas}, substituindo o conteúdo anterior do diagrama.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/interface/tela-com-diagrama-importado.jpeg}
+    \caption{Diagrama reconstruído a partir do \textit{script} SQL importado}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:diagrama-importado}
+\end{figure}
+
+A exportação segue o caminho inverso. Ao acionar o botão de exportação, o diagrama é convertido em um \textit{script} SQL e o navegador solicita o local onde o arquivo será salvo, conforme a Figura~\ref{fig:exportacao-ddl}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/interface/tela-de-exportacao-ddl.jpeg}
+    \caption{Salvamento do \textit{script} SQL exportado}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:exportacao-ddl}
+\end{figure}
+
+O Quadro~\ref{lst:ddl-exportado} apresenta o \textit{script} gerado pela exportação do diagrama da Figura~\ref{fig:diagrama-importado}. As tabelas são criadas com suas chaves primárias e, em seguida, os relacionamentos são declarados como restrições de chave estrangeira por meio de instruções \texttt{ALTER TABLE}.
+
+\begin{quadro}[H]
+    \begin{lstlisting}[frame=single, framesep=5pt, xleftmargin=5pt, xrightmargin=5pt]
+CREATE TABLE customers (
+    id INT AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE orders (
+    id INT AUTO_INCREMENT,
+    customer_id INT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE order_items (
+    id INT AUTO_INCREMENT,
+    order_id INT NOT NULL,
+    product_name VARCHAR(255) NOT NULL,
+    quantity INT NOT NULL,
+    PRIMARY KEY (id)
+);
+
+ALTER TABLE orders ADD CONSTRAINT fk_orders_customers FOREIGN KEY (customer_id) REFERENCES customers(id);
+
+ALTER TABLE order_items ADD CONSTRAINT fk_order_items_orders FOREIGN KEY (order_id) REFERENCES orders(id);
+    \end{lstlisting}
+    \caption{\textit{Script} SQL gerado pela exportação do diagrama}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{lst:ddl-exportado}
+\end{quadro}
+
 \section{Disponibilidade do Código-Fonte e da Aplicação}
 
 O código-fonte do protótipo está organizado em dois repositórios públicos no GitHub, separados por módulo:
