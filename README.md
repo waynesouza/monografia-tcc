@@ -70,3 +70,7 @@ O `latexmk` guarda o resultado da compilação anterior e não tenta de novo enq
 O BibTeX não foi executado depois da alteração. Compile com `latexmk -pdf monografia.tex` ou use a sequência manual completa acima.
 
 <!-- 1024 × 640 -->
+
+<!-- Owner https://excalidraw.com/#json=HWPl0qHwTPisUvyYYMvsD,iWHDmXf4d2peWU0cO_O8ow -->
+<!-- Editor https://excalidraw.com/#json=vpDsVhuufUh1xut1jUWfm,LWblOOztfl4Bw4qZTetTzg -->
+<!-- Viewer https://excalidraw.com/#json=3hPCWIRcAVBBXBanascky,2XErJH4B4bmNwDk8wUHDSQ -->
