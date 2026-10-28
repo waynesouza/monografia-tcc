@@ -8,11 +8,15 @@ Esta seção apresenta os resultados obtidos ao longo do desenvolvimento do prot
 
 O diagrama de caso de uso detalha as interações entre os atores e o sistema. Foram identificados três atores distintos, cada um representando um perfil de acesso diferente dentro da plataforma: \textit{Viewer}, \textit{Editor} e \textit{Owner}. Para preservar a legibilidade, os diagramas foram divididos em partes complementares, cada uma retomando o caso de uso que a conecta às demais. Como o \textit{Owner} compartilha integralmente os casos de uso do \textit{Editor}, as suas figuras apresentam somente os casos de uso que lhe são exclusivos, sem repetir as operações de modelagem já ilustradas. A especificação completa de cada caso de uso encontra-se no \hyperref[anx:caso-de-uso]{Anexo A}.
 
-O ator \textit{Viewer}, apresentado na Figura~\ref{fig:caso-de-uso-viewer}, representa o colaborador com acesso somente leitura. Após realizar o \textit{login}, ele pode listar os projetos dos quais faz parte e visualizar os diagramas associados a eles.
+% Os links contêm "#", que não pode aparecer em \url dentro de \footnote
+\urldef{\urlCasoDeUsoViewer}\url{https://excalidraw.com/#json=3hPCWIRcAVBBXBanascky,2XErJH4B4bmNwDk8wUHDSQ}
+\urldef{\urlCasoDeUsoEditor}\url{https://excalidraw.com/#json=vpDsVhuufUh1xut1jUWfm,LWblOOztfl4Bw4qZTetTzg}
+
+O ator \textit{Viewer}, apresentado na Figura~\ref{fig:caso-de-uso-viewer}, representa o colaborador com acesso somente leitura\footnote{O diagrama completo do ator \textit{Viewer} pode ser acessado em: \urlCasoDeUsoViewer.}. A listagem dos projetos dos quais faz parte inclui o \textit{login}, de modo que nenhuma ação é realizada sem autenticação. A partir dessa listagem, o \textit{Viewer} pode visualizar os diagramas associados aos projetos, caso de uso que estende a listagem.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm]{figuras/viewer.png}
+    \includegraphics[width=15cm]{figuras/viewer.jpeg}
     \caption{Diagrama de caso de uso do ator Viewer}
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
@@ -20,11 +24,11 @@ O ator \textit{Viewer}, apresentado na Figura~\ref{fig:caso-de-uso-viewer}, repr
     \label{fig:caso-de-uso-viewer}
 \end{figure}
 
-O ator \textit{Editor} herda as capacidades do \textit{Viewer} e adiciona a permissão de editar diagramas. Como o conjunto de casos de uso desse ator é extenso, o diagrama foi dividido em cinco partes, apresentadas nas Figuras~\ref{fig:caso-de-uso-editor-p1} a~\ref{fig:caso-de-uso-editor-p5}. A Figura~\ref{fig:caso-de-uso-editor-p1} apresenta o fluxo principal: após o \textit{login}, o \textit{Editor} lista os projetos, visualiza o diagrama de onde é possível exportar o \textit{script} SQL correspondente e acessa a edição do diagrama, caso de uso que concentra as operações de modelagem detalhadas nas partes seguintes.
+O ator \textit{Editor} herda as capacidades do \textit{Viewer} e adiciona a permissão de editar diagramas. Como o conjunto de casos de uso desse ator é extenso, o diagrama foi dividido em cinco partes\footnote{O diagrama completo do ator \textit{Editor} pode ser acessado em: \urlCasoDeUsoEditor.}, apresentadas nas Figuras~\ref{fig:caso-de-uso-editor-p1} a~\ref{fig:caso-de-uso-editor-p5}. A Figura~\ref{fig:caso-de-uso-editor-p1} apresenta o fluxo principal: a listagem de projetos inclui o \textit{login} e é estendida pela visualização do diagrama. A visualização, por sua vez, é estendida pela exportação do \textit{script} SQL e pela edição do diagrama, caso de uso que concentra as operações de modelagem detalhadas nas partes seguintes.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm]{figuras/editor-part1.png}
+    \includegraphics[width=15cm]{figuras/editor-part1.jpeg}
     \caption{Diagrama de caso de uso do ator Editor destacando o fluxo principal}
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
@@ -32,11 +36,11 @@ O ator \textit{Editor} herda as capacidades do \textit{Viewer} e adiciona a perm
     \label{fig:caso-de-uso-editor-p1}
 \end{figure}
 
-A Figura~\ref{fig:caso-de-uso-editor-p2} detalha, a partir do CSU-07, as operações sobre tabelas: adicionar, editar e remover. A edição de uma tabela abrange ainda a adição e a listagem dos seus atributos.
+A Figura~\ref{fig:caso-de-uso-editor-p2} detalha as operações sobre tabelas que estendem o CSU-07: adicionar, editar e remover. A edição de uma tabela sempre inclui a listagem dos seus atributos e pode ser estendida pela adição de um novo atributo.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm]{figuras/editor-part2.png}
+    \includegraphics[width=15cm]{figuras/editor-part2.jpeg}
     \caption{Diagrama de caso de uso do ator Editor destacando o gerenciamento de tabelas}
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
@@ -48,7 +52,7 @@ A Figura~\ref{fig:caso-de-uso-editor-p3} dá continuidade ao CSU-20 da parte ant
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm]{figuras/editor-part3.png}
+    \includegraphics[width=15cm]{figuras/editor-part3.jpeg}
     \caption{Diagrama de caso de uso do ator Editor destacando o gerenciamento de atributos}
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
@@ -56,24 +60,24 @@ A Figura~\ref{fig:caso-de-uso-editor-p3} dá continuidade ao CSU-20 da parte ant
     \label{fig:caso-de-uso-editor-p3}
 \end{figure}
 
-A Figura~\ref{fig:caso-de-uso-editor-p4} retoma o CSU-07 e apresenta as operações sobre os relacionamentos entre entidades: adicionar e remover.
+A Figura~\ref{fig:caso-de-uso-editor-p4} retoma o CSU-07 e apresenta outras extensões da edição do diagrama: a adição e a remoção de relacionamentos entre entidades e o reposicionamento de elementos na área de desenho.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm]{figuras/editor-part4.png}
-    \caption{Diagrama de caso de uso do ator Editor destacando o gerenciamento de relacionamentos}
+    \includegraphics[width=15cm]{figuras/editor-part4.jpeg}
+    \caption{Diagrama de caso de uso do ator Editor destacando o gerenciamento de relacionamentos e a movimentação de elementos}
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
     \end{center}
     \label{fig:caso-de-uso-editor-p4}
 \end{figure}
 
-Por fim, a Figura~\ref{fig:caso-de-uso-editor-p5}, também derivada do CSU-07, reúne o reposicionamento de elementos na área de desenho e a importação do \textit{script} SQL.
+Por fim, a Figura~\ref{fig:caso-de-uso-editor-p5} apresenta a importação do \textit{script} SQL, que também estende o CSU-07.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm]{figuras/editor-part5.png}
-    \caption{Diagrama de caso de uso do ator Editor destacando a movimentação de elementos e importação SQL}
+    \includegraphics[width=15cm]{figuras/editor-part5.jpeg}
+    \caption{Diagrama de caso de uso do ator Editor destacando a importação SQL}
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
     \end{center}
