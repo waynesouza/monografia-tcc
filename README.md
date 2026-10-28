@@ -71,6 +71,6 @@ O BibTeX não foi executado depois da alteração. Compile com `latexmk -pdf mon
 
 <!-- 1024 × 640 -->
 
-<!-- Owner https://excalidraw.com/#json=HWPl0qHwTPisUvyYYMvsD,iWHDmXf4d2peWU0cO_O8ow -->
+<!-- Owner https://excalidraw.com/#json=4QSsiWj6YhGr5VoOFNs1V,EjxswZkUFHg9A2g9XntIOw -->
 <!-- Editor https://excalidraw.com/#json=vpDsVhuufUh1xut1jUWfm,LWblOOztfl4Bw4qZTetTzg -->
 <!-- Viewer https://excalidraw.com/#json=3hPCWIRcAVBBXBanascky,2XErJH4B4bmNwDk8wUHDSQ -->

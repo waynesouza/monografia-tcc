@@ -6,11 +6,12 @@ Esta seção apresenta os resultados obtidos ao longo do desenvolvimento do prot
 
 \section{Diagrama de Caso de Uso}
 
-O diagrama de caso de uso detalha as interações entre os atores e o sistema. Foram identificados três atores distintos, cada um representando um perfil de acesso diferente dentro da plataforma: \textit{Viewer}, \textit{Editor} e \textit{Owner}. Para preservar a legibilidade, os diagramas foram divididos em partes complementares, cada uma retomando o caso de uso que a conecta às demais. Como o \textit{Owner} compartilha integralmente os casos de uso do \textit{Editor}, as suas figuras apresentam somente os casos de uso que lhe são exclusivos, sem repetir as operações de modelagem já ilustradas. A especificação completa de cada caso de uso encontra-se no \hyperref[anx:caso-de-uso]{Anexo A}.
+O diagrama de caso de uso detalha as interações entre os atores e o sistema. Foram identificados três atores distintos, cada um representando um perfil de acesso diferente dentro da plataforma: \textit{Viewer}, \textit{Editor} e \textit{Owner}. Para preservar a legibilidade, os diagramas foram divididos em partes complementares, cada uma retomando o caso de uso que a conecta às demais. A especificação completa de cada caso de uso encontra-se no \hyperref[anx:caso-de-uso]{Anexo A}.
 
 % Os links contêm "#", que não pode aparecer em \url dentro de \footnote
 \urldef{\urlCasoDeUsoViewer}\url{https://excalidraw.com/#json=3hPCWIRcAVBBXBanascky,2XErJH4B4bmNwDk8wUHDSQ}
 \urldef{\urlCasoDeUsoEditor}\url{https://excalidraw.com/#json=vpDsVhuufUh1xut1jUWfm,LWblOOztfl4Bw4qZTetTzg}
+\urldef{\urlCasoDeUsoOwner}\url{https://excalidraw.com/#json=4QSsiWj6YhGr5VoOFNs1V,EjxswZkUFHg9A2g9XntIOw}
 
 O ator \textit{Viewer}, apresentado na Figura~\ref{fig:caso-de-uso-viewer}, representa o colaborador com acesso somente leitura\footnote{O diagrama completo do ator \textit{Viewer} pode ser acessado em: \urlCasoDeUsoViewer.}. A listagem dos projetos dos quais faz parte inclui o \textit{login}, de modo que nenhuma ação é realizada sem autenticação. A partir dessa listagem, o \textit{Viewer} pode visualizar os diagramas associados aos projetos, caso de uso que estende a listagem.
 
@@ -84,23 +85,23 @@ Por fim, a Figura~\ref{fig:caso-de-uso-editor-p5} apresenta a importação do \t
     \label{fig:caso-de-uso-editor-p5}
 \end{figure}
 
-O ator \textit{Owner} possui o conjunto mais amplo de permissões: além de todos os casos de uso do \textit{Editor}, é o responsável pelo ciclo de vida dos projetos e pela gestão do time de colaboradores. As operações de modelagem do diagrama são exatamente as mesmas do \textit{Editor} e, por isso, não são reproduzidas novamente e permanecem válidas as Figuras~\ref{fig:caso-de-uso-editor-p1} a~\ref{fig:caso-de-uso-editor-p5}, bastando substituir o ator. As Figuras~\ref{fig:caso-de-uso-owner-p1} a~\ref{fig:caso-de-uso-owner-p3} apresentam apenas o que é exclusivo desse ator. A Figura~\ref{fig:caso-de-uso-owner-p1} mostra o fluxo principal: após o \textit{login}, o \textit{Owner} pode criar projetos e listar os projetos existentes, listagem a partir da qual remove projetos e acessa a visualização do diagrama, retomando daí o mesmo percurso de edição já descrito para o \textit{Editor}.
+O ator \textit{Owner} possui o conjunto mais amplo de permissões: além de todos os casos de uso do \textit{Editor}, é o responsável pelo ciclo de vida dos projetos e pela gestão do time de colaboradores. Por reunir todas as funcionalidades do sistema, o seu diagrama foi dividido em sete partes\footnote{O diagrama completo do ator \textit{Owner} pode ser acessado em: \urlCasoDeUsoOwner.}, apresentadas nas Figuras~\ref{fig:caso-de-uso-owner-p1} a~\ref{fig:caso-de-uso-owner-p7}. A Figura~\ref{fig:caso-de-uso-owner-p1} mostra o ponto de partida: tanto a criação quanto a listagem de projetos incluem o \textit{login}, de modo que nenhuma ação é realizada sem autenticação.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm]{figuras/owner-part1.png}
-    \caption{Diagrama de caso de uso do ator Owner destacando fluxo principal e ciclo de vida dos projetos}
+    \includegraphics[width=15cm]{figuras/owner-part1.jpeg}
+    \caption{Diagrama de caso de uso do ator Owner destacando o \textit{login} e a criação e listagem de projetos}
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
     \end{center}
     \label{fig:caso-de-uso-owner-p1}
 \end{figure}
 
-A Figura~\ref{fig:caso-de-uso-owner-p2} dá continuidade à listagem de projetos e apresenta a edição do projeto, que dá acesso à adição de membros ao time e à listagem dos membros existentes.
+A Figura~\ref{fig:caso-de-uso-owner-p2} apresenta as extensões da listagem de projetos voltadas à sua gestão: a remoção e a edição do projeto. A edição sempre inclui a listagem dos membros do time e pode ser estendida pela adição de novos membros. A listagem de membros, por sua vez, é estendida pela edição e pela remoção de um membro.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm]{figuras/owner-part2.png}
+    \includegraphics[width=15cm]{figuras/owner-part2.jpeg}
     \caption{Diagrama de caso de uso do ator Owner destacando a gestão do projeto e do time}
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
@@ -108,16 +109,64 @@ A Figura~\ref{fig:caso-de-uso-owner-p2} dá continuidade à listagem de projetos
     \label{fig:caso-de-uso-owner-p2}
 \end{figure}
 
-Por fim, a Figura~\ref{fig:caso-de-uso-owner-p3} dá continuidade ao CSU-09, com a remoção e a edição de membros, sendo esta última estendida pela alteração do papel de acesso do colaborador no projeto.
+A Figura~\ref{fig:caso-de-uso-owner-p3} dá continuidade ao CSU-09 e mostra que a edição de um membro é estendida pela alteração do seu papel de acesso no projeto.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm]{figuras/owner-part3.png}
+    \includegraphics[width=15cm]{figuras/owner-part3.jpeg}
     \caption{Diagrama de caso de uso do ator Owner destacando o gerenciamento de membros}
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
     \end{center}
     \label{fig:caso-de-uso-owner-p3}
+\end{figure}
+
+A partir da Figura~\ref{fig:caso-de-uso-owner-p4}, o diagrama percorre as operações de modelagem, que são as mesmas do \textit{Editor}. A visualização do diagrama estende a listagem de projetos e é estendida pela exportação do \textit{script} SQL e pela edição do diagrama.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/owner-part4.jpeg}
+    \caption{Diagrama de caso de uso do ator Owner destacando a visualização e a edição do diagrama}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:caso-de-uso-owner-p4}
+\end{figure}
+
+A Figura~\ref{fig:caso-de-uso-owner-p5} apresenta as extensões do CSU-07 relativas às tabelas (adicionar, editar e remover) e a adição de relacionamentos. A edição de uma tabela sempre inclui a listagem dos seus atributos e pode ser estendida pela adição de um novo atributo.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/owner-part5.jpeg}
+    \caption{Diagrama de caso de uso do ator Owner destacando o gerenciamento de tabelas}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:caso-de-uso-owner-p5}
+\end{figure}
+
+A Figura~\ref{fig:caso-de-uso-owner-p6} dá continuidade ao CSU-20, apresentando a edição e a remoção de atributos como extensões da listagem.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/owner-part6.jpeg}
+    \caption{Diagrama de caso de uso do ator Owner destacando o gerenciamento de atributos}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:caso-de-uso-owner-p6}
+\end{figure}
+
+Por fim, a Figura~\ref{fig:caso-de-uso-owner-p7} reúne as demais extensões do CSU-07: a remoção de relacionamentos, o reposicionamento de elementos na área de desenho e a importação do \textit{script} SQL.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{figuras/owner-part7.jpeg}
+    \caption{Diagrama de caso de uso do ator Owner destacando relacionamentos, movimentação de elementos e importação SQL}
+    \begin{center}
+        {\small Fonte: Elaborado pelo autor}
+    \end{center}
+    \label{fig:caso-de-uso-owner-p7}
 \end{figure}
 
 \section{Modelos de Dados}
