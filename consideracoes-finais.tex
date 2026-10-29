@@ -4,8 +4,35 @@
 
 O presente trabalho cumpriu com seus objetivos, confirmando a hipótese formulada na metodologia. A plataforma resultante integra, em uma única solução gratuita, a modelagem interativa de esquemas de banco de dados, a colaboração em tempo real entre múltiplos usuários e operações de importação e exportação SQL, conjunto de capacidades que, dentre as ferramentas analisadas (Tabela~\ref{tab:comparacao}), não encontra equivalente gratuito.
 
-Os quatro objetivos específicos definidos na introdução foram atendidos. O primeiro, de modelar e persistir os elementos do diagrama, foi atendido pelo editor interativo, que registra tabelas, atributos, tipos de dados, relacionamentos e posicionamentos e preserva o diagrama entre as sessões de trabalho. O segundo, de investigar a biblioteca GoJS, foi cumprido pela análise apresentada na Seção~\ref{sec:investigacao-biblioteca}, que fundamentou a sua adoção para a exibição e a edição interativa dos diagramas. O terceiro, de permitir que múltiplos usuários trabalhem simultaneamente no mesmo diagrama, foi atendido pela comunicação em tempo real entre os colaboradores, que propaga as alterações de cada um aos demais e as combina sem que uma sobrescreva a outra. O quarto, de garantir que apenas usuários autorizados acessem e modifiquem os diagramas, foi atendido pela autenticação por \textit{token} e pela verificação do perfil de cada usuário no projeto, tanto nas requisições ao servidor quanto na comunicação em tempo real. O atendimento desses objetivos foi verificado pelos testes apresentados na Seção~\ref{sec:testes-validacao}.
+Os cinco objetivos específicos definidos na introdução foram atendidos. O primeiro, de modelar e persistir os elementos do diagrama, foi atendido pelo editor interativo, que registra tabelas, atributos, tipos de dados, relacionamentos e posicionamentos e preserva o diagrama entre as sessões de trabalho. O segundo, de investigar a biblioteca GoJS, foi cumprido pela análise apresentada na Seção~\ref{sec:investigacao-biblioteca}, que fundamentou a sua adoção para a exibição e a edição interativa dos diagramas. O terceiro, de permitir que múltiplos usuários trabalhem simultaneamente no mesmo diagrama, foi atendido pela comunicação em tempo real entre os colaboradores, que propaga as alterações de cada um aos demais e as combina sem que uma sobrescreva a outra. O quarto, de garantir que apenas usuários autorizados acessem e modifiquem os diagramas, foi atendido pela autenticação por \textit{token} e pela verificação do perfil de cada usuário no projeto, tanto nas requisições ao servidor quanto na comunicação em tempo real. O quinto, de importar e exportar diagramas por meio de \textit{scripts} SQL, foi atendido pela construção do diagrama a partir de um \textit{script} no dialeto MySQL e pela geração do \textit{script} correspondente a um diagrama modelado.
+
+A Tabela~\ref{tab:objetivos-evidencias} relaciona cada objetivo específico aos casos de uso que o detalham, descritos no \hyperref[anx:caso-de-uso]{Anexo A}, e às figuras, tabelas e quadros que evidenciam o seu atendimento. O segundo objetivo, por ser de natureza investigativa, não corresponde a um caso de uso.
 
 As limitações identificadas, em especial nos tempos de resposta da colaboração, foram discutidas na Seção~\ref{sec:limitacoes} e orientam os trabalhos futuros propostos.
 
 O ganho proporcionado por este trabalho se manifesta em duas dimensões. Do ponto de vista técnico, o protótipo serve como referência prática para a construção de ferramentas colaborativas baseadas em comunicação em tempo real com editores visuais interativos em ambiente \textit{web}. Do ponto de vista da área, o trabalho contribui para reduzir a lacuna identificada na justificativa: a carência de uma ferramenta colaborativa, baseada em \textit{web} e sem barreiras de custo para a modelagem de diagramas ER, atendendo às demandas de equipes de desenvolvimento distribuídas.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\caption{Relação entre os objetivos específicos, os casos de uso e as evidências}
+\label{tab:objetivos-evidencias}
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{4.6cm}|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}p{6.2cm}|}
+    \hline
+    \textbf{Objetivo específico} & \textbf{Casos de uso} & \textbf{Evidências} \\
+    \hline
+    1. Modelar e persistir os elementos do diagrama & CSU-06, CSU-07 e CSU-13 a CSU-22 & Figuras~\ref{fig:modelo-nosql} e~\ref{fig:diagrama-vazio} a~\ref{fig:diagrama-com-entidades}; Quadros~\ref{lst:link-data} e~\ref{lst:node-data}; Tabela~\ref{tab:resultado-roteiro} (CT-06) \\
+    \hline
+    2. Investigar a biblioteca GoJS & -- & Tabela~\ref{tab:comparacao-bibliotecas} \\
+    \hline
+    3. Permitir a edição simultânea do mesmo diagrama por múltiplos usuários & CSU-07, CSU-13 e CSU-14 & Figuras~\ref{fig:arquitetura} e~\ref{fig:elemento-bloqueado}; Tabelas~\ref{tab:resultado-roteiro} (CT-01, CT-02, CT-03, CT-05 e CT-07), \ref{tab:latencia-protocolo} e~\ref{tab:latencia-percebida} \\
+    \hline
+    4. Garantir que apenas usuários autorizados acessem e modifiquem os diagramas & CSU-01 a CSU-05 e CSU-08 a CSU-12 & Figuras~\ref{fig:arquitetura-autenticacao}, \ref{fig:tela-login} a~\ref{fig:adicionar-membro} e~\ref{fig:perfil-viewer}; Tabela~\ref{tab:resultado-roteiro} (CT-04) \\
+    \hline
+    5. Importar e exportar diagramas por meio de \textit{scripts} SQL & CSU-23 e CSU-24 & Figuras~\ref{fig:importacao-ddl} a~\ref{fig:exportacao-ddl}; Quadro~\ref{lst:ddl-exportado} \\
+    \hline
+    \end{tabular}
+\begin{center}
+    {\small Fonte: Elaborado pelo autor}
+\end{center}
+\end{table}
