@@ -85,7 +85,7 @@ Por fim, a Figura~\ref{fig:caso-de-uso-editor-p5} apresenta a importação do \t
     \label{fig:caso-de-uso-editor-p5}
 \end{figure}
 
-O ator \textit{Owner} possui o conjunto mais amplo de permissões: além de todos os casos de uso do \textit{Editor}, é o responsável pelo ciclo de vida dos projetos e pela gestão do time de colaboradores. Por reunir todas as funcionalidades do sistema, o seu diagrama foi dividido em sete partes\footnote{O diagrama completo do ator \textit{Owner} pode ser acessado em: \urlCasoDeUsoOwner.}, apresentadas nas Figuras~\ref{fig:caso-de-uso-owner-p1} a~\ref{fig:caso-de-uso-owner-p7}. A Figura~\ref{fig:caso-de-uso-owner-p1} mostra o ponto de partida: tanto a criação quanto a listagem de projetos incluem o \textit{login}, de modo que nenhuma ação é realizada sem autenticação.
+O ator \textit{Owner} possui o conjunto mais amplo de permissões: além de todos os casos de uso do \textit{Editor}, é o responsável pelo ciclo de vida dos projetos e pela gestão da equipe de colaboradores. Por reunir todas as funcionalidades do sistema, o seu diagrama foi dividido em sete partes\footnote{O diagrama completo do ator \textit{Owner} pode ser acessado em: \urlCasoDeUsoOwner.}, apresentadas nas Figuras~\ref{fig:caso-de-uso-owner-p1} a~\ref{fig:caso-de-uso-owner-p7}. A Figura~\ref{fig:caso-de-uso-owner-p1} mostra o ponto de partida: tanto a criação quanto a listagem de projetos incluem o \textit{login}, de modo que nenhuma ação é realizada sem autenticação.
 
 \begin{figure}[H]
     \centering
@@ -97,12 +97,12 @@ O ator \textit{Owner} possui o conjunto mais amplo de permissões: além de todo
     \label{fig:caso-de-uso-owner-p1}
 \end{figure}
 
-A Figura~\ref{fig:caso-de-uso-owner-p2} apresenta as extensões da listagem de projetos voltadas à sua gestão: a remoção e a edição do projeto. A edição sempre inclui a listagem dos membros do time e pode ser estendida pela adição de novos membros. A listagem de membros, por sua vez, é estendida pela edição e pela remoção de um membro.
+A Figura~\ref{fig:caso-de-uso-owner-p2} apresenta as extensões da listagem de projetos voltadas à sua gestão: a remoção e a edição do projeto. A edição sempre inclui a listagem dos membros da equipe e pode ser estendida pela adição de novos membros. A listagem de membros, por sua vez, é estendida pela edição e pela remoção de um membro.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=15cm]{figuras/owner-part2.jpeg}
-    \caption{Diagrama de caso de uso do ator \textit{Owner} destacando a gestão do projeto e do time}
+    \caption{Diagrama de caso de uso do ator \textit{Owner} destacando a gestão do projeto e da equipe}
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
     \end{center}
@@ -173,7 +173,7 @@ Por fim, a Figura~\ref{fig:caso-de-uso-owner-p7} reúne as demais extensões do 
 
 As figuras \ref{fig:modelo-conceitual}, \ref{fig:modelo-logico} e \ref{fig:modelo-nosql} apresentam, respectivamente, os artefatos de modelagem de dados produzidos no projeto: o modelo conceitual e o modelo lógico do banco de dados relacional, e o esquema não-relacional com MongoDB.
 
-O modelo conceitual define as entidades e relacionamentos de alto nível, representando a estrutura geral dos dados. Ao todo, sete entidades compõem o modelo (\textit{users}, \textit{teams}, \textit{projects}, \textit{diagrams}, \textit{entities}, \textit{attributes} e \textit{relationships}) conectadas por relações que refletem a hierarquia usuário-time-projeto-diagrama e a composição interna de cada diagrama em entidades, atributos e relacionamentos.
+O modelo conceitual define as entidades e relacionamentos de alto nível, representando a estrutura geral dos dados. Ao todo, sete entidades compõem o modelo (\textit{users}, \textit{teams}, \textit{projects}, \textit{diagrams}, \textit{entities}, \textit{attributes} e \textit{relationships}) conectadas por relações que refletem a hierarquia usuário-equipe-projeto-diagrama e a composição interna de cada diagrama em entidades, atributos e relacionamentos.
 
 \begin{figure}[H]
     \centering
@@ -185,7 +185,7 @@ O modelo conceitual define as entidades e relacionamentos de alto nível, repres
     \label{fig:modelo-conceitual}
 \end{figure}
 
-O modelo lógico detalha a estrutura das tabelas e seus atributos, considerando as características do sistema de gerenciamento de banco de dados utilizado. O esquema relacional é composto por quatro tabelas (\textit{teams}, \textit{projects}, \textit{users} e \textit{refresh\_tokens}) relacionadas por chaves estrangeiras que garantem a integridade referencial entre usuários, times e projetos, além do controle de sessão por meio dos \textit{tokens} de renovação.
+O modelo lógico detalha a estrutura das tabelas e seus atributos, considerando as características do sistema de gerenciamento de banco de dados utilizado. O esquema relacional é composto por quatro tabelas (\textit{teams}, \textit{projects}, \textit{users} e \textit{refresh\_tokens}) relacionadas por chaves estrangeiras que garantem a integridade referencial entre usuários, equipes e projetos, além do controle de sessão por meio dos \textit{tokens} de renovação.
 
 \begin{figure}[H]
     \centering
@@ -342,9 +342,9 @@ A Figura~\ref{fig:arquitetura-autenticacao} ilustra a arquitetura de autenticaç
     \label{fig:arquitetura-autenticacao}
 \end{figure}
 
-\subsection{Gerenciamento de Projetos e Times}
+\subsection{Gerenciamento de Projetos e Equipes}
 
-O sistema permite ao usuário criar e gerenciar projetos de modelagem. Cada projeto possui um time de colaboradores, para o qual o criador pode convidar outros usuários cadastrados na plataforma. A gestão de projetos e times é realizada por meio de uma interface de \textit{dashboard}, com operações de criação, leitura, atualização e exclusão comunicadas ao servidor e persistidas no banco de dados.
+O sistema permite ao usuário criar e gerenciar projetos de modelagem. Cada projeto possui uma equipe de colaboradores, para a qual o criador pode convidar outros usuários cadastrados na plataforma. A gestão de projetos e equipes é realizada por meio de uma interface de \textit{dashboard}, com operações de criação, leitura, atualização e exclusão comunicadas ao servidor e persistidas no banco de dados.
 
 \subsection{Editor de Diagramas ER}
 
@@ -352,7 +352,7 @@ O editor de diagramas constitui o componente central do protótipo. Construído 
 
 \subsection{Colaboração em Tempo Real}
 
-A funcionalidade de colaboração permite que múltiplos usuários de um mesmo time trabalhem simultaneamente no mesmo diagrama. Ao abrir um projeto, o cliente estabelece uma conexão persistente com o servidor, autenticada pelo \textit{token} JWT, e passa a receber as alterações dos demais membros. O servidor só aceita a conexão de usuários autenticados e só entrega as alterações de um projeto aos seus membros. As alterações de cada usuário são enviadas 1,5 segundo depois da última edição, contendo apenas os elementos alterados, e o servidor as combina com as dos demais antes de distribuí-las, conforme a estratégia descrita na Metodologia. Quando um usuário abre uma tabela para edição, os demais colaboradores são notificados do bloqueio e ficam impedidos de editá-la até que ele encerre a edição, que a sua conexão termine ou que se passem 5 minutos.
+A funcionalidade de colaboração permite que múltiplos usuários de uma mesma equipe trabalhem simultaneamente no mesmo diagrama. Ao abrir um projeto, o cliente estabelece uma conexão persistente com o servidor, autenticada pelo \textit{token} JWT, e passa a receber as alterações dos demais membros. O servidor só aceita a conexão de usuários autenticados e só entrega as alterações de um projeto aos seus membros. As alterações de cada usuário são enviadas 1,5 segundo depois da última edição, contendo apenas os elementos alterados, e o servidor as combina com as dos demais antes de distribuí-las, conforme a estratégia descrita na Metodologia. Quando um usuário abre uma tabela para edição, os demais colaboradores são notificados do bloqueio e ficam impedidos de editá-la até que ele encerre a edição, que a sua conexão termine ou que se passem 5 minutos.
 
 \subsection{Importação e Exportação de Diagramas}
 
@@ -361,7 +361,7 @@ O protótipo suporta a interoperabilidade com outros ambientes por meio de opera
 \section{Testes e Validação do Protótipo}
 \label{sec:testes-validacao}
 
-Esta seção apresenta os resultados da estratégia de testes descrita na Subseção~\ref{subsec:estrategia-testes}: a composição dos testes automatizados e a cobertura de código, o teste de mutação, os testes de sistema e as medições de desempenho. Além dos testes automatizados, as APIs REST do \textit{back-end} foram testadas manualmente com o Postman, nos fluxos de autenticação e de renovação de \textit{token}, de gestão de projetos e times e de gravação do diagrama, e a interface foi verificada manualmente nos navegadores Google Chrome e Mozilla Firefox.
+Esta seção apresenta os resultados da estratégia de testes descrita na Subseção~\ref{subsec:estrategia-testes}: a composição dos testes automatizados e a cobertura de código, o teste de mutação, os testes de sistema e as medições de desempenho. Além dos testes automatizados, as APIs REST do \textit{back-end} foram testadas manualmente com o Postman, nos fluxos de autenticação e de renovação de \textit{token}, de gestão de projetos e equipes e de gravação do diagrama, e a interface foi verificada manualmente nos navegadores Google Chrome e Mozilla Firefox.
 
 \subsection{Testes Automatizados e Cobertura de Código}
 
@@ -506,7 +506,7 @@ A Tabela~\ref{tab:mutacao} apresenta o resultado do teste de mutação nos dois 
 \label{tab:mutacao}
     \begin{tabular}{|l|r|r|r|r|}
     \hline
-    \textbf{Projeto} & \textbf{Mutantes avaliados} & \textbf{Mortos} & \textbf{Sobreviventes} & \textbf{Escore} \\
+    \textbf{Projeto} & \textbf{Mutantes avaliados} & \textbf{Mortos} & \textbf{Sobreviventes} & \textbf{\textit{Score}} \\
     \hline
     \textit{Back-end} & 534 & 499 & 35 & 93,4\% \\
     \hline
@@ -655,7 +655,7 @@ curl -X POST https://erd-core.onrender.com/api/user \
 \end{quadro}
 
 % ----------------------------------------------------------
-\subsection{Gerenciamento de Projetos e Times}
+\subsection{Gerenciamento de Projetos e Equipes}
 % ----------------------------------------------------------
 
 Após o \textit{login}, o usuário é direcionado à tela principal da aplicação, apresentada na Figura~\ref{fig:tela-principal}. O menu lateral lista os projetos dos quais o usuário faz parte e disponibiliza o botão para criação de um novo projeto. Na parte inferior do menu, são exibidas as informações do usuário autenticado e a opção de encerrar a sessão.
@@ -682,12 +682,12 @@ Ao acionar o botão de criação, é exibido o \textit{modal} apresentado na Fig
     \label{fig:criacao-projeto}
 \end{figure}
 
-A Figura~\ref{fig:edicao-projeto} ilustra o \textit{modal} de edição de projeto, que reúne em uma única tela a edição dos dados do projeto e o gerenciamento do time de colaboradores. A seção \textit{Team Members} lista os membros com seus respectivos papéis de acesso, e o \textit{Owner} pode adicionar ou remover colaboradores e alterar seus papéis. A tela também disponibiliza a opção de excluir o projeto.
+A Figura~\ref{fig:edicao-projeto} ilustra o \textit{modal} de edição de projeto, que reúne em uma única tela a edição dos dados do projeto e o gerenciamento da equipe de colaboradores. A seção \textit{Team Members} lista os membros com seus respectivos papéis de acesso, e o \textit{Owner} pode adicionar ou remover colaboradores e alterar seus papéis. A tela também disponibiliza a opção de excluir o projeto.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figuras/interface/modal-de-edicao-de-projeto.jpeg}
-    \caption{\textit{Modal} de edição de projeto e gerenciamento de time}
+    \caption{\textit{Modal} de edição de projeto e gerenciamento de equipe}
     \begin{center}
         {\small Fonte: Elaborado pelo autor}
     \end{center}
