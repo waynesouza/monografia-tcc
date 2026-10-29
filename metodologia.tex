@@ -220,10 +220,18 @@ A validação do protótipo foi organizada em três níveis de teste, que verifi
 Os testes unitários verificam cada unidade de código de forma isolada: as dependências externas a ela, como os bancos de dados e a comunicação em tempo real, são substituídas por versões simuladas. Os casos desse nível não foram derivados dos casos de uso. Eles foram escritos unidade a unidade, com o objetivo de exercitar todos os caminhos de execução de cada uma, e por isso a cobertura de código foi adotada como critério de completude: o repositório rejeita qualquer atualização que reduza a cobertura abaixo de 100\%. No \textit{front-end}, o serviço de renderização dos diagramas e o componente que abre a conexão com o servidor, que dependem diretamente do GoJS e do SockJS, não fazem parte da medição. Como a cobertura indica apenas quais trechos foram executados, e não se o comportamento deles foi verificado \cite{Inozemtseva2014}, a eficácia desses testes foi avaliada à parte, pelo teste de mutação.
 
 \subsubsection{Testes de Integração}
-Por substituírem as dependências de cada unidade, os testes unitários não verificam se as partes do sistema funcionam em conjunto. Para o canal de comunicação em tempo real, núcleo da colaboração, foram escritos testes de integração que executam a aplicação completa: um cliente real se conecta ao servidor pelo protocolo WebSocket, apresentando o \textit{token} JWT da mesma forma que o navegador, e as permissões de cada usuário são lidas de um banco de dados relacional mantido em memória. Somente o banco de dados dos diagramas é substituído por uma versão simulada. Os casos verificam que: (i) uma alteração feita por um \textit{Editor} chega aos demais membros do projeto; (ii) uma alteração enviada por um \textit{Viewer} não é gravada nem propagada; (iii) uma conexão sem \textit{token} válido é recusada; (iv) um usuário de fora do projeto não recebe as suas alterações; e (v) alterações simultâneas de dois usuários em tabelas diferentes são ambas preservadas.
+Por substituírem as dependências de cada unidade, os testes unitários não verificam se as partes do sistema funcionam em conjunto. Para o canal de comunicação em tempo real, núcleo da colaboração, foram escritos testes de integração que executam a aplicação completa: um cliente real se conecta ao servidor pelo protocolo WebSocket, apresentando o \textit{token} JWT da mesma forma que o navegador, e as permissões de cada usuário são lidas de um banco de dados relacional mantido em memória. Somente o banco de dados dos diagramas é substituído por uma versão simulada. Foram definidos cinco casos, que verificam as seguintes regras:
+
+\begin{itemize}
+    \item Uma alteração feita por um \textit{Editor} chega aos demais membros do projeto.
+    \item Uma alteração enviada por um \textit{Viewer} não é gravada nem propagada.
+    \item Uma conexão sem \textit{token} válido é recusada.
+    \item Um usuário de fora do projeto não recebe as alterações feitas nele.
+    \item Alterações simultâneas de dois usuários em tabelas diferentes são ambas preservadas.
+\end{itemize}
 
 \subsubsection{Testes de Sistema}
-Os testes de sistema verificam o protótipo da forma como os usuários o utilizam. Cada caso foi derivado de um caso de uso do \hyperref[anx:caso-de-uso]{Anexo A}, com prioridade para os que envolvem mais de um usuário, já que a colaboração é o objetivo central do trabalho: a visualização (CSU-06) e a edição do diagrama (CSU-07), em especial a regra de que as alterações são propagadas aos demais usuários conectados ao projeto, e a inclusão (CSU-13) e a edição de tabelas (CSU-14). Em cada caso, o Google Chrome é aberto em sessões independentes, uma para cada membro do projeto, cada uma autenticada pela tela de \textit{login}; as ações são executadas em uma sessão, e o resultado é verificado nas demais. Cada caso usa um projeto próprio, e as tabelas de que ele precisa como pré-condição são criadas antes da abertura dos navegadores, pela importação de um \textit{script} SQL (CSU-24). Assim, cada caso depende apenas do comportamento que verifica. O roteiro, apresentado na Tabela~\ref{tab:roteiro-testes}, é executado automaticamente pelo Playwright.
+Os testes de sistema verificam o protótipo da forma como os usuários o utilizam. Cada caso foi derivado de um caso de uso do \hyperref[anx:caso-de-uso]{Anexo A}, com prioridade para os que envolvem mais de um usuário, já que a colaboração é o objetivo central do trabalho: a visualização e a edição do diagrama, em especial a regra de que as alterações são propagadas aos demais usuários conectados ao projeto, e a inclusão e a edição de tabelas. Em cada caso, o Google Chrome é aberto em sessões independentes, uma para cada membro do projeto, cada uma autenticada pela tela de \textit{login}; as ações são executadas em uma sessão, e o resultado é verificado nas demais. Cada caso usa um projeto próprio, e as tabelas de que ele precisa como pré-condição são criadas antes da abertura dos navegadores, pela importação de um \textit{script} SQL. Assim, cada caso depende apenas do comportamento que verifica. O roteiro, apresentado na Tabela~\ref{tab:roteiro-testes}, é executado automaticamente pelo Playwright.
 
 \begin{table}[H]
 \centering
@@ -231,23 +239,23 @@ Os testes de sistema verificam o protótipo da forma como os usuários o utiliza
 \caption{Roteiro dos testes de sistema}
 \label{tab:roteiro-testes}
 \resizebox{\textwidth}{!}{%
-    \begin{tabular}{|l|l|p{3.6cm}|p{4.6cm}|p{4.6cm}|}
+    \begin{tabular}{|l|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}p{4.6cm}|>{\raggedright\arraybackslash}p{4.6cm}|}
     \hline
     \textbf{ID} & \textbf{Caso de uso} & \textbf{Pré-condição} & \textbf{Ações} & \textbf{Resultado esperado} \\
     \hline
-    CT-01 & CSU-07, CSU-13 & Projeto vazio, aberto pelo \textit{Owner}, pelo \textit{Editor} e pelo \textit{Viewer} & O \textit{Owner} adiciona uma tabela & A tabela aparece para o \textit{Editor} e para o \textit{Viewer} \\
+    CT-01 & Editar Diagrama\newline Adicionar Tabela & Projeto vazio, aberto pelo \textit{Owner}, pelo \textit{Editor} e pelo \textit{Viewer} & O \textit{Owner} adiciona uma tabela & A tabela aparece para o \textit{Editor} e para o \textit{Viewer} \\
     \hline
-    CT-02 & CSU-07, CSU-14 & Projeto com uma tabela, aberto pelo \textit{Owner} e pelo \textit{Editor} & O \textit{Editor} abre a tabela e altera o seu nome & O novo nome aparece para o \textit{Owner} \\
+    CT-02 & Editar Diagrama\newline Editar Tabela & Projeto com uma tabela, aberto pelo \textit{Owner} e pelo \textit{Editor} & O \textit{Editor} abre a tabela e altera o seu nome & O novo nome aparece para o \textit{Owner} \\
     \hline
-    CT-03 & CSU-14 & Projeto com uma tabela, aberto pelo \textit{Owner} e pelo \textit{Editor} & O \textit{Editor} abre a tabela para edição; o \textit{Owner} tenta abri-la; o \textit{Editor} encerra a edição; o \textit{Owner} tenta de novo & A primeira tentativa é recusada, com a indicação de quem está editando; a segunda é permitida \\
+    CT-03 & Editar Tabela & Projeto com uma tabela, aberto pelo \textit{Owner} e pelo \textit{Editor} & O \textit{Editor} abre a tabela para edição; o \textit{Owner} tenta abri-la; o \textit{Editor} encerra a edição; o \textit{Owner} tenta de novo & A primeira tentativa é recusada, com a indicação de quem está editando; a segunda é permitida \\
     \hline
-    CT-04 & CSU-06 & Projeto com uma tabela, aberto pelo \textit{Owner} e pelo \textit{Viewer} & O \textit{Viewer} procura a opção de adicionar tabela e tenta abrir a tabela para edição & A opção não é exibida, a edição é recusada e o diagrama do \textit{Owner} não se altera \\
+    CT-04 & Visualizar Diagrama & Projeto com uma tabela, aberto pelo \textit{Owner} e pelo \textit{Viewer} & O \textit{Viewer} procura a opção de adicionar tabela e tenta abrir a tabela para edição & A opção não é exibida, a edição é recusada e o diagrama do \textit{Owner} não se altera \\
     \hline
-    CT-05 & CSU-07, CSU-14 & Projeto com duas tabelas, aberto pelo \textit{Owner} e pelo \textit{Editor} & Cada um renomeia uma tabela diferente, e os dois salvam dentro do mesmo intervalo de 1,5 segundo & Ao reabrir o projeto, os dois usuários veem os dois novos nomes \\
+    CT-05 & Editar Diagrama\newline Editar Tabela & Projeto com duas tabelas, aberto pelo \textit{Owner} e pelo \textit{Editor} & Cada um renomeia uma tabela diferente, e os dois salvam dentro do mesmo intervalo de 1,5 segundo & Ao reabrir o projeto, os dois usuários veem os dois novos nomes \\
     \hline
-    CT-06 & CSU-06, CSU-13 & Projeto vazio, aberto pelo \textit{Owner} & O \textit{Owner} adiciona duas tabelas e recarrega a página & As duas tabelas continuam no diagrama \\
+    CT-06 & Visualizar Diagrama\newline Adicionar Tabela & Projeto vazio, aberto pelo \textit{Owner} & O \textit{Owner} adiciona duas tabelas e recarrega a página & As duas tabelas continuam no diagrama \\
     \hline
-    CT-07 & CSU-14 & Projeto com uma tabela, aberto pelo \textit{Owner} e pelo \textit{Editor} & O \textit{Editor} abre a tabela para edição e fecha o navegador sem encerrar a edição & O \textit{Owner} consegue abrir a tabela para edição \\
+    CT-07 & Editar Tabela & Projeto com uma tabela, aberto pelo \textit{Owner} e pelo \textit{Editor} & O \textit{Editor} abre a tabela para edição e fecha o navegador sem encerrar a edição & O \textit{Owner} consegue abrir a tabela para edição \\
     \hline
     \end{tabular}%
 }
