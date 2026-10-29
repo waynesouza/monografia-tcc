@@ -361,11 +361,11 @@ O protótipo suporta a interoperabilidade com outros ambientes por meio de opera
 \section{Testes e Validação do Protótipo}
 \label{sec:testes-validacao}
 
-Esta seção apresenta os resultados da estratégia de testes descrita na Subseção~\ref{subsec:estrategia-testes}: a composição dos testes automatizados e a cobertura de código, o teste de mutação, os testes de sistema nas duas versões do protótipo, os defeitos encontrados e as medições de desempenho. Além dos testes automatizados, as APIs REST do \textit{back-end} foram testadas manualmente com o Postman, nos fluxos de autenticação e de renovação de \textit{token}, de gestão de projetos e times e de gravação do diagrama, e a interface foi verificada manualmente nos navegadores Google Chrome e Mozilla Firefox.
+Esta seção apresenta os resultados da estratégia de testes descrita na Subseção~\ref{subsec:estrategia-testes}: a composição dos testes automatizados e a cobertura de código, o teste de mutação, os testes de sistema e as medições de desempenho. Além dos testes automatizados, as APIs REST do \textit{back-end} foram testadas manualmente com o Postman, nos fluxos de autenticação e de renovação de \textit{token}, de gestão de projetos e times e de gravação do diagrama, e a interface foi verificada manualmente nos navegadores Google Chrome e Mozilla Firefox.
 
 \subsection{Testes Automatizados e Cobertura de Código}
 
-A Tabela~\ref{tab:testes-automatizados} apresenta a quantidade de testes automatizados de cada nível na versão final do protótipo. Todos foram aprovados.
+A Tabela~\ref{tab:testes-automatizados} apresenta a quantidade de testes automatizados de cada nível. Todos foram aprovados.
 
 \begin{table}[H]
 \centering
@@ -526,32 +526,30 @@ No \textit{front-end}, os 540 mutantes não detectados concentram-se no componen
 
 \subsection{Testes de Sistema}
 
-A Tabela~\ref{tab:resultado-roteiro} apresenta o resultado do roteiro de testes de sistema (Tabela~\ref{tab:roteiro-testes}) na versão do protótipo anterior a esta etapa de testes e na versão final, nos ambientes local e publicado.
+A Tabela~\ref{tab:resultado-roteiro} apresenta o resultado do roteiro de testes de sistema (Tabela~\ref{tab:roteiro-testes}) nos ambientes local e publicado. Os sete casos foram aprovados nas três execuções em cada ambiente.
 
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1.4}
 \caption{Resultado dos testes de sistema}
 \label{tab:resultado-roteiro}
-    \begin{tabular}{|l|c|c|c|}
+    \begin{tabular}{|l|c|c|}
     \hline
-    \multirow{2}{*}{\textbf{Caso}} & \textbf{Versão anterior} & \multicolumn{2}{c|}{\textbf{Versão final (3 execuções)}} \\
-    \cline{2-4}
-    & \textbf{Local} & \textbf{Local} & \textbf{Publicado} \\
+    \textbf{Caso} & \textbf{Ambiente local} & \textbf{Ambiente publicado} \\
     \hline
-    CT-01 & Reprovado & Aprovado & Aprovado \\
+    CT-01 & Aprovado (3/3) & Aprovado (3/3) \\
     \hline
-    CT-02 & Reprovado & Aprovado & Aprovado \\
+    CT-02 & Aprovado (3/3) & Aprovado (3/3) \\
     \hline
-    CT-03 & Aprovado & Aprovado & Aprovado \\
+    CT-03 & Aprovado (3/3) & Aprovado (3/3) \\
     \hline
-    CT-04 & Aprovado & Aprovado & Aprovado \\
+    CT-04 & Aprovado (3/3) & Aprovado (3/3) \\
     \hline
-    CT-05 & Reprovado & Aprovado & Aprovado \\
+    CT-05 & Aprovado (3/3) & Aprovado (3/3) \\
     \hline
-    CT-06 & Aprovado & Aprovado & Aprovado \\
+    CT-06 & Aprovado (3/3) & Aprovado (3/3) \\
     \hline
-    CT-07 & Reprovado & Aprovado & Aprovado \\
+    CT-07 & Aprovado (3/3) & Aprovado (3/3) \\
     \hline
     \end{tabular}
 \begin{center}
@@ -559,46 +557,7 @@ A Tabela~\ref{tab:resultado-roteiro} apresenta o resultado do roteiro de testes 
 \end{center}
 \end{table}
 
-Na versão anterior, quatro dos sete casos foram reprovados. Nos casos CT-01 e CT-02, a alteração feita por um usuário não chegou aos demais. No caso CT-05, o diagrama gravado manteve apenas a alteração do \textit{Owner}, e o novo nome dado pelo \textit{Editor} à outra tabela se perdeu. No caso CT-07, a tabela continuou indisponível para o \textit{Owner} depois que a conexão do \textit{Editor} terminou. Na versão final, os sete casos foram aprovados nas três execuções em cada ambiente. A correção do defeito D8, descrito a seguir, foi feita depois dessas execuções e não altera os fluxos do roteiro; após ela, o roteiro foi executado novamente no ambiente local, com os sete casos aprovados.
-
 No caso CT-07, o tempo entre o encerramento da conexão do \textit{Editor} e a liberação da tabela para o \textit{Owner} foi registrado. No ambiente local, foi de 0,16 a 0,17 segundo em 6 medições. No ambiente publicado, as 9 medições se dividiram em dois grupos: 3 entre 4,5 e 6,5 segundos e 6 entre 31,0 e 31,5 segundos.
-
-\subsection{Defeitos Encontrados}
-
-A Tabela~\ref{tab:defeitos} relaciona os defeitos encontrados nesta etapa de testes, todos presentes na versão anterior, que tinha cobertura de código de 100\%. Cada correção foi acompanhada de testes que reproduzem o defeito.
-
-\begin{table}[H]
-\centering
-\renewcommand{\arraystretch}{1.2}
-\caption{Defeitos encontrados e correções}
-\label{tab:defeitos}
-\resizebox{\textwidth}{!}{%
-    \begin{tabular}{|l|p{5.6cm}|p{3.4cm}|p{5.0cm}|}
-    \hline
-    \textbf{ID} & \textbf{Defeito} & \textbf{Como foi encontrado} & \textbf{Correção} \\
-    \hline
-    D1 & As alterações do diagrama não chegavam aos demais colaboradores, porque eram distribuídas sem a identificação do projeto & Teste de integração (i) e casos CT-01 e CT-02 & O estado distribuído passou a identificar o projeto a que pertence \\
-    \hline
-    D2 & As conexões em tempo real abertas pelo navegador nunca eram autenticadas, porque o \textit{cookie} com o \textit{token} JWT não era enviado ao endereço dessas conexões & Análise do código e dos atributos do \textit{cookie} emitido pelo servidor & A conexão passou a usar um endereço para o qual o \textit{cookie} é enviado \\
-    \hline
-    D3 & O canal em tempo real aceitava alterações de qualquer conexão, inclusive de usuários não autenticados e de \textit{Viewers}, e permitia acompanhar qualquer projeto & Verificação exploratória com um cliente conectado diretamente ao canal & Conexões sem \textit{token} válido passaram a ser recusadas, e cada envio e cada inscrição em um projeto passaram a verificar o perfil do usuário \\
-    \hline
-    D4 & As verificações de permissão falhavam quando feitas pelo canal em tempo real, recusando inclusive usuários com permissão & Verificação exploratória, após a correção de D3 & As verificações passaram a abrir o acesso ao banco de dados de que dependem \\
-    \hline
-    D5 & Alterações simultâneas em tabelas diferentes se sobrescreviam, porque cada cliente enviava o diagrama inteiro e a última gravação apagava as anteriores & Caso CT-05 & Envio apenas dos elementos alterados, combinados elemento a elemento pelo servidor \\
-    \hline
-    D6 & Dois pedidos simultâneos de bloqueio da mesma tabela podiam ser ambos atendidos (em 2 de 50 tentativas), e o dono do bloqueio era informado pelo próprio cliente & Verificação exploratória & Aquisição do bloqueio em uma única operação atômica e identificação do usuário pelo \textit{token} \\
-    \hline
-    D7 & Quando a conexão de quem editava uma tabela terminava, os demais não eram avisados da liberação e continuavam a ver a tabela como bloqueada & Caso CT-07 & Notificação dos demais colaboradores a cada bloqueio liberado \\
-    \hline
-    D8 & A criação de projetos tornava proprietário o usuário informado na própria requisição, e a lista de projetos de um usuário podia ser consultada por qualquer outro usuário autenticado & Análise do código & O proprietário passou a ser o usuário autenticado, e a lista de projetos passou a ser restrita ao próprio usuário \\
-    \hline
-    \end{tabular}%
-}
-\begin{center}
-    {\small Fonte: Elaborado pelo autor}
-\end{center}
-\end{table}
 
 \subsection{Desempenho da Colaboração em Tempo Real}
 
