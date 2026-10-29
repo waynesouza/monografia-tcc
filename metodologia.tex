@@ -9,6 +9,7 @@ Este capítulo descreve como o protótipo de modelador de diagramas ER colaborat
 Nesta seção, são listados os equipamentos de \textit{hardware} e as ferramentas, linguagens, bibliotecas e plataformas de \textit{software} empregados na concepção, no desenvolvimento e na validação da aplicação, de modo a permitir a reprodução do ambiente de trabalho. As decisões de arquitetura que motivaram a escolha dos itens mais relevantes são discutidas e justificadas na seção de Métodos, a seguir.
 
 \subsection[Equipamentos]{Equipamentos}
+\label{subsec:equipamentos}
 
 \begin{itemize}
     \item Notebook: processador Intel Core i5, 1.6 GHz, 8 GB de memória RAM e SSD de 240 GB, com \textit{dual boot} para os sistemas operacionais Windows 10 e Linux Mint.
@@ -56,8 +57,11 @@ Nesta seção, são listados os equipamentos de \textit{hardware} e as ferrament
 
 \begin{itemize}
     \item JUnit \cite{JUnit2023} e Mockito \cite{Mockito2025}: testes unitários da lógica de negócio no \textit{back-end}.
+    \item Spring Boot \cite{SpringBoot2024} e H2 \cite{H2Database2024}: testes de integração do \textit{back-end}, que executam a aplicação completa sobre um banco de dados relacional mantido em memória.
     \item Jasmine \cite{Jasmine2024} e Karma \cite{Karma2024}: testes unitários dos componentes e serviços do \textit{front-end}.
+    \item Playwright \cite{Playwright2024}: testes de sistema, executados no navegador Google Chrome com sessões simultâneas de usuários distintos.
     \item JaCoCo \cite{JaCoCo2024}: medição da cobertura de código dos testes unitários do \textit{back-end}.
+    \item PIT \cite{PIT2024} e Stryker \cite{Stryker2024}: teste de mutação do \textit{back-end} e do \textit{front-end}, respectivamente.
     \item SonarQube \cite{SonarQube2024}: análise estática de qualidade e cobertura de código do \textit{back-end}.
     \item Postman \cite{Postman2024}: testes manuais das APIs REST do \textit{back-end}.
     \item Google Chrome \cite{GoogleChrome2025} e Mozilla Firefox \cite{MozillaFirefox2026}: testes manuais de compatibilidade da interface do usuário.
@@ -179,15 +183,92 @@ No \textit{front-end}, Angular Guards atuam para proteger rotas e componentes, i
 Essa abordagem em camadas, combinando Spring Security, JWT, \textit{Cookies} e Angular Guards, oferece uma solução de segurança, protegendo a aplicação contra acesso não autorizado e garantindo a integridade dos dados.
 
 \subsection[Estratégia de Concorrência]{Estratégia de Concorrência}
-A funcionalidade de colaboração em tempo real introduz a necessidade de uma estratégia para lidar com a concorrência.  Múltiplos usuários editando o mesmo elemento simultaneamente podem levar a conflitos e perda de dados se não forem devidamente gerenciados.  De acordo com \citeonline{Hipolito2024}, para mitigar esse problema, foi implementado um mecanismo de \textit{locks} (travas) com armazenamento em memória.
+A colaboração em tempo real exige uma estratégia para as alterações simultâneas: sem ela, duas alterações feitas ao mesmo tempo podem entrar em conflito, e uma delas pode se perder. O protótipo combina dois mecanismos.
 
-A estratégia de \textit{locks} funciona da seguinte forma: antes de um usuário iniciar a edição de uma seção específica de um elemento, um \textit{lock} correspondente a essa seção é adquirido e impede que outros usuários editem a mesma seção simultaneamente.  O \textit{lock} é liberado assim que o usuário termina de editar a seção, permitindo que outros usuários a acessem.
+O primeiro é um mecanismo de \textit{locks} (travas) por tabela, mantido em memória no servidor \cite{Hipolito2024}. Ao abrir uma tabela para edição, o usuário adquire a trava daquela tabela, e os demais colaboradores ficam impedidos de editá-la até que ela seja liberada. A verificação de que a tabela está livre e a aquisição da trava são feitas em uma única operação atômica, de modo que dois pedidos simultâneos pela mesma tabela não podem ser atendidos ao mesmo tempo. A trava é liberada quando o usuário encerra a edição ou quando a sua conexão com o servidor termina e, nos dois casos, os demais colaboradores são notificados. Para que uma trava esquecida não bloqueie os demais indefinidamente, o servidor verifica as travas existentes a cada 2 minutos e libera as que foram adquiridas há mais de 5 minutos \cite{Filippo2005}.
 
-A utilização de armazenamento em memória garante um acesso rápido e eficiente às informações de travamento, minimizando a latência e, consequentemente, o impacto na experiência do usuário durante a colaboração em tempo real.  A implementação específica dos \textit{locks} foi realizada utilizando um recurso interno da linguagem Java, que oferece ferramentas eficientes para gerenciamento de concorrência em memória.
+O segundo mecanismo trata da gravação das alterações. Em vez de enviar o diagrama inteiro, cada cliente envia apenas os elementos que alterou desde o último estado recebido do servidor: as tabelas e os relacionamentos incluídos ou modificados e os identificadores dos removidos. O servidor aplica essas alterações elemento a elemento sobre o diagrama armazenado, uma de cada vez em cada projeto, e envia o resultado a todos os colaboradores. Ao receber um novo estado, cada cliente reaplica sobre ele as próprias alterações que ainda não foram gravadas. Dessa forma, alterações simultâneas em elementos diferentes são todas preservadas. Alterações simultâneas em um mesmo elemento seguem a regra de que a última gravação prevalece; na edição de tabelas, a trava descrita acima impede que elas ocorram.
 
-Embora essa abordagem mitigue os conflitos de edição, ela introduz a possibilidade de \textit{deadlocks} (travamentos mútuos). Com a finalidade de evitar isso, foi implementada uma estratégia de \textit{timeout} para os \textit{locks}. Se uma trava não for liberada dentro de um período de tempo determinado, ela é automaticamente liberada pelo sistema, prevenindo que outros usuários fiquem indefinidamente bloqueados \cite{Filippo2005}.
+As alterações de cada cliente são enviadas automaticamente depois de 1,5 segundo sem novas alterações. Esse intervalo agrupa em um único envio as alterações feitas em sequência, como as posições intermediárias de um elemento que está sendo arrastado, ao custo de atrasar na mesma medida a chegada da alteração aos demais colaboradores.
 
-Essa estratégia de concorrência, baseada em travas em memória com \textit{timeouts}, oferece um equilíbrio entre a proteção dos dados e a manutenção de uma experiência de colaboração em tempo real fluida e responsiva.
+\subsection[Estratégia de Testes]{Estratégia de Testes}
+\label{subsec:estrategia-testes}
+A validação do protótipo foi organizada em três níveis de teste, que verificam o sistema em escalas crescentes \cite{EngenhariaSoftware2021}, complementados por uma avaliação da eficácia dos testes unitários e por uma medição de desempenho da colaboração em tempo real. A Tabela~\ref{tab:niveis-teste} resume o que cada nível verifica, como os seus casos foram definidos e o que é exigido para considerá-lo aprovado.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\caption{Níveis de teste do protótipo}
+\label{tab:niveis-teste}
+    \begin{tabulary}{\textwidth}{|l|L|L|L|}
+    \hline
+    \textbf{Nível} & \textbf{O que verifica} & \textbf{Definição dos casos} & \textbf{Critério de aprovação} \\
+    \hline
+    Unitário & Cada classe do \textit{back-end} e cada componente ou serviço do \textit{front-end}, isoladamente & Escritos unidade a unidade, com a cobertura de código como critério de completude & Todos os testes aprovados e cobertura de 100\% \\
+    \hline
+    Integração & O canal de comunicação em tempo real, com a aplicação completa em execução & Um caso para cada regra de acesso e de propagação do canal & Todos os casos aprovados \\
+    \hline
+    Sistema & O comportamento percebido pelos usuários, em navegadores reais & Roteiro derivado dos casos de uso do \hyperref[anx:caso-de-uso]{Anexo A} & Resultado observado igual ao esperado em todos os casos, em três execuções \\
+    \hline
+    \end{tabulary}
+\begin{center}
+    {\small Fonte: Elaborado pelo autor}
+\end{center}
+\end{table}
+
+\subsubsection{Testes Unitários}
+Os testes unitários verificam cada unidade de código de forma isolada: as dependências externas a ela, como os bancos de dados e a comunicação em tempo real, são substituídas por versões simuladas. Os casos desse nível não foram derivados dos casos de uso. Eles foram escritos unidade a unidade, com o objetivo de exercitar todos os caminhos de execução de cada uma, e por isso a cobertura de código foi adotada como critério de completude: o repositório rejeita qualquer atualização que reduza a cobertura abaixo de 100\%. No \textit{front-end}, o serviço de renderização dos diagramas e o componente que abre a conexão com o servidor, que dependem diretamente do GoJS e do SockJS, não fazem parte da medição. Como a cobertura indica apenas quais trechos foram executados, e não se o comportamento deles foi verificado \cite{Inozemtseva2014}, a eficácia desses testes foi avaliada à parte, pelo teste de mutação.
+
+\subsubsection{Testes de Integração}
+Por substituírem as dependências de cada unidade, os testes unitários não verificam se as partes do sistema funcionam em conjunto. Para o canal de comunicação em tempo real, núcleo da colaboração, foram escritos testes de integração que executam a aplicação completa: um cliente real se conecta ao servidor pelo protocolo WebSocket, apresentando o \textit{token} JWT da mesma forma que o navegador, e as permissões de cada usuário são lidas de um banco de dados relacional mantido em memória. Somente o banco de dados dos diagramas é substituído por uma versão simulada. Os casos verificam que: (i) uma alteração feita por um \textit{Editor} chega aos demais membros do projeto; (ii) uma alteração enviada por um \textit{Viewer} não é gravada nem propagada; (iii) uma conexão sem \textit{token} válido é recusada; (iv) um usuário de fora do projeto não recebe as suas alterações; e (v) alterações simultâneas de dois usuários em tabelas diferentes são ambas preservadas.
+
+\subsubsection{Testes de Sistema}
+Os testes de sistema verificam o protótipo da forma como os usuários o utilizam. Cada caso foi derivado de um caso de uso do \hyperref[anx:caso-de-uso]{Anexo A}, com prioridade para os que envolvem mais de um usuário, já que a colaboração é o objetivo central do trabalho: a visualização (CSU-06) e a edição do diagrama (CSU-07), em especial a regra de que as alterações são propagadas aos demais usuários conectados ao projeto, e a inclusão (CSU-13) e a edição de tabelas (CSU-14). Em cada caso, o Google Chrome é aberto em sessões independentes, uma para cada membro do projeto, cada uma autenticada pela tela de \textit{login}; as ações são executadas em uma sessão, e o resultado é verificado nas demais. Cada caso usa um projeto próprio, e as tabelas de que ele precisa como pré-condição são criadas antes da abertura dos navegadores, pela importação de um \textit{script} SQL (CSU-24). Assim, cada caso depende apenas do comportamento que verifica. O roteiro, apresentado na Tabela~\ref{tab:roteiro-testes}, é executado automaticamente pelo Playwright.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\caption{Roteiro dos testes de sistema}
+\label{tab:roteiro-testes}
+\resizebox{\textwidth}{!}{%
+    \begin{tabular}{|l|l|p{3.6cm}|p{4.6cm}|p{4.6cm}|}
+    \hline
+    \textbf{ID} & \textbf{Caso de uso} & \textbf{Pré-condição} & \textbf{Ações} & \textbf{Resultado esperado} \\
+    \hline
+    CT-01 & CSU-07, CSU-13 & Projeto vazio, aberto pelo \textit{Owner}, pelo \textit{Editor} e pelo \textit{Viewer} & O \textit{Owner} adiciona uma tabela & A tabela aparece para o \textit{Editor} e para o \textit{Viewer} \\
+    \hline
+    CT-02 & CSU-07, CSU-14 & Projeto com uma tabela, aberto pelo \textit{Owner} e pelo \textit{Editor} & O \textit{Editor} abre a tabela e altera o seu nome & O novo nome aparece para o \textit{Owner} \\
+    \hline
+    CT-03 & CSU-14 & Projeto com uma tabela, aberto pelo \textit{Owner} e pelo \textit{Editor} & O \textit{Editor} abre a tabela para edição; o \textit{Owner} tenta abri-la; o \textit{Editor} encerra a edição; o \textit{Owner} tenta de novo & A primeira tentativa é recusada, com a indicação de quem está editando; a segunda é permitida \\
+    \hline
+    CT-04 & CSU-06 & Projeto com uma tabela, aberto pelo \textit{Owner} e pelo \textit{Viewer} & O \textit{Viewer} procura a opção de adicionar tabela e tenta abrir a tabela para edição & A opção não é exibida, a edição é recusada e o diagrama do \textit{Owner} não se altera \\
+    \hline
+    CT-05 & CSU-07, CSU-14 & Projeto com duas tabelas, aberto pelo \textit{Owner} e pelo \textit{Editor} & Cada um renomeia uma tabela diferente, e os dois salvam dentro do mesmo intervalo de 1,5 segundo & Ao reabrir o projeto, os dois usuários veem os dois novos nomes \\
+    \hline
+    CT-06 & CSU-06, CSU-13 & Projeto vazio, aberto pelo \textit{Owner} & O \textit{Owner} adiciona duas tabelas e recarrega a página & As duas tabelas continuam no diagrama \\
+    \hline
+    CT-07 & CSU-14 & Projeto com uma tabela, aberto pelo \textit{Owner} e pelo \textit{Editor} & O \textit{Editor} abre a tabela para edição e fecha o navegador sem encerrar a edição & O \textit{Owner} consegue abrir a tabela para edição \\
+    \hline
+    \end{tabular}%
+}
+\begin{center}
+    {\small Fonte: Elaborado pelo autor}
+\end{center}
+\end{table}
+
+O roteiro foi executado em duas versões do protótipo: a versão anterior a esta etapa de testes e a versão final, que inclui as correções dos defeitos encontrados. Na versão final, ele foi executado três vezes consecutivas, para descartar resultados que dependessem do tempo de execução.
+
+\subsubsection{Teste de Mutação}
+O teste de mutação avalia a capacidade dos testes de detectar defeitos \cite{DeMillo1978}. A ferramenta gera cópias do programa, cada uma com uma única alteração pequena no código, chamada de mutante, como a inversão de uma condição, a remoção de uma chamada ou a troca de um valor de retorno, e executa os testes sobre cada mutante. Se algum teste falha, o mutante é considerado morto, ou seja, a alteração foi detectada. Se todos passam, o mutante sobreviveu, o que indica um comportamento que os testes executam, mas não verificam. O escore de mutação é a proporção de mutantes mortos em relação ao total gerado. Foram usados o PIT no \textit{back-end} e o Stryker no \textit{front-end}, com os operadores de mutação padrão de cada ferramenta, sobre os mesmos arquivos considerados na medição de cobertura. No \textit{back-end}, os testes de integração não participaram da análise: como abrem conexões reais e aguardam intervalos de tempo, tornariam a execução de cada mutante muito mais longa.
+
+\subsubsection{Medição de Desempenho}
+O desempenho da colaboração em tempo real foi medido pelo tempo que uma alteração leva para chegar aos demais colaboradores, sob duas perspectivas.
+
+A primeira é a latência de propagação, medida no nível do protocolo. Um \textit{script} de medição, escrito em JavaScript com a mesma biblioteca de comunicação do \textit{front-end}, conecta um usuário remetente e $R$ usuários receptores a um mesmo projeto. A cada amostra, o remetente envia uma alteração, e o \textit{script} registra o intervalo entre o envio e o recebimento do novo estado por cada receptor. Todos os usuários são executados no mesmo processo, de modo que os dois instantes são lidos do mesmo relógio. Em todas as amostras, a alteração é a renomeação de uma mesma tabela, o que mantém constante o tamanho das mensagens. Foram medidos grupos de 2, 5 e 10 usuários ($R$ = 1, 4 e 9), com 100 amostras por grupo, precedidas de 5 amostras de aquecimento descartadas e separadas por intervalos de 200 milissegundos. Para cada grupo, foram calculados a média, o desvio padrão, a mediana, os percentis 95 e 99, o valor máximo e o número de mensagens perdidas.
+
+A segunda é a latência percebida pelo usuário: o intervalo entre o clique no botão de adicionar tabela no navegador de um membro e o aparecimento da tabela no navegador de outro membro, medido pelo Playwright em 30 amostras. Diferentemente da primeira, essa medida inclui o intervalo de 1,5 segundo que antecede o envio automático das alterações e o tempo de desenho do diagrama.
+
+Os valores obtidos foram comparados aos limites de tempo de resposta propostos por \citeonline{Nielsen1993}: até 0,1 segundo, o usuário percebe a resposta como imediata; até 1 segundo, percebe o atraso, mas o seu fluxo de raciocínio não é interrompido. As medições foram feitas em dois ambientes. No ambiente local, todos os componentes do protótipo foram executados em contêineres Docker no PC descrito na Subseção~\ref{subsec:equipamentos}, sem tráfego pela rede externa. No ambiente publicado, o protótipo foi executado na plataforma Render, no plano gratuito e na região da Virgínia, nos Estados Unidos, com as medições feitas a partir do mesmo PC, no Brasil.
 
 \subsection[Design da Interface do Usuário]{Design da Interface do Usuário}
 O \textit{design} da \textit{interface} da aplicação foi elaborado para garantir uma experiência de usuário intuitiva e eficaz, combinando a familiaridade de ferramentas de modelagem de dados estabelecidas com a usabilidade e a estética de aplicações \textit{web} modernas.
