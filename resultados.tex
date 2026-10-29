@@ -557,7 +557,7 @@ A Tabela~\ref{tab:resultado-roteiro} apresenta o resultado do roteiro de testes 
 \end{center}
 \end{table}
 
-No caso CT-07, o tempo entre o encerramento da conexão do \textit{Editor} e a liberação da tabela para o \textit{Owner} foi registrado. No ambiente local, foi de 0,16 a 0,17 segundo em 6 medições. No ambiente publicado, as 9 medições se dividiram em dois grupos: 3 entre 4,5 e 6,5 segundos e 6 entre 31,0 e 31,5 segundos.
+No caso CT-07, o tempo entre o encerramento da conexão do \textit{Editor} e a liberação da tabela para o \textit{Owner} foi registrado. No ambiente local, foi de 0,07 a 0,17 segundo em 6 medições. No ambiente publicado, as 9 medições se dividiram em dois grupos: 3 entre 4,5 e 6,6 segundos e 6 entre 31,0 e 31,1 segundos.
 
 \subsection{Desempenho da Colaboração em Tempo Real}
 
@@ -573,17 +573,17 @@ A Tabela~\ref{tab:latencia-protocolo} apresenta a latência de propagação medi
     \hline
     \textbf{Ambiente} & \textbf{Usuários} & \textbf{Entregas} & \textbf{Média} & \textbf{Desvio padrão} & \textbf{Mediana} & \textbf{P95} & \textbf{P99} & \textbf{Máximo} & \textbf{Perdas} \\
     \hline
-    Local & 2 & 100 & 8,2 & 1,4 & 8,0 & 8,9 & 14,2 & 20,2 & 0 \\
+    Local & 2 & 100 & 8,1 & 0,7 & 7,9 & 9,4 & 10,8 & 11,1 & 0 \\
     \hline
-    Local & 5 & 400 & 7,7 & 0,3 & 7,7 & 8,2 & 8,3 & 8,3 & 0 \\
+    Local & 5 & 400 & 7,8 & 0,5 & 7,7 & 8,8 & 9,2 & 10,2 & 0 \\
     \hline
-    Local & 10 & 900 & 7,6 & 0,3 & 7,5 & 8,1 & 8,5 & 8,6 & 0 \\
+    Local & 10 & 900 & 7,9 & 1,1 & 7,7 & 8,8 & 14,9 & 15,2 & 0 \\
     \hline
-    Publicado & 2 & 100 & 174,4 & 4,1 & 173,2 & 183,5 & 190,2 & 191,3 & 0 \\
+    Publicado & 2 & 100 & 187,2 & 5,6 & 185,3 & 196,3 & 200,6 & 221,7 & 0 \\
     \hline
-    Publicado & 5 & 400 & 172,0 & 10,3 & 173,3 & 188,0 & 200,4 & 208,6 & 0 \\
+    Publicado & 5 & 400 & 178,6 & 19,6 & 178,9 & 192,3 & 251,9 & 481,9 & 0 \\
     \hline
-    Publicado & 10 & 900 & 183,0 & 70,7 & 177,2 & 192,3 & 277,2 & 886,5 & 0 \\
+    Publicado & 10 & 900 & 168,3 & 13,5 & 169,2 & 180,2 & 191,0 & 468,2 & 0 \\
     \hline
     \end{tabular}%
 }
@@ -592,7 +592,7 @@ A Tabela~\ref{tab:latencia-protocolo} apresenta a latência de propagação medi
 \end{center}
 \end{table}
 
-Como referência para o ambiente publicado, o tempo de ida e volta de uma requisição simples ao servidor, pelo mesmo caminho, teve mediana de 214 milissegundos em 20 requisições. A Tabela~\ref{tab:latencia-percebida} apresenta a latência percebida pelo usuário, do clique em um navegador ao aparecimento da tabela no outro.
+Como referência para o ambiente publicado, o tempo de ida e volta de uma requisição simples ao servidor, pelo mesmo caminho, teve mediana de 204 milissegundos em 20 requisições. A Tabela~\ref{tab:latencia-percebida} apresenta a latência percebida pelo usuário, do clique em um navegador ao aparecimento da tabela no outro.
 
 \begin{table}[H]
 \centering
@@ -604,9 +604,9 @@ Como referência para o ambiente publicado, o tempo de ida e volta de uma requis
     \hline
     \textbf{Ambiente} & \textbf{Amostras} & \textbf{Média} & \textbf{Desvio padrão} & \textbf{Mediana} & \textbf{P95} & \textbf{Mínimo} & \textbf{Máximo} \\
     \hline
-    Local & 30 & 1.533 & 13 & 1.529 & 1.552 & 1.519 & 1.582 \\
+    Local & 30 & 1.532 & 9 & 1.530 & 1.547 & 1.517 & 1.551 \\
     \hline
-    Publicado & 30 & 1.703 & 8 & 1.701 & 1.717 & 1.690 & 1.721 \\
+    Publicado & 30 & 1.707 & 10 & 1.706 & 1.720 & 1.691 & 1.722 \\
     \hline
     \end{tabular}%
 }

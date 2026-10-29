@@ -20,7 +20,7 @@ Os quatro objetivos específicos definidos na introdução foram atendidos, e a 
     \hline
     Investigar a biblioteca GoJS & Investigação apresentada na Seção~\ref{sec:investigacao-biblioteca}; a biblioteca exibiu os diagramas e aplicou as alterações recebidas de outros colaboradores em todos os casos do roteiro de testes de sistema \\
     \hline
-    Permitir o trabalho simultâneo de múltiplos usuários no mesmo diagrama & Casos CT-01, CT-02, CT-03, CT-05 e CT-07 aprovados nos ambientes local e publicado; latência de propagação com mediana de 8 milissegundos no ambiente local e de até 177 milissegundos no publicado, para até 10 usuários e sem mensagens perdidas \\
+    Permitir o trabalho simultâneo de múltiplos usuários no mesmo diagrama & Casos CT-01, CT-02, CT-03, CT-05 e CT-07 aprovados nos ambientes local e publicado; latência de propagação com mediana de 8 milissegundos no ambiente local e de até 185 milissegundos no publicado, para até 10 usuários e sem mensagens perdidas \\
     \hline
     Garantir que apenas usuários autorizados acessem e modifiquem os diagramas & Testes de integração que recusam conexões sem \textit{token} válido, alterações enviadas por \textit{Viewers} e o acompanhamento do projeto por quem não é membro; caso CT-04; 11 testes das regras de acesso, executados com a aplicação carregada \\
     \hline
@@ -31,6 +31,6 @@ Os quatro objetivos específicos definidos na introdução foram atendidos, e a 
 \end{center}
 \end{table}
 
-Os testes também delimitam o alcance desses resultados. A latência percebida pelo usuário, de 1,53 segundo no ambiente local e de 1,70 segundo no publicado, supera o limite de 1 segundo proposto por \citeonline{Nielsen1993}, em razão do intervalo que antecede o envio automático das alterações, e, no ambiente publicado, a liberação das tabelas bloqueadas por um usuário que se desconecta levou até 31,5 segundos. Esses pontos foram discutidos na Seção~\ref{sec:avaliacao-desempenho} e constam entre os trabalhos futuros.
+Os testes também delimitam o alcance desses resultados. A latência percebida pelo usuário, de 1,53 segundo no ambiente local e de 1,71 segundo no publicado, supera o limite de 1 segundo proposto por \citeonline{Nielsen1993}, em razão do intervalo que antecede o envio automático das alterações, e, no ambiente publicado, a liberação das tabelas bloqueadas por um usuário que se desconecta levou até 31,1 segundos. Esses pontos foram discutidos na Seção~\ref{sec:avaliacao-desempenho} e constam entre os trabalhos futuros.
 
 O ganho proporcionado por este trabalho se manifesta em duas dimensões. Do ponto de vista técnico, o protótipo serve como referência prática para a construção de ferramentas colaborativas baseadas em comunicação em tempo real com editores visuais interativos em ambiente \textit{web}. Do ponto de vista da área, o trabalho contribui para reduzir a lacuna identificada na justificativa: a carência de uma ferramenta colaborativa, baseada em \textit{web} e sem barreiras de custo para a modelagem de diagramas ER, atendendo às demandas de equipes de desenvolvimento distribuídas.
