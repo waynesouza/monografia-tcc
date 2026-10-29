@@ -12,14 +12,14 @@ Nesta seção, são listados os equipamentos de \textit{hardware} e as ferrament
 \label{subsec:equipamentos}
 
 \begin{itemize}
-    \item Notebook: processador Intel Core i5, 1.6 GHz, 8 GB de memória RAM e SSD de 240 GB, com \textit{dual boot} para os sistemas operacionais Windows 10 e Linux Mint.
+    \item \textit{Notebook}: processador Intel Core i5, 1.6 GHz, 8 GB de memória RAM e SSD de 240 GB, com \textit{dual boot} para os sistemas operacionais Windows 10 e Linux Mint.
     \item PC: processador AMD Ryzen 5 5600G, 3.9 GHz, 32 GB de memória RAM e SSD de 477 GB, com sistema operacional Windows 11.
 \end{itemize}
 
 \subsection[Análise, Modelagem e Projeto]{Análise, Modelagem e Projeto}
 
 \begin{itemize}
-    \item Unified Modeling Language (UML) \cite{UML2015}: elaboração dos diagramas de caso de uso do sistema.
+    \item \textit{Unified Modeling Language} (UML) \cite{UML2015}: elaboração dos diagramas de caso de uso do sistema.
     \item Excalidraw, com a biblioteca \textit{Shapes for UML and ER Diagrams}: criação dos diagramas de arquitetura e dos modelos de dados.
 \end{itemize}
 
@@ -48,7 +48,7 @@ Nesta seção, são listados os equipamentos de \textit{hardware} e as ferrament
     \item Spring Data MongoDB \cite{SpringDataMongoDB2024}: camada de acesso a dados do MongoDB.
     \item Angular \cite{Angular2022}: construção da interface do usuário como \textit{Single-Page Application}.
     \item GoJS \cite{GoJS2024}: renderização e manipulação interativa dos diagramas ER.
-    \item stompjs e SockJS \cite{StompJS2023}: comunicação via \textit{WebSocket} no lado do cliente.
+    \item stompjs e SockJS \cite{StompJS2023}: comunicação via WebSocket no lado do cliente.
     \item Node Package Manager (npm) \cite{NPM2024}: gestão das dependências do \textit{front-end}.
 \end{itemize}
 
@@ -118,10 +118,10 @@ Uma das funcionalidades centrais do protótipo é a capacidade de exportar e imp
 
 O dialeto adotado foi o {MySQL. O MySQL é um sistema de gerenciamento de banco de dados relacional de código aberto, mantido pela Oracle Corporation, e é amplamente reconhecido como um dos SGBDs mais utilizados no mundo para aplicações \textit{web} \cite{OracleMySQL2024}. Sua sintaxe DDL é amplamente difundida no mercado de desenvolvimento \textit{web}, o que torna o dialeto MySQL uma escolha adequada para maximizar a interoperabilidade dos \textit{scripts} gerados e importados pelo protótipo com outros ambientes e ferramentas do ecossistema de desenvolvimento de \textit{software}.
 
-\subsection[Padrão de Arquitetura de Software e de Código]{Padrão de Arquitetura de Software e de Código}
+\subsection[Padrão de Arquitetura de \textit{Software} e de Código]{Padrão de Arquitetura de \textit{Software} e de Código}
 Com a arquitetura macro definida, foram adotados padrões específicos para a organização interna do código, tanto no \textit{back-end} quanto no \textit{front-end}.
 
-\subsubsection[Model-View-Controller]{Model-View-Controller}
+\subsubsection[\textit{Model-View-Controller}]{\textit{Model-View-Controller}}
 %
 % Falar que escolheu o Spring pelo suporte ao WebSocket
 % Falar que o Spring usa o MVC como padrão e por este motivo adotou-se a linguagem Java e o Angular, associando a 
@@ -145,7 +145,7 @@ A adoção do padrão MVC em ambas as camadas do sistema não foi uma mera forma
     \item \textit{Front-end}: O \textit{framework} Angular organiza a aplicação de forma análoga. Os componentes são formados por um \textit{template} HTML, uma classe que contém a lógica e o estado, e os serviços que gerenciam os dados da aplicação.
 \end{itemize}
 
-\subsubsection[Clean Code]{Clean Code}
+\subsubsection[\textit{Clean Code}]{\textit{Clean Code}}
 A qualidade interna do código-fonte foi uma adotada durante todo o ciclo de desenvolvimento. Para tanto, foram escolhidos de forma sistemática os princípios de Código Limpo, conforme popularizados por \citeonline{CleanCode2009}, com o objetivo de produzir uma base de código legível e manutenível. A aplicação desses princípios se manifestou principalmente nas seguintes práticas:
 
 \begin{itemize}
@@ -161,11 +161,11 @@ O segundo princípio foi aplicado na decomposição da lógica de negócio. Mét
 O terceiro princípio foi majoritariamente empregado na escrita de um código que, por sua própria estrutura e clareza, documenta seu funcionamento, minimizando a necessidade de comentários explicativos. A combinação de nomes significativos e funções com responsabilidade única resultou em um código que se assemelha a uma narrativa legível. Comentários foram utilizados de forma criteriosa, reservados para justificar decisões de projeto não triviais ou para explicar algoritmos complexos, em vez de parafrasear o que uma linha de código já expressa claramente.
 
 \subsection[Estratégia de Controle de Versão]{Estratégia de Controle de Versão}
-A gestão do código-fonte é um pilar para a qualidade e a rastreabilidade de qualquer projeto de software. Para este trabalho, foi empregado o Sistema de Controle de Versão (VCS) \textit{git}, com o código hospedado na plataforma GitHub \cite{Git2014}. A estratégia adotada foi um modelo híbrido, que combina a agilidade do \textit{Trunk-Based Development} como fluxo principal, complementado por uma adaptação simplificada do \textit{GitFlow} para o desenvolvimento de funcionalidades específicas.
+A gestão do código-fonte é um pilar para a qualidade e a rastreabilidade de qualquer projeto de \textit{software}. Para este trabalho, foi empregado o Sistema de Controle de Versão (VCS) Git, com o código hospedado na plataforma GitHub \cite{Git2014}. A estratégia adotada foi um modelo híbrido, que combina a agilidade do \textit{Trunk-Based Development} como fluxo principal, complementado por uma adaptação simplificada do GitFlow para o desenvolvimento de funcionalidades específicas.
 
-A abordagem primária do \textit{Trunk-Based Development}, na qual as alterações são integradas diretamente na ramificação principal (master), foi uma escolha deliberada para promover um ritmo de desenvolvimento mais acelerado e simplificar o gerenciamento de versões. A viabilidade dessa abordagem foi sustentada pelo contexto do projeto, que conta com um único desenvolvedor. Essa decisão encontra respaldo no estudo de \citeonline{Lopes2025}, que aponta que a abordagem \textit{Trunk-Based} é particularmente eficaz em projetos de ritmo acelerado, com equipes menores e mais experientes, onde a complexidade de gerenciamento de múltiplas ramificações se torna um \textit{overhead} desnecessário.
+A abordagem primária do \textit{Trunk-Based Development}, na qual as alterações são integradas diretamente na ramificação principal (\textit{master}), foi uma escolha deliberada para promover um ritmo de desenvolvimento mais acelerado e simplificar o gerenciamento de versões. A viabilidade dessa abordagem foi sustentada pelo contexto do projeto, que conta com um único desenvolvedor. Essa decisão encontra respaldo no estudo de \citeonline{Lopes2025}, que aponta que a abordagem \textit{Trunk-Based} é particularmente eficaz em projetos de ritmo acelerado, com equipes menores e mais experientes, onde a complexidade de gerenciamento de múltiplas ramificações se torna um \textit{overhead} desnecessário.
 
-Para o desenvolvimento de funcionalidades mais complexas ou para a correção de \textit{bugs} que exigissem um trabalho mais extenso, foi adotada uma adaptação do modelo \textit{GitFlow}. Neste fluxo simplificado, uma ramificação de funcionalidade (\textit{feature branch}) era criada a partir da master. Esta prática permitiu implementar e testar novas capacidades de forma isolada, sem comprometer a estabilidade da ramificação principal. Após a conclusão e validação, a \textit{feature branch} era integrada de volta à master. Esse isolamento facilitou a organização das tarefas e garantiu uma camada adicional de validação, além de aprimorar a rastreabilidade do histórico de desenvolvimento, uma vez que cada conjunto de alterações significativas fica contido em sua própria ramificação \cite{Rivero2021}.
+Para o desenvolvimento de funcionalidades mais complexas ou para a correção de \textit{bugs} que exigissem um trabalho mais extenso, foi adotada uma adaptação do modelo GitFlow. Neste fluxo simplificado, uma ramificação de funcionalidade (\textit{feature branch}) era criada a partir da \textit{master}. Esta prática permitiu implementar e testar novas capacidades de forma isolada, sem comprometer a estabilidade da ramificação principal. Após a conclusão e validação, a \textit{feature branch} era integrada de volta à \textit{master}. Esse isolamento facilitou a organização das tarefas e garantiu uma camada adicional de validação, além de aprimorar a rastreabilidade do histórico de desenvolvimento, uma vez que cada conjunto de alterações significativas fica contido em sua própria ramificação \cite{Rivero2021}.
 
 A combinação dessas duas estratégias proporcionou o melhor de ambos os mundos para o escopo deste trabalho: a velocidade e a simplicidade do \textit{Trunk-Based Development} para o progresso diário e a segurança e organização das ramificações de funcionalidade para as implementações mais críticas.
 
@@ -178,9 +178,9 @@ Os \textit{tokens} JWT foram armazenados em \textit{cookies} HTTP no cliente. Es
 
 No \textit{back-end}, o Spring Security intercepta todas as requisições, validando a autenticidade do \textit{token} JWT presente no \textit{cookie}.  Caso o \textit{token} seja válido, o Spring Security extrai as informações do usuário e suas permissões, permitindo o acesso aos recursos autorizados.
 
-No \textit{front-end}, Angular Guards atuam para proteger rotas e componentes, impedindo o acesso não autorizado a determinadas áreas da aplicação, de acordo com \citeonline{Oliveira2024}.  Por exemplo, apenas usuários com ua determinada permissão podem acessar a página de gerenciamento de usuários.
+No \textit{front-end}, Angular \textit{Guards} atuam para proteger rotas e componentes, impedindo o acesso não autorizado a determinadas áreas da aplicação, de acordo com \citeonline{Oliveira2024}.  Por exemplo, apenas usuários com ua determinada permissão podem acessar a página de gerenciamento de usuários.
 
-Essa abordagem em camadas, combinando Spring Security, JWT, \textit{Cookies} e Angular Guards, oferece uma solução de segurança, protegendo a aplicação contra acesso não autorizado e garantindo a integridade dos dados.
+Essa abordagem em camadas, combinando Spring Security, JWT, \textit{Cookies} e Angular \textit{Guards}, oferece uma solução de segurança, protegendo a aplicação contra acesso não autorizado e garantindo a integridade dos dados.
 
 \subsection[Estratégia de Concorrência]{Estratégia de Concorrência}
 A colaboração em tempo real exige uma estratégia para as alterações simultâneas: sem ela, duas alterações feitas ao mesmo tempo podem entrar em conflito, e uma delas pode se perder. O protótipo combina dois mecanismos.
@@ -279,10 +279,10 @@ A segunda é a latência percebida pelo usuário: o intervalo entre o clique no 
 
 Os valores obtidos foram comparados aos limites de tempo de resposta propostos por \citeonline{Nielsen1993}: até 0,1 segundo, o usuário percebe a resposta como imediata; até 1 segundo, percebe o atraso, mas o seu fluxo de raciocínio não é interrompido. As medições foram feitas em dois ambientes. No ambiente local, todos os componentes do protótipo foram executados em contêineres Docker no PC descrito na Subseção~\ref{subsec:equipamentos}, sem tráfego pela rede externa. No ambiente publicado, o protótipo foi executado na plataforma Render, no plano gratuito e na região da Virgínia, nos Estados Unidos, com as medições feitas a partir do mesmo PC, no Brasil.
 
-\subsection[Design da Interface do Usuário]{Design da Interface do Usuário}
-O \textit{design} da \textit{interface} da aplicação foi elaborado para garantir uma experiência de usuário intuitiva e eficaz, combinando a familiaridade de ferramentas de modelagem de dados estabelecidas com a usabilidade e a estética de aplicações \textit{web} modernas.
+\subsection[\textit{Design} da Interface do Usuário]{\textit{Design} da Interface do Usuário}
+O \textit{design} da interface da aplicação foi elaborado para garantir uma experiência de usuário intuitiva e eficaz, combinando a familiaridade de ferramentas de modelagem de dados estabelecidas com a usabilidade e a estética de aplicações \textit{web} modernas.
 
-A inspiração inicial para a estrutura geral da interface foi o MySQL Workbench. Esta escolha visou facilitar a transição para usuários já familiarizados com este ambiente de modelagem de dados. No entanto, a \textit{interface} foi adaptada e enriquecida com padrões de \textit{design} modernos comumente encontrados em aplicações \textit{web}, tais como:
+A inspiração inicial para a estrutura geral da interface foi o MySQL Workbench. Esta escolha visou facilitar a transição para usuários já familiarizados com este ambiente de modelagem de dados. No entanto, a interface foi adaptada e enriquecida com padrões de \textit{design} modernos comumente encontrados em aplicações \textit{web}, tais como:
 
 \begin{itemize}
     \item Menu Lateral: Um menu lateral fixo oferece acesso rápido e fácil a todas as funcionalidades principais da aplicação.
@@ -290,9 +290,9 @@ A inspiração inicial para a estrutura geral da interface foi o MySQL Workbench
     \item Elementos Visuais: Utilização de elementos visuais consistentes e modernos para guiar o usuário e melhorar a clareza da informação.
 \end{itemize}
 
-Um componente central da \textit{interface} é a visualização e manipulação interativa dos diagramas. Para essa funcionalidade, foi integrada a biblioteca GoJS. Ela permite a criação de diagramas complexos e dinâmicos, com recursos como arrastar e soltar, \textit{zoom}, e personalização visual, proporcionando uma experiência de modelagem de dados interativa. Essa abordagem torna a criação e visualização de diagramas uma parte central da experiência do usuário, facilitando a compreensão e manipulação das estruturas de dados.
+Um componente central da interface é a visualização e manipulação interativa dos diagramas. Para essa funcionalidade, foi integrada a biblioteca GoJS. Ela permite a criação de diagramas complexos e dinâmicos, com recursos como arrastar e soltar, \textit{zoom}, e personalização visual, proporcionando uma experiência de modelagem de dados interativa. Essa abordagem torna a criação e visualização de diagramas uma parte central da experiência do usuário, facilitando a compreensão e manipulação das estruturas de dados.
 
-A combinação do design conhecido do MySQL Workbench com elementos modernos de aplicações \textit{web} e a biblioteca GoJS indicam que uma \textit{interface} intuitiva e eficaz para a modelagem de dados e a colaboração em tempo real possa ser construída.
+A combinação do \textit{design} conhecido do MySQL Workbench com elementos modernos de aplicações \textit{web} e a biblioteca GoJS indicam que uma interface intuitiva e eficaz para a modelagem de dados e a colaboração em tempo real possa ser construída.
 
 
 
@@ -309,7 +309,7 @@ Esta padronização foi aplicada de forma abrangente nos seguintes artefatos do 
     \item Banco de dados: os nomes das tabelas, colunas e restrições no PostgreSQL, bem como os nomes das coleções e campos dos documentos no MongoDB, foram definidos em inglês. Essa decisão garante consistência com as anotações do Spring Data JPA e do Spring Data MongoDB, que realizam o mapeamento objeto-relacional e objeto-documento a partir dos identificadores declarados no código-fonte.
     \item Diagramas: os nomes de entidades, atributos e relacionamentos nos diagramas ER foram especificados em inglês, garantindo uniformidade com os demais artefatos técnicos do projeto.
     \item \textit{Endpoints} da API REST: os caminhos dos recursos e as operações expostas pela API foram nomeados em inglês, seguindo as convenções estabelecidas pelo estilo arquitetural REST.
-    \item Controle de versão: as mensagens de \textit{commit} e os nomes de ramificações (\textit{branches}) no repositório \textit{git} foram redigidos em inglês, promovendo a rastreabilidade e a clareza do histórico de desenvolvimento.
+    \item Controle de versão: as mensagens de \textit{commit} e os nomes de ramificações (\textit{branches}) no repositório Git foram redigidos em inglês, promovendo a rastreabilidade e a clareza do histórico de desenvolvimento.
 \end{itemize}
 
 A adoção uniforme do inglês como idioma técnico em todos os artefatos do projeto reduziu o atrito cognitivo entre as camadas da aplicação, facilitou a leitura e a manutenção do código e posicionou o trabalho em conformidade com os padrões internacionais da indústria de desenvolvimento de \textit{software}.

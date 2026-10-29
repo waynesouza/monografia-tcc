@@ -105,7 +105,7 @@ A sexta limitação refere-se aos tempos de resposta observados na Seção~\ref{
 
 A análise da arquitetura do protótipo e os resultados dos testes apontam cinco direções prioritárias para a evolução do sistema rumo a um ambiente de produção.
 
-\subsection{Camada de Cache Distribuído}
+\subsection{Camada de \textit{Cache} Distribuído}
 
 O mecanismo de \textit{locks} de colaboração implementado no protótipo armazena o estado de edição em uma estrutura de dados mantida na memória local do servidor, assim como o controle que aplica as alterações de cada projeto uma de cada vez. Essa abordagem só é correta enquanto a aplicação opera em uma única instância, e se torna um ponto de falha ao escalar horizontalmente: servidores distintos não compartilham o mesmo estado de \textit{locks}, o que pode originar conflitos de edição entre colaboradores atendidos por máquinas diferentes. A adoção do Redis (um repositório de dados em memória) como armazenamento compartilhado entre instâncias solucionaria esse problema, ao tornar cada \textit{lock} visível a todo o conjunto de servidores. Além do gerenciamento de \textit{locks}, o Redis possibilitaria o \textit{cache} de consultas frequentes, como listas de projetos e perfis de usuários, reduzindo a carga sobre o banco de dados relacional e melhorando o tempo de resposta da aplicação.
 
