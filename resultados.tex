@@ -352,27 +352,48 @@ O editor de diagramas constitui o componente central do protótipo. Construído 
 
 \subsection{Colaboração em Tempo Real}
 
-A funcionalidade de colaboração permite que múltiplos usuários de um mesmo time trabalhem simultaneamente no mesmo diagrama. Ao abrir um projeto, o cliente estabelece automaticamente uma conexão persistente com o servidor para receber atualizações em tempo real. Quando um usuário seleciona uma entidade para edição, uma notificação de bloqueio é imediatamente propagada a todos os demais colaboradores conectados. Enquanto o bloqueio está ativo, a entidade correspondente fica indisponível para edição pelos outros usuários, prevenindo conflitos de concorrência. O bloqueio é liberado automaticamente pelo servidor após um intervalo de tempo predefinido, caso o usuário não o libere explicitamente.
+A funcionalidade de colaboração permite que múltiplos usuários de um mesmo time trabalhem simultaneamente no mesmo diagrama. Ao abrir um projeto, o cliente estabelece uma conexão persistente com o servidor, autenticada pelo \textit{token} JWT, e passa a receber as alterações dos demais membros. O servidor só aceita a conexão de usuários autenticados e só entrega as alterações de um projeto aos seus membros. As alterações de cada usuário são enviadas 1,5 segundo depois da última edição, contendo apenas os elementos alterados, e o servidor as combina com as dos demais antes de distribuí-las, conforme a estratégia descrita na Metodologia. Quando um usuário abre uma tabela para edição, os demais colaboradores são notificados do bloqueio e ficam impedidos de editá-la até que ele encerre a edição, que a sua conexão termine ou que se passem 5 minutos.
 
 \subsection{Importação e Exportação de Diagramas}
 
 O protótipo suporta a interoperabilidade com outros ambientes por meio de operações SQL no dialeto MySQL. A exportação converte o modelo do diagrama em instruções SQL de criação de tabelas, enquanto a importação analisa um \textit{script} SQL fornecido pelo usuário para reconstruir o diagrama correspondente no \textit{canvas}. Ambas as operações são processadas pelo \textit{back-end} e o resultado é retornado ao usuário pela interface da aplicação.
 
 \section{Testes e Validação do Protótipo}
+\label{sec:testes-validacao}
 
-Conforme descrito na Subseção~\ref{subsec:testes} da Metodologia, a validação do protótipo combina suítes de testes unitários automatizados no \textit{back-end} e no \textit{front-end}, testes manuais das APIs REST com Postman e testes manuais de compatibilidade da interface nos navegadores Google Chrome e Mozilla Firefox.
+Esta seção apresenta os resultados da estratégia de testes descrita na Subseção~\ref{subsec:estrategia-testes}: a composição dos testes automatizados e a cobertura de código, o teste de mutação, os testes de sistema nas duas versões do protótipo, os defeitos encontrados e as medições de desempenho. Além dos testes automatizados, as APIs REST do \textit{back-end} foram testadas manualmente com o Postman, nos fluxos de autenticação e de renovação de \textit{token}, de gestão de projetos e times e de gravação do diagrama, e a interface foi verificada manualmente nos navegadores Google Chrome e Mozilla Firefox.
 
-No \textit{back-end}, a suíte de testes unitários com JUnit e Mockito cobre a lógica de negócio, o acesso aos dados e as regras de segurança da aplicação, incluindo a validação do \textit{token} JWT e as camadas de autorização apresentadas na Figura~\ref{fig:arquitetura-autenticacao}. A cobertura de código dessa suíte é medida automaticamente pelo JaCoCo, e a qualidade do código é avaliada pelo SonarQube; ambas as verificações são executadas a cada atualização enviada ao repositório, impedindo que alterações que reduzam a cobertura mínima estabelecida sejam incorporadas ao projeto.
+\subsection{Testes Automatizados e Cobertura de Código}
 
-No \textit{front-end}, a suíte de testes unitários com Jasmine e Karma cobre os componentes de interface e os serviços responsáveis pela comunicação com o \textit{back-end} e pela navegação entre telas. Para viabilizar essa cobertura, as partes do editor de diagramas que dependem diretamente de bibliotecas externas, a renderização via GoJS e a comunicação em tempo real, foram isoladas em componentes próprios, o que permite testá-las de forma independente do restante da aplicação. Assim como no \textit{back-end}, essa suíte também é executada automaticamente a cada atualização de código, com a mesma exigência de cobertura mínima.
+A Tabela~\ref{tab:testes-automatizados} apresenta a quantidade de testes automatizados de cada nível na versão final do protótipo. Todos foram aprovados.
 
-Os testes manuais com Postman validaram os principais fluxos das APIs REST expostas pelo \textit{back-end}: autenticação e renovação de \textit{token}, criação, edição e exclusão de projetos, gestão de times (adição, listagem, alteração de papel e remoção de membros) e persistência do estado do diagrama (entidades, atributos, relacionamentos e posicionamentos).
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\caption{Testes automatizados por nível}
+\label{tab:testes-automatizados}
+    \begin{tabular}{|l|l|l|r|}
+    \hline
+    \textbf{Nível} & \textbf{Projeto} & \textbf{Ferramentas} & \textbf{Testes} \\
+    \hline
+    Unitário & \textit{Back-end} & JUnit e Mockito & 350\textsuperscript{a} \\
+    \hline
+    Integração & \textit{Back-end} & Spring Boot e H2 & 5 \\
+    \hline
+    Unitário & \textit{Front-end} & Jasmine e Karma & 636 \\
+    \hline
+    Sistema & Protótipo completo & Playwright & 7 \\
+    \hline
+    \multicolumn{3}{|l|}{\textbf{Total}} & \textbf{998} \\
+    \hline
+    \end{tabular}
+\begin{center}
+    {\small \textsuperscript{a} Inclui 11 testes que verificam as regras de acesso com a aplicação carregada.}\\
+    {\small Fonte: Elaborado pelo autor}
+\end{center}
+\end{table}
 
-Os testes manuais de compatibilidade validaram, no Chrome e no Firefox, o comportamento visual e funcional do editor de diagramas e da colaboração em tempo real, incluindo o mecanismo de bloqueio de entidades ilustrado na Figura~\ref{fig:elemento-bloqueado}.
-
-Essa combinação reflete uma escolha de escopo: a cobertura de código automatizada garante uma rede de segurança contra regressões à medida que o protótipo evolui, enquanto os testes manuais cobrem aspectos que a automação unitária não alcança diretamente, como o comportamento real de renderização entre navegadores e a validação exploratória dos fluxos de API a partir da perspectiva de um cliente externo.
-
-A medição de cobertura foi concluída nos dois projetos e atingiu 100\% em todos os indicadores verificados, atendendo integralmente à exigência de cobertura mínima estabelecida. A Tabela~\ref{tab:cobertura-back-end} apresenta o relatório do \textit{back-end}.
+A medição de cobertura atingiu 100\% em todos os indicadores nos dois projetos. A Tabela~\ref{tab:cobertura-back-end} apresenta o relatório do \textit{back-end}, por pacote.
 
 \begin{table}[H]
 \centering
@@ -383,39 +404,39 @@ A medição de cobertura foi concluída nos dois projetos e atingiu 100\% em tod
     \hline
     \textbf{Pacote} & \textbf{Instruções} & \textbf{Ramos} & \textbf{Linhas} & \textbf{Métodos} & \textbf{Classes} \\
     \hline
-    com.erd.core.service           & 100\% & 100\% & 647/647 & 122/122 & 11/11 \\
+    com.erd.core.service           & 100\% & 100\% & 719/719 & 135/135 & 12/12 \\
     \hline
-    com.erd.core.controller        & 100\% & 100\% & 148/148 & 34/34   & 7/7   \\
+    com.erd.core.config            & 100\% & 100\% & 131/131 & 31/31 & 8/8 \\
     \hline
-    com.erd.core.config            & 100\% & 100\% & 120/120 & 30/30   & 8/8   \\
+    com.erd.core.controller        & 100\% & 100\% & 136/136 & 36/36 & 7/7 \\
     \hline
-    com.erd.core.dto.response      & 100\% & n/a   & 130/130 & 71/71   & 7/7   \\
+    com.erd.core.dto.response      & 100\% & n/a   & 130/130 & 71/71 & 7/7 \\
     \hline
-    com.erd.core.model             & 100\% & 100\% & 90/90   & 53/53   & 4/4   \\
+    com.erd.core.dto.request       & 100\% & n/a   & 101/101 & 68/68 & 11/11 \\
     \hline
-    com.erd.core.dto.request       & 100\% & n/a   & 81/81   & 57/57   & 10/10 \\
+    com.erd.core.model             & 100\% & 100\% & 90/90 & 53/53 & 4/4 \\
     \hline
-    com.erd.core.dto               & 100\% & n/a   & 83/83   & 54/54   & 6/6   \\
+    com.erd.core.dto               & 100\% & n/a   & 92/92 & 60/60 & 6/6 \\
     \hline
-    com.erd.core.filter            & 100\% & 100\% & 36/36   & 7/7     & 2/2   \\
+    com.erd.core.filter            & 100\% & 100\% & 36/36 & 7/7 & 2/2 \\
     \hline
-    com.erd.core.mapper            & 100\% & n/a   & 24/24   & 11/11   & 4/4   \\
+    com.erd.core.mapper            & 100\% & n/a   & 28/28 & 11/11 & 4/4 \\
     \hline
-    com.erd.core.dto.collaboration & 100\% & n/a   & 27/27   & 14/14   & 1/1   \\
+    com.erd.core.dto.collaboration & 100\% & n/a   & 27/27 & 14/14 & 1/1 \\
     \hline
-    com.erd.core.model.mongo       & 100\% & n/a   & 19/19   & 9/9     & 1/1   \\
+    com.erd.core.model.mongo       & 100\% & n/a   & 19/19 & 9/9 & 1/1 \\
     \hline
-    com.erd.core.enumeration       & 100\% & n/a   & 4/4     & 2/2     & 2/2   \\
+    com.erd.core.enumeration       & 100\% & n/a   & 4/4 & 2/2 & 2/2 \\
     \hline
-    com.erd.core.dto.error         & 100\% & n/a   & 11/11   & 6/6     & 1/1   \\
+    com.erd.core.dto.error         & 100\% & n/a   & 11/11 & 6/6 & 1/1 \\
     \hline
-    com.erd.core.advice            & 100\% & n/a   & 2/2     & 2/2     & 1/1   \\
+    com.erd.core.advice            & 100\% & n/a   & 2/2 & 2/2 & 1/1 \\
     \hline
-    com.erd.core.exception         & 100\% & n/a   & 2/2     & 1/1     & 1/1   \\
+    com.erd.core.exception         & 100\% & n/a   & 2/2 & 1/1 & 1/1 \\
     \hline
-    com.erd.core                   & 100\% & n/a   & 3/3     & 2/2     & 1/1   \\
+    com.erd.core                   & 100\% & n/a   & 3/3 & 2/2 & 1/1 \\
     \hline
-    \textbf{Total} & \textbf{5.414/5.414} & \textbf{242/242} & \textbf{1.427/1.427} & \textbf{475/475} & \textbf{67/67} \\
+    \textbf{Total} & \textbf{5.825/5.825} & \textbf{278/278} & \textbf{1.531/1.531} & \textbf{508/508} & \textbf{69/69} \\
     \hline
     \end{tabular}%
 }
@@ -424,7 +445,7 @@ A medição de cobertura foi concluída nos dois projetos e atingiu 100\% em tod
 \end{center}
 \end{table}
 
-A Tabela~\ref{tab:cobertura-front-end} apresenta o relatório equivalente do \textit{front-end}.
+A Tabela~\ref{tab:cobertura-front-end} apresenta o relatório equivalente do \textit{front-end}, por diretório.
 
 \begin{table}[H]
 \centering
@@ -437,35 +458,196 @@ A Tabela~\ref{tab:cobertura-front-end} apresenta o relatório equivalente do \te
     \cline{2-9}
     & \textbf{Cob.} & \textbf{Qtd.} & \textbf{Cob.} & \textbf{Qtd.} & \textbf{Cob.} & \textbf{Qtd.} & \textbf{Cob.} & \textbf{Qtd.} \\
     \hline
-    app                              & 100\% & 23/23   & 100\% & 2/2     & 100\% & 10/10   & 100\% & 21/21   \\
+    app                              & 100\% & 23/23 & 100\% & 2/2 & 100\% & 10/10 & 100\% & 21/21 \\
     \hline
-    app/component/entity-edit-form   & 100\% & 55/55   & 100\% & 33/33   & 100\% & 15/15   & 100\% & 54/54   \\
+    app/component/entity-edit-form   & 100\% & 55/55 & 100\% & 33/33 & 100\% & 15/15 & 100\% & 54/54 \\
     \hline
-    app/component/login              & 100\% & 18/18   & 100\% & 1/1     & 100\% & 5/5     & 100\% & 16/16   \\
+    app/component/login              & 100\% & 18/18 & 100\% & 1/1 & 100\% & 5/5 & 100\% & 16/16 \\
     \hline
-    app/component/modal/project      & 100\% & 194/194 & 100\% & 76/76   & 100\% & 48/48   & 100\% & 191/191 \\
+    app/component/modal/project      & 100\% & 194/194 & 100\% & 76/76 & 100\% & 48/48 & 100\% & 191/191 \\
     \hline
-    app/component/register           & 100\% & 22/22   & 100\% & 3/3     & 100\% & 5/5     & 100\% & 21/21   \\
+    app/component/register           & 100\% & 22/22 & 100\% & 3/3 & 100\% & 5/5 & 100\% & 21/21 \\
     \hline
-    app/component/side-bar           & 100\% & 95/95   & 100\% & 25/25   & 100\% & 33/33   & 100\% & 94/94   \\
+    app/component/side-bar           & 100\% & 95/95 & 100\% & 25/25 & 100\% & 33/33 & 100\% & 94/94 \\
     \hline
-    app/component/table-editor       & 100\% & 30/30   & 100\% & 6/6     & 100\% & 9/9     & 100\% & 28/28   \\
+    app/component/table-editor       & 100\% & 30/30 & 100\% & 6/6 & 100\% & 9/9 & 100\% & 28/28 \\
     \hline
-    app/diagram                      & 100\% & 587/587 & 100\% & 197/197 & 100\% & 151/151 & 100\% & 549/549 \\
+    app/diagram                      & 100\% & 641/641 & 100\% & 228/228 & 100\% & 176/176 & 100\% & 592/592 \\
     \hline
-    app/guards                       & 100\% & 27/27   & 100\% & 9/9     & 100\% & 7/7     & 100\% & 25/25   \\
+    app/guards                       & 100\% & 27/27 & 100\% & 9/9 & 100\% & 7/7 & 100\% & 25/25 \\
     \hline
-    app/interceptor                  & 100\% & 47/47   & 100\% & 15/15   & 100\% & 11/11   & 100\% & 41/41   \\
+    app/interceptor                  & 100\% & 47/47 & 100\% & 15/15 & 100\% & 11/11 & 100\% & 41/41 \\
     \hline
-    app/model/enum                   & 100\% & 13/13   & 100\% & 2/2     & 100\% & 1/1     & 100\% & 13/13   \\
+    app/model/enum                   & 100\% & 13/13 & 100\% & 2/2 & 100\% & 1/1 & 100\% & 13/13 \\
     \hline
     app/service                      & 100\% & 314/314 & 100\% & 112/112 & 100\% & 102/102 & 100\% & 295/295 \\
     \hline
-    app/shared                       & 100\% & 8/8     & 100\% & 0/0     & 100\% & 6/6     & 100\% & 7/7     \\
+    app/shared                       & 100\% & 8/8 & 100\% & 0/0 & 100\% & 6/6 & 100\% & 7/7 \\
     \hline
-    environments                     & 100\% & 1/1     & 100\% & 0/0     & 100\% & 0/0     & 100\% & 1/1     \\
+    environments                     & 100\% & 1/1 & 100\% & 0/0 & 100\% & 0/0 & 100\% & 1/1 \\
     \hline
-    \textbf{Total} & \textbf{100\%} & \textbf{1434/1434} & \textbf{100\%} & \textbf{481/481} & \textbf{100\%} & \textbf{403/403} & \textbf{100\%} & \textbf{1356/1356} \\
+    \textbf{Total} & \textbf{100\%} & \textbf{1488/1488} & \textbf{100\%} & \textbf{512/512} & \textbf{100\%} & \textbf{428/428} & \textbf{100\%} & \textbf{1399/1399} \\
+    \hline
+    \end{tabular}%
+}
+\begin{center}
+    {\small Fonte: Elaborado pelo autor}
+\end{center}
+\end{table}
+
+\subsection{Teste de Mutação}
+
+A Tabela~\ref{tab:mutacao} apresenta o resultado do teste de mutação nos dois projetos.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\caption{Resultado do teste de mutação}
+\label{tab:mutacao}
+    \begin{tabular}{|l|r|r|r|r|}
+    \hline
+    \textbf{Projeto} & \textbf{Mutantes avaliados} & \textbf{Mortos} & \textbf{Sobreviventes} & \textbf{Escore} \\
+    \hline
+    \textit{Back-end} & 534 & 499 & 35 & 93,4\% \\
+    \hline
+    \textit{Front-end} & 2.793\textsuperscript{a} & 2.253 & 540\textsuperscript{b} & 80,7\% \\
+    \hline
+    \end{tabular}
+\begin{center}
+    {\small \textsuperscript{a} Dos 2.876 mutantes gerados, foram desconsiderados 49 que impediram a execução dos testes e 34 em trechos executados apenas no carregamento da aplicação, excluídos por configuração.}\\
+    {\small \textsuperscript{b} Inclui 2 mutantes em trechos que nenhum teste executa.}\\
+    {\small Fonte: Elaborado pelo autor}
+\end{center}
+\end{table}
+
+No \textit{back-end}, os 35 mutantes sobreviventes se distribuem em quatro grupos: 14 removem chamadas que preenchem campos de objetos, como as que registram a unicidade, o valor padrão e a posição das tabelas na importação de \textit{scripts} SQL; 15 trocam o valor de retorno de um método por um valor vazio, nulo ou constante, entre eles dois que fazem verificações de permissão retornarem sempre verdadeiro; 5 invertem ou deslocam uma condição, entre elas a que define o instante de expiração do \textit{token} de renovação; e 1 altera um valor numérico usado no posicionamento das tabelas importadas.
+
+No \textit{front-end}, os 540 mutantes não detectados concentram-se no componente do editor de diagramas (302) e no serviço que valida os \textit{scripts} SQL importados (72). Por tipo, 221 alteram o conteúdo de textos, dos quais 126 são mensagens escritas no console do navegador e os demais são valores como as cores associadas aos tipos de dados, os valores padrão dos atributos e os nomes usados para localizar chaves estrangeiras; 91 substituem uma condição por um valor fixo; 49 trocam chamadas de métodos sobre listas e textos; e os 179 restantes se distribuem entre outros 12 tipos de alteração.
+
+\subsection{Testes de Sistema}
+
+A Tabela~\ref{tab:resultado-roteiro} apresenta o resultado do roteiro de testes de sistema (Tabela~\ref{tab:roteiro-testes}) na versão do protótipo anterior a esta etapa de testes e na versão final, nos ambientes local e publicado.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\caption{Resultado dos testes de sistema}
+\label{tab:resultado-roteiro}
+    \begin{tabular}{|l|c|c|c|}
+    \hline
+    \multirow{2}{*}{\textbf{Caso}} & \textbf{Versão anterior} & \multicolumn{2}{c|}{\textbf{Versão final (3 execuções)}} \\
+    \cline{2-4}
+    & \textbf{Local} & \textbf{Local} & \textbf{Publicado} \\
+    \hline
+    CT-01 & Reprovado & Aprovado & Aprovado \\
+    \hline
+    CT-02 & Reprovado & Aprovado & Aprovado \\
+    \hline
+    CT-03 & Aprovado & Aprovado & Aprovado \\
+    \hline
+    CT-04 & Aprovado & Aprovado & Aprovado \\
+    \hline
+    CT-05 & Reprovado & Aprovado & Aprovado \\
+    \hline
+    CT-06 & Aprovado & Aprovado & Aprovado \\
+    \hline
+    CT-07 & Reprovado & Aprovado & Aprovado \\
+    \hline
+    \end{tabular}
+\begin{center}
+    {\small Fonte: Elaborado pelo autor}
+\end{center}
+\end{table}
+
+Na versão anterior, quatro dos sete casos foram reprovados. Nos casos CT-01 e CT-02, a alteração feita por um usuário não chegou aos demais. No caso CT-05, o diagrama gravado manteve apenas a alteração do \textit{Owner}, e o novo nome dado pelo \textit{Editor} à outra tabela se perdeu. No caso CT-07, a tabela continuou indisponível para o \textit{Owner} depois que a conexão do \textit{Editor} terminou. Na versão final, os sete casos foram aprovados nas três execuções em cada ambiente. A correção do defeito D8, descrito a seguir, foi feita depois dessas execuções e não altera os fluxos do roteiro; após ela, o roteiro foi executado novamente no ambiente local, com os sete casos aprovados.
+
+No caso CT-07, o tempo entre o encerramento da conexão do \textit{Editor} e a liberação da tabela para o \textit{Owner} foi registrado. No ambiente local, foi de 0,16 a 0,17 segundo em 6 medições. No ambiente publicado, as 9 medições se dividiram em dois grupos: 3 entre 4,5 e 6,5 segundos e 6 entre 31,0 e 31,5 segundos.
+
+\subsection{Defeitos Encontrados}
+
+A Tabela~\ref{tab:defeitos} relaciona os defeitos encontrados nesta etapa de testes, todos presentes na versão anterior, que tinha cobertura de código de 100\%. Cada correção foi acompanhada de testes que reproduzem o defeito.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\caption{Defeitos encontrados e correções}
+\label{tab:defeitos}
+\resizebox{\textwidth}{!}{%
+    \begin{tabular}{|l|p{5.6cm}|p{3.4cm}|p{5.0cm}|}
+    \hline
+    \textbf{ID} & \textbf{Defeito} & \textbf{Como foi encontrado} & \textbf{Correção} \\
+    \hline
+    D1 & As alterações do diagrama não chegavam aos demais colaboradores, porque eram distribuídas sem a identificação do projeto & Teste de integração (i) e casos CT-01 e CT-02 & O estado distribuído passou a identificar o projeto a que pertence \\
+    \hline
+    D2 & As conexões em tempo real abertas pelo navegador nunca eram autenticadas, porque o \textit{cookie} com o \textit{token} JWT não era enviado ao endereço dessas conexões & Análise do código e dos atributos do \textit{cookie} emitido pelo servidor & A conexão passou a usar um endereço para o qual o \textit{cookie} é enviado \\
+    \hline
+    D3 & O canal em tempo real aceitava alterações de qualquer conexão, inclusive de usuários não autenticados e de \textit{Viewers}, e permitia acompanhar qualquer projeto & Verificação exploratória com um cliente conectado diretamente ao canal & Conexões sem \textit{token} válido passaram a ser recusadas, e cada envio e cada inscrição em um projeto passaram a verificar o perfil do usuário \\
+    \hline
+    D4 & As verificações de permissão falhavam quando feitas pelo canal em tempo real, recusando inclusive usuários com permissão & Verificação exploratória, após a correção de D3 & As verificações passaram a abrir o acesso ao banco de dados de que dependem \\
+    \hline
+    D5 & Alterações simultâneas em tabelas diferentes se sobrescreviam, porque cada cliente enviava o diagrama inteiro e a última gravação apagava as anteriores & Caso CT-05 & Envio apenas dos elementos alterados, combinados elemento a elemento pelo servidor \\
+    \hline
+    D6 & Dois pedidos simultâneos de bloqueio da mesma tabela podiam ser ambos atendidos (em 2 de 50 tentativas), e o dono do bloqueio era informado pelo próprio cliente & Verificação exploratória & Aquisição do bloqueio em uma única operação atômica e identificação do usuário pelo \textit{token} \\
+    \hline
+    D7 & Quando a conexão de quem editava uma tabela terminava, os demais não eram avisados da liberação e continuavam a ver a tabela como bloqueada & Caso CT-07 & Notificação dos demais colaboradores a cada bloqueio liberado \\
+    \hline
+    D8 & A criação de projetos tornava proprietário o usuário informado na própria requisição, e a lista de projetos de um usuário podia ser consultada por qualquer outro usuário autenticado & Análise do código & O proprietário passou a ser o usuário autenticado, e a lista de projetos passou a ser restrita ao próprio usuário \\
+    \hline
+    \end{tabular}%
+}
+\begin{center}
+    {\small Fonte: Elaborado pelo autor}
+\end{center}
+\end{table}
+
+\subsection{Desempenho da Colaboração em Tempo Real}
+
+A Tabela~\ref{tab:latencia-protocolo} apresenta a latência de propagação medida no nível do protocolo, em milissegundos. Nenhuma das 1.400 entregas esperadas em cada ambiente foi perdida.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\caption{Latência de propagação no nível do protocolo (ms)}
+\label{tab:latencia-protocolo}
+\resizebox{\textwidth}{!}{%
+    \begin{tabular}{|l|c|r|r|r|r|r|r|r|r|}
+    \hline
+    \textbf{Ambiente} & \textbf{Usuários} & \textbf{Entregas} & \textbf{Média} & \textbf{Desvio padrão} & \textbf{Mediana} & \textbf{P95} & \textbf{P99} & \textbf{Máximo} & \textbf{Perdas} \\
+    \hline
+    Local & 2 & 100 & 8,2 & 1,4 & 8,0 & 8,9 & 14,2 & 20,2 & 0 \\
+    \hline
+    Local & 5 & 400 & 7,7 & 0,3 & 7,7 & 8,2 & 8,3 & 8,3 & 0 \\
+    \hline
+    Local & 10 & 900 & 7,6 & 0,3 & 7,5 & 8,1 & 8,5 & 8,6 & 0 \\
+    \hline
+    Publicado & 2 & 100 & 174,4 & 4,1 & 173,2 & 183,5 & 190,2 & 191,3 & 0 \\
+    \hline
+    Publicado & 5 & 400 & 172,0 & 10,3 & 173,3 & 188,0 & 200,4 & 208,6 & 0 \\
+    \hline
+    Publicado & 10 & 900 & 183,0 & 70,7 & 177,2 & 192,3 & 277,2 & 886,5 & 0 \\
+    \hline
+    \end{tabular}%
+}
+\begin{center}
+    {\small Fonte: Elaborado pelo autor}
+\end{center}
+\end{table}
+
+Como referência para o ambiente publicado, o tempo de ida e volta de uma requisição simples ao servidor, pelo mesmo caminho, teve mediana de 214 milissegundos em 20 requisições. A Tabela~\ref{tab:latencia-percebida} apresenta a latência percebida pelo usuário, do clique em um navegador ao aparecimento da tabela no outro.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\caption{Latência percebida pelo usuário (ms)}
+\label{tab:latencia-percebida}
+\resizebox{\textwidth}{!}{%
+    \begin{tabular}{|l|r|r|r|r|r|r|r|}
+    \hline
+    \textbf{Ambiente} & \textbf{Amostras} & \textbf{Média} & \textbf{Desvio padrão} & \textbf{Mediana} & \textbf{P95} & \textbf{Mínimo} & \textbf{Máximo} \\
+    \hline
+    Local & 30 & 1.533 & 13 & 1.529 & 1.552 & 1.519 & 1.582 \\
+    \hline
+    Publicado & 30 & 1.703 & 8 & 1.701 & 1.717 & 1.690 & 1.721 \\
     \hline
     \end{tabular}%
 }
