@@ -12,8 +12,8 @@ Nesta seção, são listados os equipamentos de \textit{hardware} e as ferrament
 \label{subsec:equipamentos}
 
 \begin{itemize}
-    \item \textit{Notebook}: processador Intel Core i5, 1.6 GHz, 8 GB de memória RAM e SSD de 240 GB, com \textit{dual boot} para os sistemas operacionais Windows 10 e Linux Mint.
-    \item PC: processador AMD Ryzen 5 5600G, 3.9 GHz, 32 GB de memória RAM e SSD de 477 GB, com sistema operacional Windows 11.
+    \item \textit{Notebook}: processador Intel Core i5, 1,6 GHz, 8 GB de \textit{Random Access Memory} (RAM) e \textit{Solid State Drive} (SSD) de 240 GB, com \textit{dual boot} para os sistemas operacionais Windows 10 e Linux Mint.
+    \item \textit{Personal Computer} (PC): processador AMD Ryzen 5 5600G, 3,9 GHz, 32 GB de memória RAM e SSD de 477 GB, com sistema operacional Windows 11.
 \end{itemize}
 
 \subsection[Análise, Modelagem e Projeto]{Análise, Modelagem e Projeto}
@@ -38,15 +38,15 @@ Nesta seção, são listados os equipamentos de \textit{hardware} e as ferrament
     \item GitHub \cite{GitHub2024}: hospedagem e repositório central do código-fonte.
     \item GitHub Copilot \cite{GitHubCopilot2026}: apoio à revisão de código em parte dos \textit{pull requests}.
     \item Docker \cite{Docker2024}: execução do ambiente de desenvolvimento e dos bancos de dados em \textit{containers}.
-    \item IntelliJ IDEA \cite{IntelliJ2024}: IDE para o desenvolvimento do \textit{back-end} em Java e Spring.
+    \item IntelliJ IDEA \cite{IntelliJ2024}: \textit{Integrated Development Environment} (IDE) para o desenvolvimento do \textit{back-end} em Java e Spring.
     \item WebStorm \cite{WebStorm2024}: IDE para o desenvolvimento do \textit{front-end} em Angular.
     \item Java \cite{Java2024}: linguagem de programação do \textit{back-end}.
-    \item Spring Boot \cite{SpringBoot2024}: \textit{framework} de estruturação do \textit{back-end} e das APIs REST.
+    \item Spring Boot \cite{SpringBoot2024}: \textit{framework} de estruturação do \textit{back-end} e das \textit{Application Programming Interfaces} (APIs) no estilo \textit{Representational State Transfer} (REST).
     \item Spring WebSocket \cite{WebSockets2024}: comunicação em tempo real entre \textit{back-end} e clientes.
-    \item Spring Security \cite{SpringSecurity2024}: autenticação e autorização da aplicação, em conjunto com JWT.
+    \item Spring Security \cite{SpringSecurity2024}: autenticação e autorização da aplicação, em conjunto com \textit{JSON Web Token} (JWT).
     \item Spring Data JPA \cite{SpringDataJPA2024}: camada de acesso a dados do PostgreSQL.
     \item Spring Data MongoDB \cite{SpringDataMongoDB2024}: camada de acesso a dados do MongoDB.
-    \item Angular \cite{Angular2022}: construção da interface do usuário como \textit{Single-Page Application}.
+    \item Angular \cite{Angular2022}: construção da interface do usuário como \textit{Single-Page Application} (SPA).
     \item GoJS \cite{GoJS2024}: renderização e manipulação interativa dos diagramas ER.
     \item stompjs e SockJS \cite{StompJS2023}: comunicação via WebSocket no lado do cliente.
     \item Node Package Manager (npm) \cite{NPM2024}: gestão das dependências do \textit{front-end}.
@@ -83,7 +83,7 @@ Proposto por \citeonline{Boehm1988}, o modelo em espiral organiza o desenvolvime
 O Scrum é um \textit{framework} ágil, definido por \citeonline{Schwaber2020}, que organiza o trabalho em ciclos curtos e de duração fixa, denominados \textit{sprints}, a partir de uma lista priorizada de itens a serem desenvolvidos, o \textit{Product Backlog}. A metodologia foi utilizada de forma adaptada para o gerenciamento das atividades de desenvolvimento. O trabalho foi decomposto em épicos, representando as grandes funcionalidades, que por sua vez foram detalhados em tarefas menores e mais específicas, facilitando o acompanhamento do progresso e a organização do trabalho em ciclos curtos de desenvolvimento.
 
 \subsection[Análise e Projeto do Sistema]{Análise e Projeto do Sistema}
-A fase de análise e projeto teve como objetivo delimitar o escopo funcional do protótipo e orientar as decisões técnicas de sua construção. Esse escopo foi definido a partir de duas fontes: os objetivos específicos estabelecidos na introdução e a análise comparativa apresentada na fundamentação teórica. Da análise comparativa, extraíram-se tanto as funcionalidades comuns às ferramentas analisadas, como a modelagem de diagramas ER e a exportação de \textit{scripts} SQL, quanto as limitações que o protótipo buscou superar, como a ausência de edição simultânea e de importação SQL no brModeloWeb e a exigência de assinatura paga no SqlDBM e no Vertabelo. Com base nessas fontes, foram elaborados diagramas de Caso de Uso. Essa técnica da \textit{Unified Modeling Language} (UML) permitiu identificar os atores e suas interações com o sistema, delimitando as funcionalidades a serem implementadas, como criar um projeto, convidar colaboradores, adicionar uma entidade ao diagrama, entre outras. A partir dessa análise, foram tomadas decisões arquiteturais cruciais.
+A fase de análise e projeto teve como objetivo delimitar o escopo funcional do protótipo e orientar as decisões técnicas de sua construção. Esse escopo foi definido a partir de duas fontes: os objetivos específicos estabelecidos na introdução e a análise comparativa apresentada na fundamentação teórica. Da análise comparativa, extraíram-se tanto as funcionalidades comuns às ferramentas analisadas, como a modelagem de diagramas ER e a exportação de \textit{scripts} SQL, quanto as limitações que o protótipo buscou superar, como a ausência de edição simultânea e de importação SQL no brModeloWeb e a exigência de assinatura paga no SqlDBM e no Vertabelo. Com base nessas fontes, foram elaborados diagramas de Caso de Uso. Essa técnica da UML permitiu identificar os atores e suas interações com o sistema, delimitando as funcionalidades a serem implementadas, como criar um projeto, convidar colaboradores, adicionar uma entidade ao diagrama, entre outras. A partir dessa análise, foram tomadas decisões arquiteturais cruciais.
 
 \subsubsection[Arquitetura Cliente-Servidor]{Arquitetura Cliente-Servidor}
 %
@@ -93,7 +93,7 @@ Optou-se pela arquitetura macro do tipo cliente-servidor, padrão para aplicaç�
 
 \subsubsection[Protocolo de Comunicação em Tempo Real]{Protocolo de Comunicação em Tempo Real}
 
-Para atender à necessidade central de colaboração em tempo real, o protocolo WebSocket foi escolhido para a comunicação contínua entre cliente e servidor. A comunicação síncrona do protocolo HTTP, baseada em um ciclo de requisição e resposta estritamente iniciado pelo cliente, mostra-se ineficiente para este cenário. Soluções paliativas que utilizam HTTP, como o \textit{polling} (onde o cliente consulta o servidor em intervalos regulares), geram uma alta latência e um tráfego de rede excessivo, pois cada consulta reinicia uma conexão e carrega metadados que são, na maioria das vezes, desnecessários.
+Para atender à necessidade central de colaboração em tempo real, o protocolo WebSocket foi escolhido para a comunicação contínua entre cliente e servidor. A comunicação síncrona do \textit{Hypertext Transfer Protocol} (HTTP), baseada em um ciclo de requisição e resposta estritamente iniciado pelo cliente, mostra-se ineficiente para este cenário. Soluções paliativas que utilizam HTTP, como o \textit{polling} (onde o cliente consulta o servidor em intervalos regulares), geram uma alta latência e um tráfego de rede excessivo, pois cada consulta reinicia uma conexão e carrega metadados que são, na maioria das vezes, desnecessários.
 
 O WebSocket, em contrapartida, estabelece uma conexão única, persistente e bidirecional  após um \textit{handshake} inicial. Essa arquitetura permite que o servidor envie atualizações aos clientes de forma proativa e instantânea (\textit{server push}), com baixa sobrecarga de dados. Essa característica é fundamental para a viabilidade de sistemas colaborativos, onde a propagação de alterações deve ter a menor latência possível para garantir uma experiência de uso fluida e consistente entre os múltiplos usuários. Conforme \citeonline{Souza2023}, em aplicações que demandam alta interatividade e troca constante de pequenos pacotes de dados, o WebSocket apresenta um desempenho superior e um custo computacional significativamente menor quando comparado às abordagens baseadas em HTTP.
 
@@ -104,7 +104,7 @@ A estratégia de persistência de dados adotada neste projeto foi a abordagem h�
 %
 % Explicar porque escolheu o PostgreSQL
 %
-Para o armazenamento de dados com estrutura bem definida e que exigem integridade referencial, como as informações de usuários, projetos e credenciais de acesso, optou-se pelo SGBD PostgreSQL. Sua conformidade com as propriedades ACID (Atomicidade, Consistência, Isolamento e Durabilidade) e seu sistema de controle de transações foram fatores determinantes para garantir a consistência e a segurança dos dados do sistema. A modelagem dessas informações foi formalizada por meio de um diagrama Entidade-Relacionamento (ER).
+Para o armazenamento de dados com estrutura bem definida e que exigem integridade referencial, como as informações de usuários, projetos e credenciais de acesso, optou-se pelo SGBD PostgreSQL. Sua conformidade com as propriedades de Atomicidade, Consistência, Isolamento e Durabilidade (ACID) e seu sistema de controle de transações foram fatores determinantes para garantir a consistência e a segurança dos dados do sistema. A modelagem dessas informações foi formalizada por meio de um diagrama Entidade-Relacionamento (ER).
 
 \subsubsection[Dados Não Relacionais]{Dados Não Relacionais}
 %
@@ -114,7 +114,7 @@ Em contrapartida, para a persistência dos dados que compõem os diagramas ER do
 
 \subsection[Dialeto SQL]{Dialeto SQL}
 
-Uma das funcionalidades centrais do protótipo é a capacidade de exportar e importar o diagrama ER como um \textit{script} SQL. Para viabilizar essas operações, foi necessário definir um dialeto SQL de referência, já que diferentes SGBDs possuem particularidades sintáticas próprias em suas instruções DDL.
+Uma das funcionalidades centrais do protótipo é a capacidade de exportar e importar o diagrama ER como um \textit{script} SQL. Para viabilizar essas operações, foi necessário definir um dialeto SQL de referência, já que diferentes SGBDs possuem particularidades sintáticas próprias em suas instruções \textit{Data Definition Language} (DDL).
 
 O dialeto adotado foi o {MySQL. O MySQL é um sistema de gerenciamento de banco de dados relacional de código aberto, mantido pela Oracle Corporation, e é amplamente reconhecido como um dos SGBDs mais utilizados no mundo para aplicações \textit{web} \cite{OracleMySQL2024}. Sua sintaxe DDL é amplamente difundida no mercado de desenvolvimento \textit{web}, o que torna o dialeto MySQL uma escolha adequada para maximizar a interoperabilidade dos \textit{scripts} gerados e importados pelo protótipo com outros ambientes e ferramentas do ecossistema de desenvolvimento de \textit{software}.
 
@@ -141,8 +141,8 @@ A escolha do padrão de arquitetura \textit{Model-View-Controller} (MVC) foi uma
 A adoção do padrão MVC em ambas as camadas do sistema não foi uma mera formalidade, mas uma escolha deliberada para obter vantagens concretas no processo de desenvolvimento. Essa abordagem está alinhada com as melhores práticas da Engenharia de \textit{Software}, que destacam o MVC como um padrão que promove a coesão e o baixo acoplamento entre as partes de um sistema. Conforme aponta a literatura, a separação de interesses facilita o desenvolvimento paralelo, a reutilização de componentes e, crucialmente, a testabilidade e a manutenção do \textit{software} \cite{EngenhariaSoftware2021}.
 
 \begin{itemize}
-    \item \textit{Back-end}: O \textit{framework} Spring implementa nativamente uma variação do MVC. As classes que usam uma determinada anotação atuam como Controladores, recebendo requisições HTTP. A lógica de negócio e os objetos de domínio representam o Modelo. A Visão é materializada pela resposta serializada, tipicamente em formato JSON, enviada ao cliente.
-    \item \textit{Front-end}: O \textit{framework} Angular organiza a aplicação de forma análoga. Os componentes são formados por um \textit{template} HTML, uma classe que contém a lógica e o estado, e os serviços que gerenciam os dados da aplicação.
+    \item \textit{Back-end}: O \textit{framework} Spring implementa nativamente uma variação do MVC. As classes que usam uma determinada anotação atuam como Controladores, recebendo requisições HTTP. A lógica de negócio e os objetos de domínio representam o Modelo. A Visão é materializada pela resposta serializada, tipicamente em formato \textit{JavaScript Object Notation} (JSON), enviada ao cliente.
+    \item \textit{Front-end}: O \textit{framework} Angular organiza a aplicação de forma análoga. Os componentes são formados por um \textit{template} \textit{HyperText Markup Language} (HTML), uma classe que contém a lógica e o estado, e os serviços que gerenciam os dados da aplicação.
 \end{itemize}
 
 \subsubsection[\textit{Clean Code}]{\textit{Clean Code}}
@@ -174,7 +174,7 @@ A segurança da aplicação foi implementada utilizando uma combinação de tecn
 
 Para a autenticação, foi adotado o padrão JWT.  Após a autenticação bem-sucedida do usuário (verificação de credenciais), o servidor gera um \textit{token} JWT, que é então enviado ao cliente. Este \textit{token} contém informações sobre o usuário autenticado e suas permissões.
 
-Os \textit{tokens} JWT foram armazenados em \textit{cookies} HTTP no cliente. Essa abordagem permite que o navegador gerencie automaticamente o envio do \textit{token} em cada requisição subsequente ao servidor, simplificando a implementação e melhorando a segurança em relação ao armazenamento em \textit{localStorage}, que é mais vulnerável a ataques XSS (\textit{Cross-Site Scripting}) \cite{Bulgakova2020}.
+Os \textit{tokens} JWT foram armazenados em \textit{cookies} HTTP no cliente. Essa abordagem permite que o navegador gerencie automaticamente o envio do \textit{token} em cada requisição subsequente ao servidor, simplificando a implementação e melhorando a segurança em relação ao armazenamento em \textit{localStorage}, que é mais vulnerável a ataques de \textit{Cross-Site Scripting} (XSS) \cite{Bulgakova2020}.
 
 No \textit{back-end}, o Spring Security intercepta todas as requisições, validando a autenticidade do \textit{token} JWT presente no \textit{cookie}.  Caso o \textit{token} seja válido, o Spring Security extrai as informações do usuário e suas permissões, permitindo o acesso aos recursos autorizados.
 
@@ -231,7 +231,7 @@ Por substituírem as dependências de cada unidade, os testes unitários não ve
 \end{itemize}
 
 \subsubsection{Testes de Sistema}
-Os testes de sistema verificam o protótipo da forma como os usuários o utilizam. Cada caso foi derivado de um caso de uso do \hyperref[anx:caso-de-uso]{Anexo A}, com prioridade para os que envolvem mais de um usuário, já que a colaboração é o objetivo central do trabalho: a visualização e a edição do diagrama, em especial a regra de que as alterações são propagadas aos demais usuários conectados ao projeto, e a inclusão e a edição de tabelas. Em cada caso, o Google Chrome é aberto em sessões independentes, uma para cada membro do projeto, cada uma autenticada pela tela de \textit{login}; as ações são executadas em uma sessão, e o resultado é verificado nas demais. Cada caso usa um projeto próprio, e as tabelas de que ele precisa como pré-condição são criadas antes da abertura dos navegadores, pela importação de um \textit{script} SQL. Assim, cada caso depende apenas do comportamento que verifica. O roteiro, apresentado na Tabela~\ref{tab:roteiro-testes}, é executado automaticamente pelo Playwright.
+Os testes de sistema verificam o protótipo da forma como os usuários o utilizam. Cada caso foi derivado de um caso de uso do \hyperref[anx:caso-de-uso]{Anexo A}, com prioridade para os que envolvem mais de um usuário, já que a colaboração é o objetivo central do trabalho: a visualização e a edição do diagrama, em especial a regra de que as alterações são propagadas aos demais usuários conectados ao projeto, e a inclusão e a edição de tabelas. Em cada caso, o Google Chrome é aberto em sessões independentes, uma para cada membro do projeto, cada uma autenticada pela tela de \textit{login}; as ações são executadas em uma sessão, e o resultado é verificado nas demais. Cada caso usa um projeto próprio, e as tabelas de que ele precisa como pré-condição são criadas antes da abertura dos navegadores, pela importação de um \textit{script} SQL. Assim, cada caso depende apenas do comportamento que verifica. O roteiro, apresentado na Tabela~\ref{tab:roteiro-testes}, identifica cada caso de teste pelo prefixo CT seguido de um número e é executado automaticamente pelo Playwright.
 
 \begin{table}[H]
 \centering
@@ -241,7 +241,7 @@ Os testes de sistema verificam o protótipo da forma como os usuários o utiliza
 \resizebox{\textwidth}{!}{%
     \begin{tabular}{|l|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}p{4.6cm}|>{\raggedright\arraybackslash}p{4.6cm}|}
     \hline
-    \textbf{ID} & \textbf{Caso de uso} & \textbf{Pré-condição} & \textbf{Ações} & \textbf{Resultado esperado} \\
+    \textbf{Teste} & \textbf{Caso de uso} & \textbf{Pré-condição} & \textbf{Ações} & \textbf{Resultado esperado} \\
     \hline
     CT-01 & Editar Diagrama\newline Adicionar Tabela & Projeto vazio, aberto pelo \textit{Owner}, pelo \textit{Editor} e pelo \textit{Viewer} & O \textit{Owner} adiciona uma tabela & A tabela aparece para o \textit{Editor} e para o \textit{Viewer} \\
     \hline

@@ -6,7 +6,7 @@ Esta seção apresenta os resultados obtidos ao longo do desenvolvimento do prot
 
 \section{Diagrama de Caso de Uso}
 
-O diagrama de caso de uso detalha as interações entre os atores e o sistema. Foram identificados três atores distintos, cada um representando um perfil de acesso diferente dentro da plataforma: \textit{Viewer}, \textit{Editor} e \textit{Owner}. Para preservar a legibilidade, os diagramas foram divididos em partes complementares, cada uma retomando o caso de uso que a conecta às demais. A especificação completa de cada caso de uso encontra-se no \hyperref[anx:caso-de-uso]{Anexo A}.
+O diagrama de caso de uso detalha as interações entre os atores e o sistema. Foram identificados três atores distintos, cada um representando um perfil de acesso diferente dentro da plataforma: \textit{Viewer}, \textit{Editor} e \textit{Owner}. Para preservar a legibilidade, os diagramas foram divididos em partes complementares, cada uma retomando o caso de uso que a conecta às demais. A especificação completa de cada caso de uso, identificado pelo prefixo CSU seguido de um número, encontra-se no \hyperref[anx:caso-de-uso]{Anexo A}.
 
 % Os links contêm "#", que não pode aparecer em \url dentro de \footnote
 \urldef{\urlCasoDeUsoViewer}\url{https://excalidraw.com/#json=3hPCWIRcAVBBXBanascky,2XErJH4B4bmNwDk8wUHDSQ}
@@ -265,7 +265,7 @@ A área de desenho concentra a representação visual das entidades, dos atribut
 
 O desenvolvimento de elementos próprios ofereceria controle total sobre a aparência e o comportamento do diagrama, além de dispensar qualquer custo de licença. Em contrapartida, exigiria implementar recursos que as bibliotecas de diagramação já oferecem, como a seleção de elementos, o arrastar e soltar, o \textit{zoom}, o traçado das linhas de relacionamento entre as entidades e o desfazer e refazer de ações. Conforme a revisão de estudos industriais conduzida por \citeonline{Mohagheghi2007}, o reuso sistemático de componentes de \textit{software} está associado a uma menor densidade de defeitos e a ganhos de produtividade. Considerando que o protótipo foi desenvolvido por um único desenvolvedor e dentro do prazo de um trabalho de conclusão de curso, essa alternativa foi descartada, de modo que o esforço do projeto pudesse ser direcionado à colaboração em tempo real, foco do objetivo geral deste trabalho.
 
-A JointJS é uma biblioteca de diagramação baseada em SVG, cujo núcleo é distribuído sob licença de código aberto, enquanto recursos avançados de interface são oferecidos em uma versão comercial denominada JointJS+ \cite{JointJS2026}. O exemplo de diagrama ER disponibilizado pelo fabricante pertence a essa versão comercial \cite{JointJSDemos}. A biblioteca já foi empregada em ferramentas acadêmicas de modelagem colaborativa: \citeonline{Zweihoff2019} a utilizaram como camada de visualização do Pyro, um ambiente de modelagem colaborativa executado no navegador, no qual os elementos gráficos são manipulados de forma interativa. Por ser baseado em SVG, cada elemento do diagrama torna-se parte da estrutura da página, o que permite a sua inspeção pelas ferramentas do navegador e a sua leitura por tecnologias assistivas \cite{KorenIvancevic2026}.
+A JointJS é uma biblioteca de diagramação baseada em \textit{Scalable Vector Graphics} (SVG), cujo núcleo é distribuído sob licença de código aberto, enquanto recursos avançados de interface são oferecidos em uma versão comercial denominada JointJS+ \cite{JointJS2026}. O exemplo de diagrama ER disponibilizado pelo fabricante pertence a essa versão comercial \cite{JointJSDemos}. A biblioteca já foi empregada em ferramentas acadêmicas de modelagem colaborativa: \citeonline{Zweihoff2019} a utilizaram como camada de visualização do Pyro, um ambiente de modelagem colaborativa executado no navegador, no qual os elementos gráficos são manipulados de forma interativa. Por ser baseado em SVG, cada elemento do diagrama torna-se parte da estrutura da página, o que permite a sua inspeção pelas ferramentas do navegador e a sua leitura por tecnologias assistivas \cite{KorenIvancevic2026}.
 
 A GoJS, por sua vez, é uma biblioteca comercial que realiza a renderização sobre o elemento \textit{canvas} do HTML. A investigação identificou um conjunto de capacidades diretamente aplicáveis ao modelador proposto. A biblioteca permite definir modelos visuais reutilizáveis para as entidades e para os relacionamentos, cuja aparência é vinculada automaticamente aos dados, de modo que uma alteração em um atributo é refletida no diagrama sem necessidade de redesenho manual. Ela dispõe ainda de um painel em formato de tabela, adequado à representação de uma entidade com a sua lista de atributos, e o fabricante disponibiliza um exemplo oficial de diagrama ER \cite{GoJSERSample}. Arrastar e soltar, \textit{zoom}, seleção, desfazer e refazer e o traçado das linhas de relacionamento são oferecidos pela própria biblioteca, e o fabricante mantém documentação específica para a integração com o Angular \cite{GoJS2024}.
 
@@ -330,7 +330,7 @@ As subseções a seguir descrevem as funcionalidades que compõem o protótipo d
 
 O protótipo implementa um fluxo de autenticação com credenciais de acesso. Após a autenticação bem-sucedida, o servidor emite dois \textit{tokens} de segurança: um de curta duração para as requisições e outro de renovação, ambos armazenados de forma segura no navegador do cliente. As rotas da aplicação são protegidas tanto no lado do cliente quanto no servidor, garantindo que apenas usuários autenticados acessem os recursos. Quando o \textit{token} de acesso expira, a renovação ocorre de forma automática e transparente ao usuário, sem necessidade de novo \textit{login}.
 
-A Figura~\ref{fig:arquitetura-autenticacao} ilustra a arquitetura de autenticação e autorização implementada no \textit{back-end}. Toda requisição originada pelo cliente passa pelo filtro JWT, que valida o \textit{token} presente no \textit{cookie}; caso inválido, a requisição é rejeitada com o código 401 (\textit{Unauthorized}). Requisições válidas avançam para duas camadas de autorização em série: a primeira verifica permissões com base na URL acessada e a segunda aplica restrições mais granulares ao nível do método, controlando o acesso de acordo com o perfil do usuário autenticado. O descumprimento de qualquer uma dessas camadas resulta em resposta 403 (\textit{Forbidden}); somente após a aprovação em ambas a requisição alcança os controladores da aplicação.
+A Figura~\ref{fig:arquitetura-autenticacao} ilustra a arquitetura de autenticação e autorização implementada no \textit{back-end}. Toda requisição originada pelo cliente passa pelo filtro JWT, que valida o \textit{token} presente no \textit{cookie}; caso inválido, a requisição é rejeitada com o código 401 (\textit{Unauthorized}). Requisições válidas avançam para duas camadas de autorização em série: a primeira verifica permissões com base na \textit{Uniform Resource Locator} (URL) acessada e a segunda aplica restrições mais granulares ao nível do método, controlando o acesso de acordo com o perfil do usuário autenticado. O descumprimento de qualquer uma dessas camadas resulta em resposta 403 (\textit{Forbidden}); somente após a aprovação em ambas a requisição alcança os controladores da aplicação.
 
 \begin{figure}[H]
     \centering
@@ -410,37 +410,38 @@ A medição de cobertura atingiu 100\% em todos os indicadores nos dois projetos
     \hline
     com.erd.core.controller        & 100\% & 100\% & 136/136 & 36/36 & 7/7 \\
     \hline
-    com.erd.core.dto.response      & 100\% & n/a   & 130/130 & 71/71 & 7/7 \\
+    com.erd.core.dto.response      & 100\% & --   & 130/130 & 71/71 & 7/7 \\
     \hline
-    com.erd.core.dto.request       & 100\% & n/a   & 101/101 & 68/68 & 11/11 \\
+    com.erd.core.dto.request       & 100\% & --   & 101/101 & 68/68 & 11/11 \\
     \hline
     com.erd.core.model             & 100\% & 100\% & 90/90 & 53/53 & 4/4 \\
     \hline
-    com.erd.core.dto               & 100\% & n/a   & 92/92 & 60/60 & 6/6 \\
+    com.erd.core.dto               & 100\% & --   & 92/92 & 60/60 & 6/6 \\
     \hline
     com.erd.core.filter            & 100\% & 100\% & 36/36 & 7/7 & 2/2 \\
     \hline
-    com.erd.core.mapper            & 100\% & n/a   & 28/28 & 11/11 & 4/4 \\
+    com.erd.core.mapper            & 100\% & --   & 28/28 & 11/11 & 4/4 \\
     \hline
-    com.erd.core.dto.collaboration & 100\% & n/a   & 27/27 & 14/14 & 1/1 \\
+    com.erd.core.dto.collaboration & 100\% & --   & 27/27 & 14/14 & 1/1 \\
     \hline
-    com.erd.core.model.mongo       & 100\% & n/a   & 19/19 & 9/9 & 1/1 \\
+    com.erd.core.model.mongo       & 100\% & --   & 19/19 & 9/9 & 1/1 \\
     \hline
-    com.erd.core.enumeration       & 100\% & n/a   & 4/4 & 2/2 & 2/2 \\
+    com.erd.core.enumeration       & 100\% & --   & 4/4 & 2/2 & 2/2 \\
     \hline
-    com.erd.core.dto.error         & 100\% & n/a   & 11/11 & 6/6 & 1/1 \\
+    com.erd.core.dto.error         & 100\% & --   & 11/11 & 6/6 & 1/1 \\
     \hline
-    com.erd.core.advice            & 100\% & n/a   & 2/2 & 2/2 & 1/1 \\
+    com.erd.core.advice            & 100\% & --   & 2/2 & 2/2 & 1/1 \\
     \hline
-    com.erd.core.exception         & 100\% & n/a   & 2/2 & 1/1 & 1/1 \\
+    com.erd.core.exception         & 100\% & --   & 2/2 & 1/1 & 1/1 \\
     \hline
-    com.erd.core                   & 100\% & n/a   & 3/3 & 2/2 & 1/1 \\
+    com.erd.core                   & 100\% & --   & 3/3 & 2/2 & 1/1 \\
     \hline
     \textbf{Total} & \textbf{5.825/5.825} & \textbf{278/278} & \textbf{1.531/1.531} & \textbf{508/508} & \textbf{69/69} \\
     \hline
     \end{tabular}%
 }
 \begin{center}
+    {\small -- Pacote sem ramos de decisão.}\\
     {\small Fonte: Elaborado pelo autor}
 \end{center}
 \end{table}
@@ -491,6 +492,7 @@ A Tabela~\ref{tab:cobertura-front-end} apresenta o relatório equivalente do \te
     \end{tabular}%
 }
 \begin{center}
+    {\small Cob.: cobertura; Qtd.: itens cobertos em relação ao total.}\\
     {\small Fonte: Elaborado pelo autor}
 \end{center}
 \end{table}
@@ -588,6 +590,7 @@ A Tabela~\ref{tab:latencia-protocolo} apresenta a latência de propagação medi
     \end{tabular}%
 }
 \begin{center}
+    {\small P95 e P99: percentis 95 e 99.}\\
     {\small Fonte: Elaborado pelo autor}
 \end{center}
 \end{table}
@@ -611,6 +614,7 @@ Como referência para o ambiente publicado, o tempo de ida e volta de uma requis
     \end{tabular}%
 }
 \begin{center}
+    {\small P95: percentil 95.}\\
     {\small Fonte: Elaborado pelo autor}
 \end{center}
 \end{table}
