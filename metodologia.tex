@@ -116,7 +116,7 @@ Em contrapartida, para a persistência dos dados que compõem os diagramas ER do
 
 Uma das funcionalidades centrais do protótipo é a capacidade de exportar e importar o diagrama ER como um \textit{script} SQL. Para viabilizar essas operações, foi necessário definir um dialeto SQL de referência, já que diferentes SGBDs possuem particularidades sintáticas próprias em suas instruções \textit{Data Definition Language} (DDL).
 
-O dialeto adotado foi o {MySQL. O MySQL é um sistema de gerenciamento de banco de dados relacional de código aberto, mantido pela Oracle Corporation, e é amplamente reconhecido como um dos SGBDs mais utilizados no mundo para aplicações \textit{web} \cite{OracleMySQL2024}. Sua sintaxe DDL é amplamente difundida no mercado de desenvolvimento \textit{web}, o que torna o dialeto MySQL uma escolha adequada para maximizar a interoperabilidade dos \textit{scripts} gerados e importados pelo protótipo com outros ambientes e ferramentas do ecossistema de desenvolvimento de \textit{software}.
+O dialeto adotado foi o MySQL. O MySQL é um sistema de gerenciamento de banco de dados relacional de código aberto, mantido pela Oracle Corporation, e é amplamente reconhecido como um dos SGBDs mais utilizados no mundo para aplicações \textit{web} \cite{OracleMySQL2024}. Sua sintaxe DDL é amplamente difundida no mercado de desenvolvimento \textit{web}, o que torna o dialeto MySQL uma escolha adequada para maximizar a interoperabilidade dos \textit{scripts} gerados e importados pelo protótipo com outros ambientes e ferramentas do ecossistema de desenvolvimento de \textit{software}.
 
 \subsection[Padrão de Arquitetura de \textit{Software} e de Código]{Padrão de Arquitetura de \textit{Software} e de Código}
 Com a arquitetura macro definida, foram adotados padrões específicos para a organização interna do código, tanto no \textit{back-end} quanto no \textit{front-end}.
@@ -146,7 +146,7 @@ A adoção do padrão MVC em ambas as camadas do sistema não foi uma mera forma
 \end{itemize}
 
 \subsubsection[\textit{Clean Code}]{\textit{Clean Code}}
-A qualidade interna do código-fonte foi uma adotada durante todo o ciclo de desenvolvimento. Para tanto, foram escolhidos de forma sistemática os princípios de Código Limpo, conforme popularizados por \citeonline{CleanCode2009}, com o objetivo de produzir uma base de código legível e manutenível. A aplicação desses princípios se manifestou principalmente nas seguintes práticas:
+Ao longo do desenvolvimento, foram adotados os princípios de Código Limpo, conforme popularizados por \citeonline{CleanCode2009}, com o objetivo de produzir uma base de código legível e manutenível. A aplicação desses princípios se manifestou principalmente nas seguintes práticas:
 
 \begin{itemize}
     \item Nomes de variáveis e métodos significativos
@@ -178,7 +178,7 @@ Os \textit{tokens} JWT foram armazenados em \textit{cookies} HTTP no cliente. Es
 
 No \textit{back-end}, o Spring Security intercepta todas as requisições, validando a autenticidade do \textit{token} JWT presente no \textit{cookie}.  Caso o \textit{token} seja válido, o Spring Security extrai as informações do usuário e suas permissões, permitindo o acesso aos recursos autorizados.
 
-No \textit{front-end}, Angular \textit{Guards} atuam para proteger rotas e componentes, impedindo o acesso não autorizado a determinadas áreas da aplicação, de acordo com \citeonline{Oliveira2024}.  Por exemplo, apenas usuários com ua determinada permissão podem acessar a página de gerenciamento de usuários.
+No \textit{front-end}, Angular \textit{Guards} atuam para proteger rotas e componentes, impedindo o acesso não autorizado a determinadas áreas da aplicação, de acordo com \citeonline{Oliveira2024}.  Por exemplo, apenas usuários com uma determinada permissão podem acessar a página de gerenciamento de usuários.
 
 Essa abordagem em camadas, combinando Spring Security, JWT, \textit{Cookies} e Angular \textit{Guards}, oferece uma solução de segurança, protegendo a aplicação contra acesso não autorizado e garantindo a integridade dos dados.
 
