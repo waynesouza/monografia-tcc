@@ -2,7 +2,7 @@
 \chapter{Resultados}
 % ----------------------------------------------------------
 
-Esta seção apresenta os resultados obtidos ao longo do desenvolvimento do protótipo de modelador de diagramas ER colaborativo. Os resultados são organizados nas seguintes etapas: o diagrama de caso de uso, os modelos de dados, a investigação da biblioteca de diagramação, a arquitetura implementada e as funcionalidades do protótipo.
+Este capítulo apresenta os resultados obtidos ao longo do desenvolvimento do protótipo de modelador de diagramas ER colaborativo. Os resultados são organizados nas seguintes etapas: o diagrama de caso de uso, os modelos de dados, a investigação da biblioteca de diagramação, a arquitetura implementada e as funcionalidades do protótipo.
 
 \section{Diagrama de Caso de Uso}
 
@@ -872,4 +872,27 @@ O código-fonte do protótipo está organizado em dois repositórios públicos n
     \item \textbf{\textit{Front-end}:} \url{https://github.com/waynesouza/erd-client}
 \end{itemize}
 
-Após a implantação, a aplicação estará acessível temporariamente pelo navegador no seguinte endereço: \url{https://erd-client.onrender.com}.
+A aplicação foi publicada na plataforma Render e pode ser acessada pelo navegador no endereço \url{https://erd-client.onrender.com}. Essa publicação é temporária: a aplicação permanecerá disponível até a conclusão deste trabalho e, após esse período, será retirada do ar. O código-fonte continuará disponível nos repositórios indicados acima.
+
+Para a avaliação do protótipo, foram cadastradas as contas de teste apresentadas na Tabela~\ref{tab:usuarios-teste}.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\caption{Contas de teste do protótipo}
+\label{tab:usuarios-teste}
+    \begin{tabular}{|l|l|l|}
+    \hline
+    \textbf{Perfil} & \textbf{\textit{E-mail}} & \textbf{Senha} \\
+    \hline
+    \textit{Owner}  & \texttt{owner@email.com}  & \texttt{passwordOwner}  \\
+    \hline
+    \textit{Editor} & \texttt{editor@email.com} & \texttt{passwordEditor} \\
+    \hline
+    \textit{Viewer} & \texttt{viewer@email.com} & \texttt{passwordViewer} \\
+    \hline
+    \end{tabular}
+\begin{center}
+    {\small Fonte: Elaborado pelo autor}
+\end{center}
+\end{table}
